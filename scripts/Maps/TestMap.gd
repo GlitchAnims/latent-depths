@@ -1,7 +1,15 @@
 class_name TestMap extends Map
 
+@rpc("any_peer", "call_remote", "reliable")
+func Rem_ToServer_AskForSpecialHexes() -> void:
+	pass
+
 func _ready() -> void:
-	if not GameData.isServer: return
+	if not GameData.isServer:
+		NormalizeHexDict()
+		
+		
+		return
 	
 	var spawn_list: Array[Unit] = []
 	

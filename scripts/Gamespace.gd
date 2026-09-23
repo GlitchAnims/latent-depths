@@ -23,6 +23,7 @@ func InitMultiplayer() -> void:
 		var pos: Vector2 = HexMath.hex_to_pixel(hex.coord)
 		newnode.position = Vector3(pos.x,0,pos.y)
 		add_child(newnode)
+		worldhex_list.push_back(newnode)
 	
 	# Serialization Send to Client
 	var hexpack: PackedByteArray = var_to_bytes_with_objects(special_hex_list)
@@ -39,8 +40,8 @@ func Auth_Rem_ToClient_SendSpecialHexData(hexpack: PackedByteArray) -> void:
 	var special_hex_list: Array[Hex] = bytes_to_var_with_objects(hexpack)
 	Map.ModifyHexMapWithSpecialHex(special_hex_list)
 
-
-
+var worldhex_list: Array[WorldHex] = []
+var worldhex_hovered: WorldHex = null
 
 func _physics_process(delta: float) -> void:
 	if not GameData.started: return
@@ -51,12 +52,20 @@ func _physics_process(delta: float) -> void:
 	var to: Vector3 = THECamera_Node.global_position + THECamera_Node.project_ray_normal(mousePos) * 200.0
 	GameData.rayquery_wall.from = from
 	GameData.rayquery_wall.to = to
+	
+	var worldhex: WorldHex = null
+	
 	var result: Dictionary = space_state.intersect_ray(GameData.rayquery_wall)
 	if result and result.collider is WorldPickable:
 		var worldPick: WorldPickable = result.collider as WorldPickable
-		var worldhex: WorldHex = worldPick.LogicNode as WorldHex
-		worldhex.timer = 0.2
-		#var worldPick.LogicNode
+		if worldPick.LogicNode is WorldHex:
+			worldhex = worldPick.LogicNode as WorldHex
+	
+	if worldhex_hovered != worldhex:
+		if worldhex_hovered != null:
+			worldhex_hovered.SetHovered(false)
+		worldhex_hovered = worldhex
+		if worldhex != null: worldhex.SetHovered(true)
 	
 	var unit_list: Array[Unit] = GameData.unit_list_temp
 	

@@ -4,11 +4,11 @@ class_name WorldHex extends Node3D
 
 var hex_ref: Hex = null
 
-var timer: float = 0
-
-func _process(delta: float) -> void:
-	timer -= delta
-	if timer > 0: visible = false
+func SetHovered(b: bool) -> void:
+	if b:
+		var mat: ShaderMaterial = HexModel_Node.material_override
+		mat.set_shader_parameter(&"alpha_mult", 1.0)
 	else:
-		visible = true
-		timer = 0
+		var mat: ShaderMaterial = HexModel_Node.material_override
+		mat.set_shader_parameter(&"alpha_mult", 0.4)
+	

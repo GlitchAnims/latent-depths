@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://1q58ymgwu3es"]
+
+[ext_resource type="Shader" uid="uid://difp80s6et7wc" path="res://shaders/worldhex_fade.gdshader" id="1_rocdm"]
+
+[resource]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_rocdm")
+shader_parameter/custom_color = Color(1, 0, 0, 1)
+shader_parameter/alpha_mult = 0.4

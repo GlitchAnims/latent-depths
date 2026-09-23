@@ -1,0 +1,14 @@
+[gd_resource type="ArrayMesh" format=4 uid="uid://blitm18gxdrld"]
+
+[resource]
+_surfaces = [{
+"aabb": AABB(-0.5, 0, -0.43301272, 1, 1e-05, 0.86602545),
+"attribute_data": PackedByteArray("AABAPwAAAD/NzDw/AAAAPwAAID/2bDc/ZmYeP4OnND8AAMA+9mw3PzMzwz6DpzQ/AACAPv///z5mZoY+////PgEAwD4UJpE+NDPDPvqwlj4AACA/FCaRPmZmHj/6sJY+"),
+"format": 34359742487,
+"index_count": 36,
+"index_data": PackedByteArray("AAADAAEAAAACAAMAAgAFAAMAAgAEAAUABAAHAAUABAAGAAcABgAJAAcABgAIAAkACAALAAkACAAKAAsAAAALAAoAAAABAAsA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 12,
+"vertex_data": PackedByteArray("AAAAPwAAAAAAAAAAMzPzPgAAAAAAAAAA//9/PgAAAADYs90+MjNzPgAAAAANntI+AQCAvgAAAADXs90+NTNzvgAAAAAMntI+AAAAvwAAAAAuvTuzMzPzvgAAAAAfWjKz/f9/vgAAAADYs92+MDNzvgAAAAANntK+/f9/PgAAAADYs92+MDNzPgAAAAANntK+/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA")
+}]

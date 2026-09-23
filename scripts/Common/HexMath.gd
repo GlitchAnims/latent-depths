@@ -71,3 +71,51 @@ static func MakeHexMesh() -> ArrayMesh:
 	hexmesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, surface_array)
 	ResourceSaver.save(hexmesh, "res://meshes/Hexagonal/hexmesh.tres", ResourceSaver.FLAG_COMPRESS)
 	return hexmesh
+
+static func MakeHexRingMesh() -> ArrayMesh:
+	var verts: PackedVector3Array = []
+	var uvs: PackedVector2Array = []
+	var normals: PackedVector3Array = []
+	var indices: PackedInt32Array = []
+	
+	for i in 6:
+		var cur_rot: float = hex_angle_rot * i
+		var corner_vec: Vector3 = Vector3(hex_size,0,0)
+		corner_vec = corner_vec.rotated(Vector3.DOWN,cur_rot)
+		
+		var corner_small_vec: Vector3 = corner_vec*0.95
+		verts.push_back(corner_vec)
+		verts.push_back(corner_small_vec)
+		# TODO Funny triangel
+		uvs.push_back(Vector2(corner_vec.x / 2 + 0.5,corner_vec.z / 2 + 0.5))
+		uvs.push_back(Vector2(corner_small_vec.x / 2 + 0.5,corner_small_vec.z / 2 + 0.5))
+		normals.push_back(Vector3.BACK)
+		normals.push_back(Vector3.BACK)
+		
+		if i >= 1:
+			var tring_idx: int = (i-1) * 2
+			indices.push_back(tring_idx)
+			indices.push_back(tring_idx+3)
+			indices.push_back(tring_idx+1)
+			indices.push_back(tring_idx)
+			indices.push_back(tring_idx+2)
+			indices.push_back(tring_idx+3)
+	
+	indices.push_back(0)
+	indices.push_back(11)
+	indices.push_back(10)
+	indices.push_back(0)
+	indices.push_back(1)
+	indices.push_back(11)
+	
+	var surface_array = []
+	surface_array.resize(Mesh.ARRAY_MAX)
+	surface_array[Mesh.ARRAY_VERTEX] = verts
+	surface_array[Mesh.ARRAY_TEX_UV] = uvs
+	surface_array[Mesh.ARRAY_NORMAL] = normals
+	surface_array[Mesh.ARRAY_INDEX] = indices
+	
+	var hexmesh: ArrayMesh = ArrayMesh.new()
+	hexmesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, surface_array)
+	ResourceSaver.save(hexmesh, "res://meshes/Hexagonal/hexmesh_ring.tres", ResourceSaver.FLAG_COMPRESS)
+	return hexmesh
