@@ -35,6 +35,22 @@ properties/8/replication_mode = 0
 radius = 0.3
 height = 1.5
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kkjc3"]
+cull_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_vesgh"]
+material = SubResource("StandardMaterial3D_kkjc3")
+top_radius = 0.35
+bottom_radius = 0.0
+height = 0.7
+radial_segments = 6
+rings = 0
+cap_top = false
+cap_bottom = false
+
 [node name="Unit" type="Node3D" unique_id=756562779]
 script = ExtResource("1_o7ajc")
 metadata/_custom_type_script = "uid://b0ykym1txudf3"
@@ -46,3 +62,12 @@ visibility_update_mode = 2
 [node name="Capsule" type="MeshInstance3D" parent="." unique_id=1837716725]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72187877, 0)
 mesh = SubResource("CapsuleMesh_vesgh")
+
+[node name="ID" type="Label3D" parent="." unique_id=153694226]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7796253, 0)
+pixel_size = 0.01
+text = "12"
+
+[node name="Tringl" type="MeshInstance3D" parent="." unique_id=87896051]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5852852, 0)
+mesh = SubResource("CylinderMesh_vesgh")

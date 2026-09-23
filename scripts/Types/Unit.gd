@@ -4,6 +4,9 @@ class_name Unit extends Node3D
 @export_storage var team: int = 0
 @export_storage var pos_hex: Vector2i = Vector2i.ZERO
 
+@onready var ID_Label: Label3D = $"ID"
+@onready var TurnMarker_Node: Node3D = $"Tringl"
+
 ## Called by Server when spawned, before adding as child to tree.
 func Server_SetupForSpawn(uniqueunitid: int) -> void:
 	unitID = uniqueunitid
@@ -48,14 +51,21 @@ func SetupLight(max_new: int = 10) -> void:
 	light_max = max_new
 	light = floor(float(max_new) / 2)
 
+func UpdateForActor() -> void:
+	var is_actor: bool = GameData.current_actor == self
+	TurnMarker_Node.visible = is_actor
+
 func _exit_tree() -> void:
 	GameData.unit_dict.erase(unitID)
+	GameData.sig_actor_changed.disconnect(UpdateForActor)
 func free() -> void:
-	# do things
+	pass
 	super()
 
 func _ready() -> void:
 	GameData.unit_dict[unitID] = self
+	GameData.sig_actor_changed.connect(UpdateForActor)
+	ID_Label.text = str(unitID)
 	_ready_unit()
 	var pos2: Vector2 = HexMath.hex_to_pixel(pos_hex)
 	position.x = pos2.x
