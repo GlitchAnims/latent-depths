@@ -24,8 +24,8 @@ func SetupHP(hp_max_new: int = 1000) -> void:
 
 @export_storage var overhead_downtime: int = 0
 
-var skill_list: Array[Skill] = []
-var skill_selected: Skill = null
+var skill_list: Array[SkillBase] = []
+var skill_selected: SkillBase = null
 @export_storage var skill_selected_i: int = 0
 
 func GetSumDelay() -> int:

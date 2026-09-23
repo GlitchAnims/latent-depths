@@ -3,12 +3,11 @@
 [ext_resource type="Script" uid="uid://dgh0cec8wivo" path="res://scripts/Stronghold.gd" id="1_mw8q0"]
 [ext_resource type="Script" uid="uid://bl4m2n6i335nw" path="res://scripts/Encompass.gd" id="2_hber8"]
 [ext_resource type="Script" uid="uid://d2t127lkc868q" path="res://scripts/Gamespace.gd" id="3_eav5i"]
-[ext_resource type="Script" uid="uid://js26ljisydam" path="res://scripts/PlayerSpawner.gd" id="4_evvgm"]
+[ext_resource type="Script" uid="uid://js26ljisydam" path="res://scripts/HUD/PlayerSpawner.gd" id="4_evvgm"]
 [ext_resource type="Script" uid="uid://b0v6wf0jodgkf" path="res://scripts/HUD/SkillRack.gd" id="6_cf4id"]
 [ext_resource type="PackedScene" uid="uid://bhpd1ue316s2l" path="res://scenes/HUD/skill_button.tscn" id="6_i5rp2"]
 [ext_resource type="Script" uid="uid://cxv6jr8qhky3l" path="res://scripts/HUD/BattleTimeline.gd" id="7_v57l1"]
 [ext_resource type="Texture2D" uid="uid://bsjt2gl6p5fxv" path="res://icon.svg" id="10_1v5lc"]
-[ext_resource type="Script" uid="uid://djkf31t4ssml" path="res://scripts/BufSpawner.gd" id="10_h5fdx"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j02l2"]
 content_margin_left = 10.0
@@ -35,10 +34,6 @@ metadata/_custom_type_script = "uid://d2t127lkc868q"
 [node name="UnitSpawner" type="MultiplayerSpawner" parent="Gamespace" unique_id=1175697082]
 _spawnable_scenes = PackedStringArray("uid://bx6iy0abyupfe")
 spawn_path = NodePath("../Unitry")
-
-[node name="BufSpawner" type="MultiplayerSpawner" parent="Gamespace" unique_id=873671786]
-spawn_path = NodePath(".")
-script = ExtResource("10_h5fdx")
 
 [node name="Unitry" type="Node3D" parent="Gamespace" unique_id=1830807825]
 

@@ -1,7 +1,6 @@
 class_name Gamespace extends Node3D
 
 @onready var UnitSpawner_Node: MultiplayerSpawner = $"UnitSpawner"
-@onready var BufSpawner_Node: MultiplayerSpawner = $"BufSpawner"
 @onready var Unitry_Node: Node3D = $"Unitry"
 
 @onready var THECamera_Node: Camera3D = $"THECamera"
@@ -66,5 +65,5 @@ func _process(delta: float) -> void:
 
 func AddUnitSceneAutoSpawn(path: String) -> void:
 	UnitSpawner_Node.add_spawnable_scene(path)
-func AddBufSceneAutoSpawn(path: String) -> void:
-	BufSpawner_Node.add_spawnable_scene(path)
+#func AddBufSceneAutoSpawn(path: String) -> void:
+	#BufSpawner_Node.add_spawnable_scene(path)

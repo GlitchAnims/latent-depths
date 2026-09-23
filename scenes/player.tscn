@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://7u5rpxdcfusb"]
 
-[ext_resource type="Script" uid="uid://c6twfywct3r0u" path="res://scripts/Player.gd" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://c6twfywct3r0u" path="res://scripts/Types/Player.gd" id="1_3vyb7"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_3vyb7"]
 properties/0/path = NodePath(".:pilotID")

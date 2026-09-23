@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ddyut8slaoy2m"]
 
-[ext_resource type="Script" uid="uid://cyjxu4c5iu4ax" path="res://scripts/UnitStatus.gd" id="1_1q30g"]
+[ext_resource type="Script" uid="uid://cyjxu4c5iu4ax" path="res://scripts/HUD/UnitStatus.gd" id="1_1q30g"]
 [ext_resource type="StyleBox" uid="uid://cs8kplqaoud3o" path="res://styles/styleboxempty.tres" id="1_p7axi"]
 [ext_resource type="StyleBox" uid="uid://dnk8l4tt1gj2a" path="res://styles/statusbarbg_white.tres" id="3_a4t50"]
 [ext_resource type="StyleBox" uid="uid://5xjooewjqtna" path="res://styles/statusbarbg_hp.tres" id="3_v6534"]
