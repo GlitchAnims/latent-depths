@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://dk5mokt2rf1j2"]
+
+[ext_resource type="Script" uid="uid://t6ihsvf6jls6" path="res://scripts/WorldInteract/WorldHex.gd" id="1_hdsv8"]
+[ext_resource type="Material" uid="uid://b2al0xtjcfdn2" path="res://materials/Hex/standard_red.tres" id="2_5oit4"]
+[ext_resource type="ArrayMesh" uid="uid://dvrov6dd2mgma" path="res://meshes/Hexagonal/hexmesh.tres" id="3_40m0n"]
+[ext_resource type="Script" uid="uid://ds4ygwk08iv3x" path="res://scripts/WorldInteract/WorldPickable.gd" id="4_40m0n"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_vesgh"]
+height = 0.1
+
+[node name="WorldHex" type="Node3D" unique_id=193438681]
+script = ExtResource("1_hdsv8")
+
+[node name="HexModel" type="MeshInstance3D" parent="." unique_id=2057743868]
+transform = Transform3D(1.05, 0, 0, 0, 1.05, 0, 0, 0, 1.05, 0, 0, 0)
+material_override = ExtResource("2_5oit4")
+transparency = 0.71
+cast_shadow = 0
+mesh = ExtResource("3_40m0n")
+
+[node name="MouseSelector" type="StaticBody3D" parent="." unique_id=350250079 node_paths=PackedStringArray("LogicNode")]
+collision_layer = 8
+collision_mask = 0
+input_ray_pickable = false
+script = ExtResource("4_40m0n")
+LogicNode = NodePath("..")
+
+[node name="ColShape" type="CollisionShape3D" parent="MouseSelector" unique_id=1903947297]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04095441, 0)
+shape = SubResource("CylinderShape3D_vesgh")

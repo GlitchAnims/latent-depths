@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SkillStats" load_steps=2 format=3 uid="uid://dh4gdf76cnodj"]
+
+[ext_resource type="Script" uid="uid://bwegycd5huhoq" path="res://scripts/Configs/SkillStats.gd" id="1_016ih"]
+
+[resource]
+script = ExtResource("1_016ih")
+enactment_type = 0
+cancellable = true
+charge_rate = 2.0
+cancel_rate = 1.0
+metadata/_custom_type_script = "uid://bwegycd5huhoq"

@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://c1aptoga6iddy"]
+
+[ext_resource type="Script" uid="uid://v2p53eda0mpt" path="res://scripts/HUD/TimelineMarker.gd" id="1_1hbba"]
+
+[node name="TimelineMarker" type="Control" unique_id=698649434]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1hbba")
+
+[node name="Label" type="Label" parent="." unique_id=1653088211]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "1"

@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://ddyut8slaoy2m"]
+
+[ext_resource type="Script" uid="uid://cyjxu4c5iu4ax" path="res://scripts/UnitStatus.gd" id="1_1q30g"]
+[ext_resource type="StyleBox" uid="uid://cs8kplqaoud3o" path="res://styles/styleboxempty.tres" id="1_p7axi"]
+[ext_resource type="StyleBox" uid="uid://dnk8l4tt1gj2a" path="res://styles/statusbarbg_white.tres" id="3_a4t50"]
+[ext_resource type="StyleBox" uid="uid://5xjooewjqtna" path="res://styles/statusbarbg_hp.tres" id="3_v6534"]
+[ext_resource type="StyleBox" uid="uid://cbu14tj1b72gv" path="res://styles/statusbar_hp.tres" id="4_8j1f7"]
+[ext_resource type="StyleBox" uid="uid://ivht4beo7hpb" path="res://styles/statusbar_white.tres" id="4_frrjd"]
+[ext_resource type="StyleBox" uid="uid://bu67wnmra0jvy" path="res://styles/statusbarbg_sp.tres" id="5_elm0e"]
+[ext_resource type="StyleBox" uid="uid://duj2quikybabc" path="res://styles/statusbar_sp.tres" id="6_lfnpq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p7axi"]
+bg_color = Color(0.160784, 0.160784, 0.160784, 0.588235)
+
+[node name="UnitStatus" type="PanelContainer" unique_id=1491466091]
+offset_right = 200.0
+offset_bottom = 86.0
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("1_p7axi")
+script = ExtResource("1_1q30g")
+
+[node name="VBox1" type="VBoxContainer" parent="." unique_id=1059492957]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="NamePanel" type="PanelContainer" parent="VBox1" unique_id=1808663191]
+custom_minimum_size = Vector2(0, 27)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_p7axi")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBox1/NamePanel" unique_id=726306603]
+layout_mode = 2
+mouse_filter = 2
+text = "MY nAME"
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+threaded = true
+
+[node name="HealthPanel" type="PanelContainer" parent="VBox1" unique_id=2133738281]
+custom_minimum_size = Vector2(100, 15)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HealthBar" type="ProgressBar" parent="VBox1/HealthPanel" unique_id=363976095]
+layout_mode = 2
+size_flags_vertical = 1
+mouse_filter = 2
+theme_override_styles/background = ExtResource("3_v6534")
+theme_override_styles/fill = ExtResource("4_8j1f7")
+max_value = 1000.0
+step = 1.0
+value = 700.0
+rounded = true
+show_percentage = false
+
+[node name="SanityBar" type="ProgressBar" parent="VBox1" unique_id=1708697347]
+visible = false
+custom_minimum_size = Vector2(100, 15)
+layout_mode = 2
+size_flags_vertical = 1
+mouse_filter = 2
+theme_override_styles/background = ExtResource("5_elm0e")
+theme_override_styles/fill = ExtResource("6_lfnpq")
+max_value = 1000.0
+step = 1.0
+value = 700.0
+rounded = true
+show_percentage = false
+
+[node name="Energy1Bar" type="ProgressBar" parent="VBox1" unique_id=564859980]
+visible = false
+custom_minimum_size = Vector2(150, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+theme_override_styles/background = ExtResource("3_a4t50")
+theme_override_styles/fill = ExtResource("4_frrjd")
+max_value = 1000.0
+value = 700.0
+rounded = true
+show_percentage = false
+
+[node name="Energy2Bar" type="ProgressBar" parent="VBox1" unique_id=1025312446]
+visible = false
+custom_minimum_size = Vector2(150, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+theme_override_styles/background = ExtResource("3_a4t50")
+theme_override_styles/fill = ExtResource("4_frrjd")
+max_value = 1000.0
+step = 1.0
+value = 700.0
+rounded = true
+show_percentage = false

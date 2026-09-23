@@ -1,0 +1,129 @@
+[gd_scene format=3 uid="uid://ne7wsul48ojw"]
+
+[ext_resource type="Script" uid="uid://dgh0cec8wivo" path="res://scripts/Stronghold.gd" id="1_mw8q0"]
+[ext_resource type="Script" uid="uid://bl4m2n6i335nw" path="res://scripts/Encompass.gd" id="2_hber8"]
+[ext_resource type="Script" uid="uid://d2t127lkc868q" path="res://scripts/Gamespace.gd" id="3_eav5i"]
+[ext_resource type="Script" uid="uid://js26ljisydam" path="res://scripts/PlayerSpawner.gd" id="4_evvgm"]
+[ext_resource type="Script" uid="uid://b0v6wf0jodgkf" path="res://scripts/HUD/SkillRack.gd" id="6_cf4id"]
+[ext_resource type="PackedScene" uid="uid://bhpd1ue316s2l" path="res://scenes/HUD/skill_button.tscn" id="6_i5rp2"]
+[ext_resource type="Script" uid="uid://cxv6jr8qhky3l" path="res://scripts/HUD/BattleTimeline.gd" id="7_v57l1"]
+[ext_resource type="Texture2D" uid="uid://bsjt2gl6p5fxv" path="res://icon.svg" id="10_1v5lc"]
+[ext_resource type="Script" uid="uid://djkf31t4ssml" path="res://scripts/BufSpawner.gd" id="10_h5fdx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j02l2"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+
+[node name="Stronghold" type="Node" unique_id=495344873]
+script = ExtResource("1_mw8q0")
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="." unique_id=874524148]
+_spawnable_scenes = PackedStringArray("uid://7u5rpxdcfusb")
+spawn_path = NodePath(".")
+script = ExtResource("4_evvgm")
+
+[node name="MapSpawner" type="MultiplayerSpawner" parent="." unique_id=1450200937]
+_spawnable_scenes = PackedStringArray("uid://bnvxou856dhfv")
+spawn_path = NodePath("../Gamespace")
+
+[node name="Gamespace" type="Node3D" parent="." unique_id=963668178]
+script = ExtResource("3_eav5i")
+metadata/_custom_type_script = "uid://d2t127lkc868q"
+
+[node name="UnitSpawner" type="MultiplayerSpawner" parent="Gamespace" unique_id=1175697082]
+_spawnable_scenes = PackedStringArray("uid://bx6iy0abyupfe")
+spawn_path = NodePath("../Unitry")
+
+[node name="BufSpawner" type="MultiplayerSpawner" parent="Gamespace" unique_id=873671786]
+spawn_path = NodePath(".")
+script = ExtResource("10_h5fdx")
+
+[node name="Unitry" type="Node3D" parent="Gamespace" unique_id=1830807825]
+
+[node name="THECamera" type="Camera3D" parent="Gamespace" unique_id=674794322]
+transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, 0, 5.616629, 6.99713)
+current = true
+
+[node name="Encompass" type="PanelContainer" parent="." unique_id=1532195454 node_paths=PackedStringArray("SkillRack_Node")]
+offset_right = 717.0
+offset_bottom = 480.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_j02l2")
+script = ExtResource("2_hber8")
+SkillRack_Node = NodePath("VBox1/HBox1/VBox1/Skills/SkillRack")
+metadata/_edit_lock_ = true
+
+[node name="VBox1" type="VBoxContainer" parent="Encompass" unique_id=437500129]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="HBox1" type="HBoxContainer" parent="Encompass/VBox1" unique_id=289315603]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="VBox1" type="VBoxContainer" parent="Encompass/VBox1/HBox1" unique_id=857863670]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="Encompass/VBox1/HBox1/VBox1" unique_id=1814358390]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+mouse_filter = 2
+
+[node name="Skills" type="Control" parent="Encompass/VBox1/HBox1/VBox1" unique_id=1262945260]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="SkillRack" type="VBoxContainer" parent="Encompass/VBox1/HBox1/VBox1/Skills" unique_id=1420464672]
+layout_mode = 0
+offset_right = 599.99994
+offset_bottom = 884.9999
+scale = Vector2(0.4, 0.4)
+mouse_filter = 2
+script = ExtResource("6_cf4id")
+
+[node name="SkillButton1" parent="Encompass/VBox1/HBox1/VBox1/Skills/SkillRack" unique_id=668977192 instance=ExtResource("6_i5rp2")]
+layout_mode = 2
+
+[node name="SkillButton2" parent="Encompass/VBox1/HBox1/VBox1/Skills/SkillRack" unique_id=1790402817 instance=ExtResource("6_i5rp2")]
+layout_mode = 2
+
+[node name="SkillButton3" parent="Encompass/VBox1/HBox1/VBox1/Skills/SkillRack" unique_id=1037304494 instance=ExtResource("6_i5rp2")]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Encompass/VBox1/HBox1" unique_id=1564730961]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Timeline" type="HBoxContainer" parent="Encompass/VBox1" unique_id=1828398779]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+mouse_filter = 2
+script = ExtResource("7_v57l1")
+
+[node name="Ruler" type="PanelContainer" parent="Encompass/VBox1/Timeline" unique_id=173987354]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="RulerLine" type="Line2D" parent="Encompass/VBox1/Timeline/Ruler" unique_id=2024940109]
+points = PackedVector2Array(0, 20, 600, 20)
+width = 4.0
+
+[node name="TextureRect" type="TextureRect" parent="Encompass/VBox1/Timeline" unique_id=1941467643]
+layout_mode = 2
+texture = ExtResource("10_1v5lc")
+expand_mode = 2

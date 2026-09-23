@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://rhhtjgxj831e"]
+
+[ext_resource type="Script" uid="uid://cca1lsf4nn000" path="res://scripts/Menus/ConnectMenu.gd" id="1_144wn"]
+[ext_resource type="StyleBox" uid="uid://cs8kplqaoud3o" path="res://styles/styleboxempty.tres" id="2_lj2ni"]
+
+[node name="ConnectMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 84.0
+offset_bottom = 101.0
+script = ExtResource("1_144wn")
+
+[node name="ConnectPanel" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="vBox1" type="VBoxContainer" parent="ConnectPanel"]
+layout_mode = 2
+
+[node name="IPInput" type="LineEdit" parent="ConnectPanel/vBox1"]
+layout_mode = 2
+placeholder_text = "IP Here"
+
+[node name="ConnectButton" type="Button" parent="ConnectPanel/vBox1"]
+layout_mode = 2
+theme_override_styles/focus = ExtResource("2_lj2ni")
+text = "CONNECT"
+
+[node name="HostButton" type="Button" parent="ConnectPanel/vBox1"]
+layout_mode = 2
+theme_override_styles/focus = ExtResource("2_lj2ni")
+text = "HOST"
+
+[connection signal="button_up" from="ConnectPanel/vBox1/ConnectButton" to="." method="OnChooseConnect"]
+[connection signal="button_up" from="ConnectPanel/vBox1/HostButton" to="." method="OnChooseHost"]

@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://xynvc08yqdyj"]
+
+[ext_resource type="PackedScene" uid="uid://b852mxp0vmvnm" path="res://scenes/buf.tscn" id="1_6nljv"]
+[ext_resource type="Script" uid="uid://7ktu8bnmowj7" path="res://scripts/Bufs/DefUp.gd" id="2_lmq7p"]
+
+[node name="DefUp" unique_id=2011182333 instance=ExtResource("1_6nljv")]
+script = ExtResource("2_lmq7p")

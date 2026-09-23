@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BufConfig" format=3 uid="uid://cr60wcl2wr47h"]
+
+[ext_resource type="PackedScene" uid="uid://xynvc08yqdyj" path="res://scenes/Bufs/defup.tscn" id="1_ipnqy"]
+[ext_resource type="Script" uid="uid://dg68sqmeghnaq" path="res://scripts/Configs/BufConfig.gd" id="1_lrbch"]
+
+[resource]
+script = ExtResource("1_lrbch")
+identifier = &"og_defup"
+buf_name = &"BUF_DEFUP"
+buf_desc = &"BUF_DESC_DEFUP"
+buf_scene = ExtResource("1_ipnqy")
+metadata/_custom_type_script = "uid://dg68sqmeghnaq"

@@ -1,0 +1,62 @@
+# LANGUAGE translation for wizclone for the following files:
+# res://scripts/HUD/HandHUD.gd
+# res://locale/cardnames_og.gd
+# res://locale/energynames_og.gd
+# res://locale/bufnames_og.gd
+#
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: wizclone\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8-bit\n"
+
+#: scripts/HUD/HandHUD.gd:70
+msgid "HAND_FULL"
+msgstr ""
+
+#: scripts/HUD/HandHUD.gd:71
+msgid "HAND_NOT_FULL_DRAWING"
+msgstr ""
+
+#: locale/cardnames_og.gd:4
+msgid "CARD_Firefist"
+msgstr ""
+
+#: locale/cardnames_og.gd:5
+msgid "CARD_DESC_Firefist"
+msgstr ""
+
+#: locale/cardnames_og.gd:6
+msgid "CARD_Flamethrow"
+msgstr ""
+
+#: locale/cardnames_og.gd:7
+msgid "CARD_DESC_Flamethrow"
+msgstr ""
+
+#: locale/cardnames_og.gd:8
+msgid "CARD_D12Fuel"
+msgstr ""
+
+#: locale/cardnames_og.gd:9
+msgid "CARD_DESC_D12Fuel"
+msgstr ""
+
+#: locale/energynames_og.gd:4
+msgid "NRG_FISTOVERHEAT"
+msgstr ""
+
+#: locale/bufnames_og.gd:4
+msgid "BUF_SHIN"
+msgstr ""
+
+#: locale/bufnames_og.gd:5
+msgid "BUF_DESC_SHIN"
+msgstr ""
+
+msgid "wizclone"
+msgstr ""

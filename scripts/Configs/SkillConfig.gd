@@ -1,0 +1,1 @@
+class_name SkillConfig extends Resource

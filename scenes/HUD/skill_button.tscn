@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://bhpd1ue316s2l"]
+
+[ext_resource type="Texture2D" uid="uid://bsjt2gl6p5fxv" path="res://icon.svg" id="1_8mgkg"]
+[ext_resource type="Script" uid="uid://deecaxs8obdc" path="res://scripts/HUD/SkillButton.gd" id="1_nh5wf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nh5wf"]
+bg_color = Color(0.15686275, 0.15686275, 0.15686275, 1)
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_detail = 1
+
+[node name="SkillButton" type="Control" unique_id=1790402817]
+custom_minimum_size = Vector2(300, 128)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 300.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_nh5wf")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=668977192]
+layout_mode = 0
+offset_left = 1.0
+offset_right = 221.0
+offset_bottom = 128.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nh5wf")
+
+[node name="VBox1" type="VBoxContainer" parent="." unique_id=1639515702]
+layout_mode = 0
+offset_left = 128.0
+offset_right = 188.0
+offset_bottom = 128.0
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="." unique_id=1891134831]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
+mouse_filter = 2
+texture = ExtResource("1_8mgkg")

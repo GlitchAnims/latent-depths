@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://cleibq30bwinv"]
+
+[ext_resource type="StyleBox" uid="uid://oejd5bhb71jt" path="res://styles/increaseshine.tres" id="1_dkq6v"]
+[ext_resource type="Script" uid="uid://jkjpi48sapc8" path="res://scenes/HUD/CardShineSweep.gd" id="2_6ue57"]
+[ext_resource type="AnimationLibrary" uid="uid://dde4sivnsvy51" path="res://anims/LIB_CardShineSweep.res" id="4_c8ul8"]
+
+[sub_resource type="Animation" id="Animation_6ue57"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:offset_transform_scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:self_modulate:a")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vjsmw"]
+_data = {
+&"RESET": SubResource("Animation_6ue57")
+}
+
+[node name="CardShineSweep" type="Panel" unique_id=991224583]
+offset_right = 30.0
+offset_bottom = 150.0
+offset_transform_enabled = true
+offset_transform_pivot_ratio = Vector2(0.5, 1)
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("1_dkq6v")
+script = ExtResource("2_6ue57")
+
+[node name="Anim" type="AnimationPlayer" parent="." unique_id=1824269821]
+libraries/ = SubResource("AnimationLibrary_vjsmw")
+libraries/LIB_CardShineSweep = ExtResource("4_c8ul8")

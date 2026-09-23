@@ -1,0 +1,50 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://eitjhismfum"]
+
+[ext_resource type="Texture2D" uid="uid://uub5srus6win" path="res://sprites/UnitSprites/Firefist/skill1_3.png" id="1_upm31"]
+[ext_resource type="Texture2D" uid="uid://c42da16s72jcu" path="res://sprites/UnitSprites/Firefist/idle.png" id="2_cqvrd"]
+[ext_resource type="Texture2D" uid="uid://ckhqin0fx1rl5" path="res://sprites/UnitSprites/Firefist/dmg.png" id="3_81guk"]
+[ext_resource type="Texture2D" uid="uid://3iat4013dkk2" path="res://sprites/UnitSprites/Firefist/gud.png" id="4_f48mp"]
+[ext_resource type="Texture2D" uid="uid://q7bk3dgav7i4" path="res://sprites/UnitSprites/Firefist/move.png" id="5_uru6r"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_upm31")
+}],
+"loop": 1,
+"name": &"atk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_cqvrd")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_81guk")
+}],
+"loop": 1,
+"name": &"dmg",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_f48mp")
+}],
+"loop": 1,
+"name": &"guard",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_uru6r")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 5.0
+}]

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BufConfig" format=3 uid="uid://ojlw7ilgqem6"]
+
+[ext_resource type="Script" uid="uid://dg68sqmeghnaq" path="res://scripts/Configs/BufConfig.gd" id="1_pgjc2"]
+
+[resource]
+script = ExtResource("1_pgjc2")
+identifier = &"og_shin"
+buf_name = &"BUF_SHIN"
+buf_desc = &"BUF_DESC_SHIN"
+metadata/_custom_type_script = "uid://dg68sqmeghnaq"
