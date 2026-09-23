@@ -50,11 +50,15 @@ func _physics_process(delta: float) -> void:
 	
 	for i in sec_mark_count:
 		var marker: TimelineMarker_Seconds = secondmarker_list[i]
-		marker.visible = i < sec_sect_count
-		marker.IDLabel.text = String.num(0.5 * i, 1) + "s"
-		var timeline_mult: float = float(time_per_second*0.5*i) / timeline_limit
-		var timeline_pos: float = timeline_mult * (line_end.x-line_start.x)
-		marker.position = line_end - Vector2(timeline_pos,0)
+		@warning_ignore("narrowing_conversion")
+		var marker_time: int = time_per_second*i*0.5
+		var marker_visible: bool = marker_time < timeline_limit - (time_per_second*0.1)
+		marker.visible = marker_visible
+		if marker_visible:
+			marker.IDLabel.text = String.num(0.5 * i, 1) + "s"
+			var timeline_mult: float = float(marker_time) / timeline_limit
+			var timeline_pos: float = timeline_mult * (line_end.x-line_start.x)
+			marker.position = line_end - Vector2(timeline_pos,0)
 	
 	var unit_list: Array[Unit] = GameData.unit_dict.values() as Array[Unit]
 	var unit_count: int = unit_list.size()
