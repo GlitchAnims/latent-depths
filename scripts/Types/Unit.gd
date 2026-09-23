@@ -38,6 +38,9 @@ func GetSumDowntime() -> int:
 	var downtime: int = GetSumCooloff()
 	return total+delay+downtime
 
+func GetSumSpeed() -> int:
+	return 0
+
 @export_storage var light_max: int = 10
 @export_storage var light: int = 5
 ## Auto-called by [method Unit.Server_SetupForSpawn]

@@ -56,23 +56,62 @@ func _physics_process(delta: float) -> void:
 	
 	var unit_list: Array[Unit] = GameData.unit_list_temp
 	
-	var time_pass: int = floori(BattleTimeline.time_per_second * delta)
-	var lowest_downtime: int = time_pass
-	for unit: Unit in unit_list:
-		var downtime: int = unit.GetSumDowntime()
-		if downtime < lowest_downtime:
-			lowest_downtime = downtime
-	
-	time_pass = lowest_downtime
+	var has_actor: bool = is_instance_valid(GameData.current_actor)
+	var time_pass: int = 0
+	if not has_actor:
+		time_pass = floori(BattleTimeline.time_per_second * delta)
+		time_pass = maxi(time_pass, 10)
+		time_pass = GetShortestActTime(time_pass)
 	
 	if time_pass > 0:
 		for unit: Unit in unit_list:
 			var skill: SkillBase = unit.skill_selected
 			if is_instance_valid(skill):
-				TickDownSkill(skill)
+				TickDownSkill(skill, time_pass)
+			else:
+				unit.overhead_downtime -= time_pass
+	else:
+		if not has_actor:
+			var actors: Array[Unit] = []
+			for unit: Unit in unit_list:
+				var downtime: int = unit.GetSumDowntime()
+				if downtime < 1: actors.push_back(unit)
+			
+			actors.sort_custom(func(a: Unit, b: Unit) -> bool:
+				var a_speed: int = a.GetSumSpeed()
+				var b_speed: int = b.GetSumSpeed()
+				if a_speed == b_speed:
+					return a.unitID < b.unitID # Tiebreaker
+				return a_speed < b_speed
+			)
+			
+			var selected_actor: Unit = actors[0]
+			GameData.current_actor = selected_actor
+			has_actor = true
+		
+		if Input.is_action_just_pressed(&"ACT_Space"):
+			GameData.current_actor.overhead_downtime += randi_range(5000,60000)
+			GameData.current_actor = null
+			BattleTimeline.SetTimelineLimit()
 
-func TickDownSkill(skill: SkillBase) -> void:
+func ProcessTurn() -> void:
 	pass
+
+func GetShortestActTime(lowest: int) -> int:
+	for unit: Unit in GameData.unit_list_temp:
+		var skill: SkillBase = unit.skill_selected
+		if is_instance_valid(skill):
+			var instruction: SkillInstruction = skill.instruction_list[0]
+			if instruction.timer < lowest: lowest = instruction.timer
+		else:
+			var downtime: int = unit.GetSumDowntime()
+			if downtime < lowest: lowest = downtime
+	
+	return lowest
+
+func TickDownSkill(skill: SkillBase, time_pass: int) -> void:
+	var instruction: SkillInstruction = skill.instruction_list[0]
+	instruction.timer -= time_pass
 
 func _process(delta: float) -> void:
 	

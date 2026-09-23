@@ -4,6 +4,7 @@ class_name Encompass extends PanelContainer
 
 func _ready() -> void:
 	ClientData.viewportSize_changed.connect(UpdateSize)
+	GameData.sig_actor_changed.connect(UpdateForActor)
 	UpdateSize()
 
 func UpdateSize() -> void:
@@ -13,6 +14,9 @@ func UpdateSize() -> void:
 	var itemscale: Vector2 = Vector2(1,1) * minf(ClientData.viewportScale, 1.0)
 	SkillRack_Node.scale = itemscale * 0.4
 
+func UpdateForActor() -> void:
+	var current_actor: Unit = GameData.current_actor
+	SkillRack_Node.UpdateSkillRack(current_actor)
 
 func _ProcessHudBar(value: int, lerpspeed: float, hudbar: HudBar, mode: int) -> void:
 	if value != hudbar.goal:

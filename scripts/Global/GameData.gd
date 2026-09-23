@@ -63,7 +63,12 @@ var unit_list_temp: Array[Unit] = []
 func _physics_process(_delta: float) -> void:
 	unit_list_temp = unit_dict.values()
 
-var currentActionableUnit:Unit = null
+signal sig_actor_changed
+var current_actor: Unit = null:
+	set(value):
+		current_actor = value
+		sig_actor_changed.emit()
+
 var pilotDict: Dictionary[int, Pilot] = {}
 var playerDict: Dictionary[int, Player] = {}
 

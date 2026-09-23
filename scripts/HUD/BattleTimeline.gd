@@ -4,21 +4,57 @@ class_name BattleTimeline extends HBoxContainer
 @onready var RulerLine_Node: Line2D = $"Ruler/RulerLine"
 
 const time_per_second: int = 10000
-const timeline_limit: int = time_per_second * 5
+static var timeline_limit: int = time_per_second * 3
 
 const timeline_marker_scene: PackedScene = preload("res://scenes/HUD/timeline_marker.tscn")
+const timeline_seconds_scene: PackedScene = preload("res://scenes/HUD/timeline_marker_seconds.tscn")
 
 var myturn_list: Array[TimelineMarker] = []
+var secondmarker_list: Array[TimelineMarker_Seconds] = []
 
-func _physics_process(delta: float) -> void:
-	var ruler_end: Vector2 = Ruler_Node.get_end()
-	var ruler_middle: Vector2 = ruler_end / 2
+static func SetTimelineLimit() -> void:
+	var longest: int = time_per_second * 4
+	for unit: Unit in GameData.unit_list_temp:
+		var downtime: int = unit.GetSumDowntime()
+		if downtime > longest: longest = downtime
 	
-	var line_start: Vector2 = Vector2(ruler_end.x*0.04,ruler_middle.y)
-	var line_end: Vector2 = Vector2(ruler_end.x*0.96,ruler_middle.y)
+	@warning_ignore("narrowing_conversion")
+	timeline_limit = longest
+
+@warning_ignore("unused_parameter")
+func _physics_process(delta: float) -> void:
+	SetTimelineLimit()
+	#TimeLabel.text = String.num(float(timeline_limit) / time_per_second, 1) + "s"
+	
+	var sec_mark_count: int = secondmarker_list.size()
+	@warning_ignore("integer_division")
+	var sec_sect_count: int = timeline_limit*2/time_per_second
+	
+	if sec_mark_count < sec_sect_count:
+		for i in sec_sect_count-sec_mark_count:
+			var new_node: TimelineMarker_Seconds = timeline_seconds_scene.instantiate()
+			RulerLine_Node.add_child(new_node)
+			secondmarker_list.push_back(new_node)
+		sec_mark_count = secondmarker_list.size()
+	
+	var ruler_begin: Vector2 = Ruler_Node.get_begin()
+	var ruler_end: Vector2 = Ruler_Node.get_end()
+	var ruler_vec: Vector2 = ruler_end - ruler_begin
+	var ruler_middle: Vector2 = ruler_vec / 2
+	
+	var line_start: Vector2 = Vector2(ruler_vec.x*0.04,ruler_middle.y)
+	var line_end: Vector2 = Vector2(ruler_vec.x*0.96,ruler_middle.y)
 	
 	RulerLine_Node.set_point_position(0,line_start)
 	RulerLine_Node.set_point_position(1,line_end)
+	
+	for i in sec_mark_count:
+		var marker: TimelineMarker_Seconds = secondmarker_list[i]
+		marker.visible = i < sec_sect_count
+		marker.IDLabel.text = String.num(0.5 * i, 1) + "s"
+		var timeline_mult: float = float(time_per_second*0.5*i) / timeline_limit
+		var timeline_pos: float = timeline_mult * (line_end.x-line_start.x)
+		marker.position = line_end - Vector2(timeline_pos,0)
 	
 	var unit_list: Array[Unit] = GameData.unit_dict.values() as Array[Unit]
 	var unit_count: int = unit_list.size()
@@ -55,6 +91,5 @@ func RefreshAllMarkers(unit_list: Array[Unit]) -> void:
 			var marker: TimelineMarker = timeline_marker_scene.instantiate()
 			marker.unit_ref = unit
 			myturn_list.push_back(marker)
-			Ruler_Node.add_child(marker)
-			unit.overhead_downtime = randi_range(10,30000)
+			RulerLine_Node.add_child(marker)
 			marker.IDLabel.text = str(unit.unitID)
