@@ -28,6 +28,10 @@ offset_bottom = 128.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_nh5wf")
 
+[node name="Button" type="Button" parent="PanelContainer" unique_id=1885478319]
+layout_mode = 2
+focus_mode = 0
+
 [node name="VBox1" type="VBoxContainer" parent="." unique_id=1639515702]
 layout_mode = 0
 offset_left = 128.0
@@ -41,3 +45,6 @@ offset_right = 128.0
 offset_bottom = 128.0
 mouse_filter = 2
 texture = ExtResource("1_8mgkg")
+
+[connection signal="mouse_entered" from="PanelContainer/Button" to="." method="_MouseEnter_Button"]
+[connection signal="mouse_exited" from="PanelContainer/Button" to="." method="_MouseExit_Button"]

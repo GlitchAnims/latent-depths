@@ -11,6 +11,7 @@ const timeline_seconds_scene: PackedScene = preload("res://scenes/HUD/timeline_m
 
 var myturn_list: Array[TimelineMarker] = []
 var secondmarker_list: Array[TimelineMarker_Seconds] = []
+var skillstruction_line_list: Array[Line2D] = []
 
 static func SetTimelineLimit() -> void:
 	var longest: int = time_per_second * 4
@@ -20,6 +21,16 @@ static func SetTimelineLimit() -> void:
 	
 	@warning_ignore("narrowing_conversion")
 	timeline_limit = longest
+
+func _ready() -> void:
+	for i in 6:
+		var newnode: Line2D = Line2D.new()
+		newnode.visible = false
+		newnode.width = 3.0
+		newnode.add_point(Vector2.ZERO)
+		newnode.add_point(Vector2(1,0))
+		RulerLine_Node.add_child(newnode)
+		skillstruction_line_list.push_back(newnode)
 
 @warning_ignore("unused_parameter")
 func _physics_process(delta: float) -> void:
@@ -74,6 +85,37 @@ func _physics_process(delta: float) -> void:
 		var timeline_mult: float = float(downtime) / timeline_limit
 		var timeline_pos: float = timeline_mult * (line_end.x-line_start.x)
 		marker.position = line_end - Vector2(timeline_pos,0)
+	
+	var ins_list: Array[SkillInstruction] = ClientData.temp_skillstruction_list
+	var ins_count: int = ins_list.size()
+	for i in skillstruction_line_list.size():
+		var line: Line2D = skillstruction_line_list[i]
+		line.visible = i < ins_count
+	
+	var last_ins_time: int = 0
+	for i in ins_count:
+		var line: Line2D = skillstruction_line_list[i]
+		var ins: SkillInstruction = ins_list[i]
+		var ins_time: int = last_ins_time + ins.timer
+		var ins_color: Color = Color.CHOCOLATE
+		
+		var ins_start_mult: float = float(last_ins_time) / timeline_limit
+		var ins_start_pos: float = ins_start_mult * (line_end.x-line_start.x)
+		
+		var ins_end_mult: float = float(ins_time) / timeline_limit
+		var ins_end_pos: float = ins_end_mult * (line_end.x-line_start.x)
+		
+		if ins.ins_type == SkillInstruction.INS_TYPE.down and i == ins_count-1:
+			if i == ins_count-1: ins_color = Color.RED
+			line.set_point_position(0,line_end - Vector2(ins_start_pos,0))
+			line.set_point_position(0,line_end - Vector2(ins_end_pos,0))
+		elif ins.ins_type == SkillInstruction.INS_TYPE.ability:
+			ins_color = Color.VIOLET
+			line.set_point_position(0,line_end - Vector2(ins_start_pos,0))
+			line.set_point_position(0,line_end - Vector2(ins_start_pos,2))
+		
+		line.default_color = ins_color
+		last_ins_time = ins_time
 
 func RefreshAllMarkers(unit_list: Array[Unit]) -> void:
 	var marker_count: int = myturn_list.size()

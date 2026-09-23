@@ -1,11 +1,17 @@
 class_name Encompass extends PanelContainer
 
 @export var SkillRack_Node: SkillRack = null
+#@export var MouseShite_Node: Node2D = null
+@export var MouseTooltip_Node: MouseTooltip = null
 
 func _ready() -> void:
 	ClientData.viewportSize_changed.connect(UpdateSize)
 	GameData.sig_actor_changed.connect(UpdateForActor)
 	UpdateSize()
+
+@warning_ignore("unused_parameter")
+func _process(delta: float) -> void:
+	if MouseTooltip_Node.visible: MouseTooltip_Node.position = ClientData.mousePos
 
 func UpdateSize() -> void:
 	set_begin(Vector2.ZERO)
@@ -13,6 +19,16 @@ func UpdateSize() -> void:
 	
 	var itemscale: Vector2 = Vector2(1,1) * minf(ClientData.viewportScale, 1.0)
 	SkillRack_Node.scale = itemscale * 0.4
+	MouseTooltip_Node.scale = itemscale
+
+func ClearTooltip() -> void:
+	MouseTooltip_Node.visible = false
+
+func MakeTooltip() -> void:
+	MouseTooltip_Node.visible = true
+	MouseTooltip_Node.position = ClientData.mousePos
+	
+	
 
 func UpdateForActor() -> void:
 	var current_actor: Unit = GameData.current_actor

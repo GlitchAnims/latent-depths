@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://deis8xe157xuk"]
+
+[ext_resource type="Script" uid="uid://cux10e5ucshxe" path="res://scripts/HUD/MouseTooltip.gd" id="1_x87fy"]
+
+[node name="MouseTooltip" type="Control" unique_id=404117395]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_x87fy")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2024715052]
+layout_mode = 0
+offset_right = 117.0
+offset_bottom = 178.0
+mouse_filter = 2
+color = Color(0.44346637, 0.44346634, 0.44346637, 1)

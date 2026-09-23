@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource("1_bt2nj")
+identifier = &"og_basemove"
 metadata/_custom_type_script = "uid://derk5pfmfhjf6"

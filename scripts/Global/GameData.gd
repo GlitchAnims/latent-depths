@@ -2,6 +2,7 @@ extends Node
 
 var Stronghold_Node: Stronghold = null
 var Gamespace_Node: Gamespace = null
+var Encompass_Node: Encompass = null
 var HandHUD_Node: HandHUD = null
 var ConnectMenuNode: ConnectMenu = null
 
@@ -23,6 +24,8 @@ var tibiadict_cards: Dictionary[StringName, CardTibia] = {}
 var configlist_bufs: Array[BufConfig] = []
 var tibialist_bufs: Array[BufTibia] = []
 var tibiadict_bufs: Dictionary[StringName, BufTibia] = {}
+
+var skillConfig_dict: Dictionary[StringName, SkillConfig] = {}
 
 func ActualizeConfigLists(extracards: Array[CardConfig]) -> void:
 	configlist_cards.clear()

@@ -2,8 +2,11 @@
 
 [ext_resource type="Script" uid="uid://dgh0cec8wivo" path="res://scripts/Stronghold.gd" id="1_mw8q0"]
 [ext_resource type="Script" uid="uid://bl4m2n6i335nw" path="res://scripts/Encompass.gd" id="2_hber8"]
+[ext_resource type="Script" uid="uid://derk5pfmfhjf6" path="res://scripts/Configs/SkillConfig.gd" id="2_umgfj"]
 [ext_resource type="Script" uid="uid://d2t127lkc868q" path="res://scripts/Gamespace.gd" id="3_eav5i"]
+[ext_resource type="Resource" uid="uid://b0gqw2sl3hcmn" path="res://configs/SkillConfigs/BaseSkills/BaseMove.tres" id="3_kj1sv"]
 [ext_resource type="Script" uid="uid://js26ljisydam" path="res://scripts/HUD/PlayerSpawner.gd" id="4_evvgm"]
+[ext_resource type="PackedScene" uid="uid://deis8xe157xuk" path="res://scenes/HUD/mouse_tooltip.tscn" id="5_cf4id"]
 [ext_resource type="Script" uid="uid://b0v6wf0jodgkf" path="res://scripts/HUD/SkillRack.gd" id="6_cf4id"]
 [ext_resource type="PackedScene" uid="uid://bhpd1ue316s2l" path="res://scenes/HUD/skill_button.tscn" id="6_i5rp2"]
 [ext_resource type="Script" uid="uid://cxv6jr8qhky3l" path="res://scripts/HUD/BattleTimeline.gd" id="7_v57l1"]
@@ -17,6 +20,7 @@ content_margin_bottom = 10.0
 
 [node name="Stronghold" type="Node" unique_id=495344873]
 script = ExtResource("1_mw8q0")
+og_skillconfigs = Array[ExtResource("2_umgfj")]([ExtResource("3_kj1sv")])
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="." unique_id=874524148]
 _spawnable_scenes = PackedStringArray("uid://7u5rpxdcfusb")
@@ -41,14 +45,19 @@ spawn_path = NodePath("../Unitry")
 transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, 0, 5.616629, 6.99713)
 current = true
 
-[node name="Encompass" type="PanelContainer" parent="." unique_id=1532195454 node_paths=PackedStringArray("SkillRack_Node")]
+[node name="Encompass" type="PanelContainer" parent="." unique_id=1532195454 node_paths=PackedStringArray("SkillRack_Node", "MouseTooltip_Node")]
 offset_right = 717.0
 offset_bottom = 480.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_j02l2")
 script = ExtResource("2_hber8")
 SkillRack_Node = NodePath("VBox1/HBox1/VBox1/Skills/SkillRack")
+MouseTooltip_Node = NodePath("MouseShite/MouseTooltip")
 metadata/_edit_lock_ = true
+
+[node name="MouseShite" type="Node2D" parent="Encompass" unique_id=1435703666]
+
+[node name="MouseTooltip" parent="Encompass/MouseShite" unique_id=404117395 instance=ExtResource("5_cf4id")]
 
 [node name="VBox1" type="VBoxContainer" parent="Encompass" unique_id=437500129]
 layout_mode = 2
