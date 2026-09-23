@@ -7,3 +7,10 @@ var resource_cost: int = 0
 
 func IsHexSelectable(newHex:Hex) -> bool:
 	return true
+
+func GetSumDelay() -> int:
+	return 0
+func GetSumCooloff() -> int:
+	return 0
+func GetSumDowntime() -> int:
+	return 0

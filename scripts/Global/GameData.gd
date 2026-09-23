@@ -55,7 +55,14 @@ signal sig_updatehandvisual
 
 #var bufDict: Dictionary[int, Buf] = {}
 
-var unitDict: Dictionary[int, Unit] = {}
+var unit_dict: Dictionary[int, Unit] = {}
+## This is set every tick automatically. Do not set this manually.[br]
+## It is merely a shorthand so you don't have to do Dictionary.values() every time.
+var unit_list_temp: Array[Unit] = []
+
+func _physics_process(_delta: float) -> void:
+	unit_list_temp = unit_dict.values()
+
 var currentActionableUnit:Unit = null
 var pilotDict: Dictionary[int, Pilot] = {}
 var playerDict: Dictionary[int, Player] = {}

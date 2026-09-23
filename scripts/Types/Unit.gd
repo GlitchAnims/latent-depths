@@ -46,13 +46,13 @@ func SetupLight(max_new: int = 10) -> void:
 	light = floor(float(max_new) / 2)
 
 func _exit_tree() -> void:
-	GameData.unitDict.erase(unitID)
+	GameData.unit_dict.erase(unitID)
 func free() -> void:
 	# do things
 	super()
 
 func _ready() -> void:
-	GameData.unitDict[unitID] = self
+	GameData.unit_dict[unitID] = self
 	_ready_unit()
 	var pos2: Vector2 = HexMath.hex_to_pixel(pos_hex)
 	position.x = pos2.x

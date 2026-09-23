@@ -38,7 +38,7 @@ func Auth_Rem_SendSpecialHexData(hexpack: PackedByteArray) -> void:
 	var special_hex_list: Array[Hex] = bytes_to_var_with_objects(hexpack)
 	Map.ModifyHexMapWithSpecialHex(special_hex_list)
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if not GameData.started: return
 	
 	var mousePos: Vector2 = ClientData.mousePos
@@ -53,6 +53,26 @@ func _physics_process(_delta: float) -> void:
 		var worldhex: WorldHex = worldPick.LogicNode as WorldHex
 		worldhex.timer = 0.2
 		#var worldPick.LogicNode
+	
+	var unit_list: Array[Unit] = GameData.unit_list_temp
+	
+	var time_pass: int = floori(BattleTimeline.time_per_second * delta)
+	var lowest_downtime: int = time_pass
+	for unit: Unit in unit_list:
+		var downtime: int = unit.GetSumDowntime()
+		if downtime < lowest_downtime:
+			lowest_downtime = downtime
+	
+	time_pass = lowest_downtime
+	
+	if time_pass > 0:
+		for unit: Unit in unit_list:
+			var skill: SkillBase = unit.skill_selected
+			if is_instance_valid(skill):
+				TickDownSkill(skill)
+
+func TickDownSkill(skill: SkillBase) -> void:
+	pass
 
 func _process(delta: float) -> void:
 	

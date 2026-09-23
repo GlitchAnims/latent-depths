@@ -11,8 +11,6 @@ const timeline_marker_scene: PackedScene = preload("res://scenes/HUD/timeline_ma
 var myturn_list: Array[TimelineMarker] = []
 
 func _physics_process(delta: float) -> void:
-	var time_pass: int = time_per_second * delta
-	
 	var ruler_end: Vector2 = Ruler_Node.get_end()
 	var ruler_middle: Vector2 = ruler_end / 2
 	
@@ -22,7 +20,7 @@ func _physics_process(delta: float) -> void:
 	RulerLine_Node.set_point_position(0,line_start)
 	RulerLine_Node.set_point_position(1,line_end)
 	
-	var unit_list: Array[Unit] = GameData.unitDict.values() as Array[Unit]
+	var unit_list: Array[Unit] = GameData.unit_dict.values() as Array[Unit]
 	var unit_count: int = unit_list.size()
 	var marker_count: int = myturn_list.size()
 	
