@@ -107,18 +107,19 @@ func _physics_process(delta: float) -> void:
 				var downtime: int = unit.GetSumDowntime()
 				if downtime < 1: actors.push_back(unit)
 			
-			actors.sort_custom(func(a: Unit, b: Unit) -> bool:
-				var a_speed: int = a.GetSumSpeed()
-				var b_speed: int = b.GetSumSpeed()
-				if a_speed == b_speed:
-					return a.unitID < b.unitID # Tiebreaker
-				return a_speed < b_speed
-			)
-			
-			var selected_actor: Unit = actors[0]
-			GameData.current_actor = selected_actor
-			Auth_Rem_ToClient_ItsThisGuysTurn.rpc(selected_actor.unitID)
-			has_actor = true
+			if not actors.is_empty():
+				actors.sort_custom(func(a: Unit, b: Unit) -> bool:
+					var a_speed: int = a.GetSumSpeed()
+					var b_speed: int = b.GetSumSpeed()
+					if a_speed == b_speed:
+						return a.unitID < b.unitID # Tiebreaker
+					return a_speed < b_speed
+				)
+				
+				var selected_actor: Unit = actors[0]
+				GameData.current_actor = selected_actor
+				Auth_Rem_ToClient_ItsThisGuysTurn.rpc(selected_actor.unitID)
+				has_actor = true
 		
 		if has_actor:
 			var actor: Unit = GameData.current_actor
@@ -132,10 +133,20 @@ func _physics_process(delta: float) -> void:
 				
 				if is_instance_valid(worldhex_hovered):
 					var hex_to: Hex = worldhex_hovered.hex_ref
-					#var coord_from: Vector2i = hex_from.coord
-					#var coord_to: Vector2i = hex_from.coord
 					var canchoose: bool = skill.IsHexSelectable(hex_from, hex_to)
 					
+					if canchoose: ClientData.temp_skillstruction_list = skill.FabricateSkillstructions(hex_from,hex_to)
+					else: ClientData.temp_skillstruction_list = []
+					
+					if ClientData.press_m1 and canchoose:
+						skill.instruction_list = ClientData.temp_skillstruction_list
+						actor.skill_selected = skill
+						actor.pos_hex = hex_to.coord
+						actor.SnapPositionToHexPos()
+						ClientData.temp_skillstruction_list = []
+						ClientData.temp_skill = null
+						GameData.current_actor = null
+						Auth_Rem_ToClient_ItsThisGuysTurn.rpc(-1)
 					
 			
 			#GameData.current_actor = null

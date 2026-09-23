@@ -26,7 +26,7 @@ func _ready() -> void:
 	for i in 6:
 		var newnode: Line2D = Line2D.new()
 		newnode.visible = false
-		newnode.width = 3.0
+		newnode.width = 5.0
 		newnode.add_point(Vector2.ZERO)
 		newnode.add_point(Vector2(1,0))
 		RulerLine_Node.add_child(newnode)
@@ -105,14 +105,14 @@ func _physics_process(delta: float) -> void:
 		var ins_end_mult: float = float(ins_time) / timeline_limit
 		var ins_end_pos: float = ins_end_mult * (line_end.x-line_start.x)
 		
-		if ins.ins_type == SkillInstruction.INS_TYPE.down and i == ins_count-1:
+		if ins.ins_type == SkillInstruction.INS_TYPE.down:
 			if i == ins_count-1: ins_color = Color.RED
 			line.set_point_position(0,line_end - Vector2(ins_start_pos,0))
-			line.set_point_position(0,line_end - Vector2(ins_end_pos,0))
+			line.set_point_position(1,line_end - Vector2(ins_end_pos,0))
 		elif ins.ins_type == SkillInstruction.INS_TYPE.ability:
-			ins_color = Color.VIOLET
-			line.set_point_position(0,line_end - Vector2(ins_start_pos,0))
-			line.set_point_position(0,line_end - Vector2(ins_start_pos,2))
+			ins_color = Color.BLUE
+			line.set_point_position(0,line_end - Vector2(ins_start_pos,10))
+			line.set_point_position(1,line_end - Vector2(ins_start_pos,-10))
 		
 		line.default_color = ins_color
 		last_ins_time = ins_time

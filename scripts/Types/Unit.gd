@@ -45,6 +45,7 @@ func GetSumDowntime() -> int:
 	var total: int = overhead_downtime
 	var delay: int = GetSumDelay()
 	var downtime: int = GetSumCooloff()
+	if is_instance_valid(skill_selected): total += skill_selected.GetSumDowntime()
 	return total+delay+downtime
 
 func GetSumSpeed() -> int:

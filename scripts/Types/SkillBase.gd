@@ -9,10 +9,14 @@ var resource_cost: int = 0
 
 func IsHexSelectable(_hex_from: Hex, _hex_to: Hex) -> bool: return true
 func CanBeUsed() -> bool: return true
+func FabricateSkillstructions(_hex_from: Hex, _hex_to: Hex) -> Array[SkillInstruction]: return []
 
 func GetSumDelay() -> int:
 	return 0
 func GetSumCooloff() -> int:
 	return 0
 func GetSumDowntime() -> int:
-	return 0
+	var total: int = 0
+	for ins: SkillInstruction in instruction_list:
+		total += ins.timer
+	return total
