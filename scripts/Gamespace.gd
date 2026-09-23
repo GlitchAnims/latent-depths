@@ -53,6 +53,12 @@ func PopulateWorldHexes() -> void:
 var worldhex_list: Array[WorldHex] = []
 var worldhex_hovered: WorldHex = null
 
+@rpc("authority", "call_remote", "reliable")
+func Auth_Rem_ToClient_ItsThisGuysTurn(unit_id: int) -> void:
+	if GameData.isServer: return
+	var unit: Unit = GameData.unit_dict.get(unit_id,null)
+	GameData.current_actor = unit
+
 func _physics_process(delta: float) -> void:
 	if not GameData.started: return
 	
@@ -93,7 +99,7 @@ func _physics_process(delta: float) -> void:
 				TickDownSkill(skill, time_pass)
 			else:
 				unit.overhead_downtime -= time_pass
-	else:
+	elif GameData.isServer:
 		if not has_actor:
 			var actors: Array[Unit] = []
 			for unit: Unit in unit_list:
@@ -110,12 +116,14 @@ func _physics_process(delta: float) -> void:
 			
 			var selected_actor: Unit = actors[0]
 			GameData.current_actor = selected_actor
+			Auth_Rem_ToClient_ItsThisGuysTurn.rpc(selected_actor.unitID)
 			has_actor = true
 		
 		if Input.is_action_just_pressed(&"ACT_Space"):
 			GameData.current_actor.overhead_downtime += randi_range(5000,60000)
 			GameData.current_actor = null
-			BattleTimeline.SetTimelineLimit()
+			Auth_Rem_ToClient_ItsThisGuysTurn.rpc(-1)
+			
 
 func ProcessTurn() -> void:
 	pass

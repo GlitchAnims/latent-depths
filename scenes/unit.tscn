@@ -30,6 +30,9 @@ properties/7/replication_mode = 0
 properties/8/path = NodePath(".:pos_hex")
 properties/8/spawn = true
 properties/8/replication_mode = 0
+properties/9/path = NodePath(".:overhead_downtime")
+properties/9/spawn = true
+properties/9/replication_mode = 0
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_vesgh"]
 radius = 0.3
