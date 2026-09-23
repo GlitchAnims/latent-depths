@@ -46,6 +46,7 @@ func PopulateWorldHexes() -> void:
 		if hex.tile_flags & Hex.TILE_FLAGS.WALL: continue
 		var newnode: WorldHex = ClientData.worldhex_scene.instantiate()
 		var pos: Vector2 = HexMath.hex_to_pixel(hex.coord)
+		newnode.hex_ref = hex
 		newnode.position = Vector3(pos.x,0,pos.y)
 		add_child(newnode)
 		worldhex_list.push_back(newnode)
@@ -119,10 +120,26 @@ func _physics_process(delta: float) -> void:
 			Auth_Rem_ToClient_ItsThisGuysTurn.rpc(selected_actor.unitID)
 			has_actor = true
 		
-		if Input.is_action_just_pressed(&"ACT_Space"):
-			GameData.current_actor.overhead_downtime += randi_range(5000,60000)
-			GameData.current_actor = null
-			Auth_Rem_ToClient_ItsThisGuysTurn.rpc(-1)
+		if has_actor:
+			var actor: Unit = GameData.current_actor
+			var skill: SkillBase = ClientData.temp_skill
+			if is_instance_valid(skill):
+				var hex_from: Hex = GameData.hex_dict[actor.pos_hex]
+				
+				for obj: WorldHex in worldhex_list:
+					if skill.IsHexSelectable(hex_from, obj.hex_ref): obj.SetHexColor(Color.GREEN)
+					else: obj.SetHexColor(Color.RED)
+				
+				if is_instance_valid(worldhex_hovered):
+					var hex_to: Hex = worldhex_hovered.hex_ref
+					#var coord_from: Vector2i = hex_from.coord
+					#var coord_to: Vector2i = hex_from.coord
+					var canchoose: bool = skill.IsHexSelectable(hex_from, hex_to)
+					
+					
+			
+			#GameData.current_actor = null
+			#Auth_Rem_ToClient_ItsThisGuysTurn.rpc(-1)
 			
 
 func ProcessTurn() -> void:

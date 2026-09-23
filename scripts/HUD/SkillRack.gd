@@ -11,6 +11,7 @@ func _PopulateSkillButtons(unit: Unit) -> void:
 		var config: SkillConfig = skill.skillConfig_ref
 		var skillButton: SkillButton = skillbutton_scene.instantiate()
 		skillButton.skillRack_ref = self
+		skillButton.skill_ref = skill
 		add_child(skillButton)
 		skillButton.SetIcon(config.icon)
 		

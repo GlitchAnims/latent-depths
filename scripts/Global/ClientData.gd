@@ -100,4 +100,5 @@ func _unhandled_input(event):
 	if event is InputEventMouseMotion:
 		mouseEvent_relVec = event.relative
 
+var temp_skill: SkillBase = null
 var temp_skillstruction_list: Array[SkillInstruction] = []

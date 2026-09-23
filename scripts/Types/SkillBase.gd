@@ -7,7 +7,7 @@ var loudness_value: int = 0
 var instruction_list: Array[SkillInstruction] = []
 var resource_cost: int = 0
 
-func IsHexSelectable(_fromHex: Hex, _toHex: Hex) -> bool: return true
+func IsHexSelectable(_hex_from: Hex, _hex_to: Hex) -> bool: return true
 func CanBeUsed() -> bool: return true
 
 func GetSumDelay() -> int:

@@ -19,6 +19,12 @@ static func hex_to_pixel(hex: Vector2i) -> Vector2:
 	y = y * hex_size
 	return Vector2(x, y)
 
+static func CoordVecLength(coord_vec: Vector2i) -> int:
+	var dist: int = (abs(coord_vec.x)
+	+ abs(coord_vec.x + coord_vec.y)
+	+ abs(coord_vec.y)) / 2
+	return dist
+
 const hex_angle_rot: float = PI / 3
 
 const hex_size: float = 0.5
