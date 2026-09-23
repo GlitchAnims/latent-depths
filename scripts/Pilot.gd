@@ -3,9 +3,6 @@ class_name Pilot extends Node
 @export var pilotID: int = -1
 var unit_ref: Unit = null
 
-@export var mouse_worldPos: Vector3 = Vector3.ZERO
-@export var intent: int = 0
-
 var interval: float = 0
 var fulltime: bool = false
 

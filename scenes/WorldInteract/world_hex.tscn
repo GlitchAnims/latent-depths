@@ -1,9 +1,14 @@
 [gd_scene format=3 uid="uid://dk5mokt2rf1j2"]
 
 [ext_resource type="Script" uid="uid://t6ihsvf6jls6" path="res://scripts/WorldInteract/WorldHex.gd" id="1_hdsv8"]
-[ext_resource type="Material" uid="uid://b2al0xtjcfdn2" path="res://materials/Hex/standard_red.tres" id="2_5oit4"]
 [ext_resource type="ArrayMesh" uid="uid://dvrov6dd2mgma" path="res://meshes/Hexagonal/hexmesh.tres" id="3_40m0n"]
+[ext_resource type="Shader" uid="uid://difp80s6et7wc" path="res://shaders/worldhex_fade.gdshader" id="3_ek2cq"]
 [ext_resource type="Script" uid="uid://ds4ygwk08iv3x" path="res://scripts/WorldInteract/WorldPickable.gd" id="4_40m0n"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dsalv"]
+render_priority = 0
+shader = ExtResource("3_ek2cq")
+shader_parameter/custom_color = Color(1, 0, 0, 1)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_vesgh"]
 height = 0.1
@@ -13,8 +18,7 @@ script = ExtResource("1_hdsv8")
 
 [node name="HexModel" type="MeshInstance3D" parent="." unique_id=2057743868]
 transform = Transform3D(1.05, 0, 0, 0, 1.05, 0, 0, 0, 1.05, 0, 0, 0)
-material_override = ExtResource("2_5oit4")
-transparency = 0.71
+material_override = SubResource("ShaderMaterial_dsalv")
 cast_shadow = 0
 mesh = ExtResource("3_40m0n")
 

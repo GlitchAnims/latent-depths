@@ -29,14 +29,18 @@ func InitMultiplayer() -> void:
 	# Can do serialization on dictionary, too... Hmmmmmm
 	#var hexpack: PackedByteArray = var_to_bytes_with_objects(GameData.hex_dict)
 	print(hexpack.size())
-	Auth_Rem_SendSpecialHexData.rpc(hexpack)
+	Auth_Rem_ToClient_SendSpecialHexData.rpc(hexpack)
 	# Multiplayer Synchronizer syncs when this happens. Do everything else before it.
 	add_child(map, true)
 
 @rpc("authority", "call_remote", "reliable")
-func Auth_Rem_SendSpecialHexData(hexpack: PackedByteArray) -> void:
+func Auth_Rem_ToClient_SendSpecialHexData(hexpack: PackedByteArray) -> void:
+	if GameData.isServer: return
 	var special_hex_list: Array[Hex] = bytes_to_var_with_objects(hexpack)
 	Map.ModifyHexMapWithSpecialHex(special_hex_list)
+
+
+
 
 func _physics_process(delta: float) -> void:
 	if not GameData.started: return
