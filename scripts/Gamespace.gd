@@ -12,10 +12,35 @@ func InitMultiplayer() -> void:
 	
 	# Init Map Server Side.
 	var map: Map = basemap_scene.instantiate()
-	var special_hex_list: Array[Hex] = map.GenerateSpecialHexList()
-	Map.ModifyHexMapWithSpecialHex(special_hex_list)
+	var specialhex_list: Array[Hex] = map.GenerateSpecialHexList()
+	Map.ModifyHexMapWithSpecialHex(specialhex_list)
+	Map.specialhex_list = specialhex_list
 	
-	# Clickable hexes map
+	# Serialization Send to Client
+	var hexpack: PackedByteArray = var_to_bytes_with_objects(specialhex_list)
+	# Can do serialization on dictionary, too... Hmmmmmm
+	#var hexpack: PackedByteArray = var_to_bytes_with_objects(GameData.hex_dict)
+	print(hexpack.size())
+	Auth_Rem_ToClient_SendSpecialHexData.rpc(hexpack)
+	# Multiplayer Synchronizer syncs when this happens. Do everything else before it.
+	add_child(map, true)
+
+@rpc("any_peer", "call_remote", "reliable")
+func Rem_ToServer_AskForSpecialHexes() -> void:
+	if not GameData.isServer: return
+	var sender_id: int = multiplayer.get_remote_sender_id()
+	var hexpack: PackedByteArray = var_to_bytes_with_objects(Map.specialhex_list)
+	Auth_Rem_ToClient_SendSpecialHexData.rpc_id(sender_id,hexpack)
+@rpc("authority", "call_remote", "reliable")
+func Auth_Rem_ToClient_SendSpecialHexData(hexpack: PackedByteArray) -> void:
+	if GameData.isServer: return
+	var special_hex_list: Array[Hex] = bytes_to_var_with_objects(hexpack)
+	Map.ModifyHexMapWithSpecialHex(special_hex_list)
+	if worldhex_list.is_empty():
+		PopulateWorldHexes()
+
+## Clickable hexes map
+func PopulateWorldHexes() -> void:
 	var hex_list: Array[Hex] = GameData.hex_dict.values() as Array[Hex]
 	for hex in hex_list:
 		if hex.tile_flags & Hex.TILE_FLAGS.WALL: continue
@@ -24,21 +49,6 @@ func InitMultiplayer() -> void:
 		newnode.position = Vector3(pos.x,0,pos.y)
 		add_child(newnode)
 		worldhex_list.push_back(newnode)
-	
-	# Serialization Send to Client
-	var hexpack: PackedByteArray = var_to_bytes_with_objects(special_hex_list)
-	# Can do serialization on dictionary, too... Hmmmmmm
-	#var hexpack: PackedByteArray = var_to_bytes_with_objects(GameData.hex_dict)
-	print(hexpack.size())
-	Auth_Rem_ToClient_SendSpecialHexData.rpc(hexpack)
-	# Multiplayer Synchronizer syncs when this happens. Do everything else before it.
-	add_child(map, true)
-
-@rpc("authority", "call_remote", "reliable")
-func Auth_Rem_ToClient_SendSpecialHexData(hexpack: PackedByteArray) -> void:
-	if GameData.isServer: return
-	var special_hex_list: Array[Hex] = bytes_to_var_with_objects(hexpack)
-	Map.ModifyHexMapWithSpecialHex(special_hex_list)
 
 var worldhex_list: Array[WorldHex] = []
 var worldhex_hovered: WorldHex = null

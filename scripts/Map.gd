@@ -3,6 +3,8 @@ class_name Map extends Node3D
 ## Override this
 func GenerateSpecialHexList() -> Array[Hex]: return []
 
+static var specialhex_list: Array[Hex] = []
+
 static func NormalizeHexDict() -> void:
 	GameData.hex_dict.clear()
 	
@@ -19,6 +21,6 @@ static func NormalizeHexDict() -> void:
 			GameData.hex_dict[coord] = hex
 
 
-static func ModifyHexMapWithSpecialHex(special_hex_list: Array[Hex]) -> void:
-	for hex in special_hex_list:
+static func ModifyHexMapWithSpecialHex(h_list: Array[Hex]) -> void:
+	for hex in h_list:
 		GameData.hex_dict[hex.coord] = hex

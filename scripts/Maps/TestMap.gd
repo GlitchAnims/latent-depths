@@ -1,16 +1,14 @@
 class_name TestMap extends Map
 
-@rpc("any_peer", "call_remote", "reliable")
-func Rem_ToServer_AskForSpecialHexes() -> void:
-	pass
+
 
 func _ready() -> void:
 	if not GameData.isServer:
 		NormalizeHexDict()
-		
-		
+		GameData.Gamespace_Node.Rem_ToServer_AskForSpecialHexes.rpc_id(1)
 		return
 	
+	GameData.Gamespace_Node.PopulateWorldHexes()
 	var spawn_list: Array[Unit] = []
 	
 	for i in 5:

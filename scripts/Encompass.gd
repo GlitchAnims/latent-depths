@@ -30,10 +30,10 @@ func _ProcessHudBar(value: int, lerpspeed: float, hudbar: HudBar, mode: int) -> 
 		hudbar.travel = minf(hudbar.travel + lerpspeed, 1.0)
 		hudbar.cur = hudbar.last + floori(float(diff) * lerp_value)
 	
-	var final_value: int = hudbar.cur
-	var label_string: String = str(final_value)
-	var label_string_first: String = label_string.left(-1)
-	var label_string_last: String = label_string.right(1)
+	#var final_value: int = hudbar.cur
+	#var label_string: String = str(final_value)
+	#var label_string_first: String = label_string.left(-1)
+	#var label_string_last: String = label_string.right(1)
 	
 	match mode:
 		0:

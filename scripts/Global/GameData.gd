@@ -51,8 +51,6 @@ func ActualizeTibiaList() -> void:
 		tibialist_bufs.push_back(new_buftibia)
 		tibiadict_bufs[config.identifier] = new_buftibia
 
-signal sig_updatehandvisual
-
 #var bufDict: Dictionary[int, Buf] = {}
 
 var unit_dict: Dictionary[int, Unit] = {}

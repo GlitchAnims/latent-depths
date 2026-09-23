@@ -11,6 +11,7 @@ func Client_SetDoneAnims(b: bool) -> void:
 @rpc("any_peer", "call_remote", "reliable")
 func _Rem_ToServer_SetDoneAnims(b: bool) -> void:
 	if not GameData.isServer: return
+	if multiplayer.get_remote_sender_id() != playerID: return
 	done_anims = b
 
 @rpc("authority", "call_remote", "reliable")
