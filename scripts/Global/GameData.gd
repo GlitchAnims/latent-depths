@@ -59,10 +59,19 @@ func ActualizeTibiaList() -> void:
 var unit_dict: Dictionary[int, Unit] = {}
 ## This is set every tick automatically. Do not set this manually.[br]
 ## It is merely a shorthand so you don't have to do Dictionary.values() every time.
+## Automatically sorted by Speed and unitID
 var unit_list_temp: Array[Unit] = []
 
 func _physics_process(_delta: float) -> void:
 	unit_list_temp = unit_dict.values()
+	
+	unit_list_temp.sort_custom(func(a: Unit, b: Unit) -> bool:
+		var a_speed: int = a.GetSumSpeed()
+		var b_speed: int = b.GetSumSpeed()
+		if a_speed == b_speed:
+			return a.unitID < b.unitID # Tiebreaker
+		return a_speed < b_speed
+	)
 
 signal sig_actor_changed
 var current_actor: Unit = null:

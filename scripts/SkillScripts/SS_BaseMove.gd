@@ -33,7 +33,7 @@ func FabricateSkillstructions(hex_from: Hex, hex_to: Hex) -> Array[SkillInstruct
 	
 	var ins_ability: SkillInstruction = SkillInstruction.new()
 	ins_ability.ins_type = SkillInstruction.INS_TYPE.walk
-	#ins_ability.coord_chosen_list.push_back()
+	ins_ability.coord_chosen_list.push_back(hex_to.coord)
 	
 	var ins_cool: SkillInstruction = SkillInstruction.new()
 	ins_cool.timer = 2000
@@ -56,4 +56,14 @@ func DoWorldHexWidgets(worldHex_dict: Dictionary[Vector2i, WorldHex]) -> void:
 		pathHex = _distance_map.get(coord_backwalk, null)
 		coord_to = coord_backwalk
 
+func Server_PerformInstruction(ins: SkillInstruction) -> void:
+	if ins.ins_type != SkillInstruction.INS_TYPE.walk: return
+	var coord: Vector2i = ins.coord_chosen_list[0]
+	Auth_Rem_ToClient_BaseWalkAbility(coord)
+	Auth_Rem_ToClient_BaseWalkAbility.rpc(coord)
+
+@rpc("authority", "call_remote", "reliable")
+func Auth_Rem_ToClient_BaseWalkAbility(coord: Vector2i) -> void:
+	unit_ref.pos_hex = coord
+	unit_ref.SnapPositionToHexPos()
 #class Pathing extends RefCounted:

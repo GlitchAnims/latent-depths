@@ -21,6 +21,7 @@ func IsHexSelectable(_hex_from: Hex, _hex_to: Hex) -> bool: return true
 func CanBeUsed() -> bool: return true
 ## Do not send nulls, please.
 func FabricateSkillstructions(_hex_from: Hex, _hex_to: Hex) -> Array[SkillInstruction]: return []
+func Server_PerformInstruction(_ins: SkillInstruction) -> void: pass
 
 func DoWorldHexWidgets(_worldHex_dict: Dictionary[Vector2i, WorldHex]) -> void: pass
 

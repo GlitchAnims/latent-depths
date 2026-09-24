@@ -128,20 +128,34 @@ func _physics_process(delta: float) -> void:
 				var downtime: int = unit.GetSumDowntime()
 				if downtime < 1: actors.push_back(unit)
 			
-			if not actors.is_empty():
-				actors.sort_custom(func(a: Unit, b: Unit) -> bool:
-					var a_speed: int = a.GetSumSpeed()
-					var b_speed: int = b.GetSumSpeed()
-					if a_speed == b_speed:
-						return a.unitID < b.unitID # Tiebreaker
-					return a_speed < b_speed
-				)
+			if actors.is_empty(): # Means a Skill somewhere is now at 0 instruction timer
 				
+				var bad_actor: Unit = null
+				var bad_skill: SkillBase = null
+				var bad_skillstruction: SkillInstruction = null
+				for unit: Unit in unit_list:
+					bad_skill = unit.skill_selected
+					if not is_instance_valid(bad_skill): continue
+					var skillstruction_list: Array[SkillInstruction] = bad_skill.instruction_list
+					if not skillstruction_list.is_empty():
+						bad_skillstruction = skillstruction_list[0]
+						var timer: int = bad_skillstruction.timer
+						if timer < 1:
+							bad_actor = unit
+							break
+				
+				if bad_actor != null:
+					bad_skill.instruction_list.pop_front()
+					var packed_ins_list: PackedByteArray = GameData.Stronghold_Node.pickler.pickle(bad_skill.instruction_list)
+					bad_actor.Auth_Rem_ToClient_SendSkillstructionArray(bad_skill.skill_ID, packed_ins_list)
+					bad_skill.Server_PerformInstruction(bad_skillstruction)
+				
+			else: # No Possible Actors, find New Turn
 				var selected_actor: Unit = actors[0]
 				GameData.current_actor = selected_actor
 				Auth_Rem_ToClient_ItsThisGuysTurn.rpc(selected_actor.unitID)
 				has_actor = true
-		
+	
 	if has_actor:
 		var actor: Unit = GameData.current_actor
 		var skill: SkillBase = ClientData.temp_skill
