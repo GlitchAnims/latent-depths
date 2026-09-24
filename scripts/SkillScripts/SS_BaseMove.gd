@@ -5,7 +5,7 @@ func IsHexSelectable(hex_from: Hex, hex_to: Hex) -> bool:
 	return dist >= 1 and dist <= 4
 
 var _last_hex_from: Hex = null
-var _distance_map: Dictionary[Vector2i, int]
+var _distance_map: Dictionary[Vector2i, PathHex]
 
 func _CheckPathDist(hex_from: Hex, hex_to: Hex) -> int:
 	var coord_from: Vector2i = hex_from.coord
@@ -15,7 +15,9 @@ func _CheckPathDist(hex_from: Hex, hex_to: Hex) -> int:
 		_last_hex_from = hex_from
 		_distance_map = Map.BuildDistanceMap(coord_from)
 	
-	var dist: int = _distance_map.get(coord_to, -1)
+	var path_hex: PathHex = _distance_map.get(coord_to, null)
+	var dist: int = -1
+	if path_hex != null: dist = path_hex.dist
 	if dist < 1: dist = 999999
 	return dist
 
