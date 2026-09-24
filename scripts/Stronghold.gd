@@ -8,7 +8,12 @@ class_name Stronghold extends Node
 @export var og_bufs: Array[BufConfig] = []
 @export var og_skillconfigs: Array[SkillConfig] = []
 
+var pickler = Pickler.new()
+
 func _ready() -> void:
+	pickler.register_custom_class(SkillInstruction)
+	pickler.register_custom_class(Hex)
+	
 	GameData.Stronghold_Node = self
 	GameData.Gamespace_Node = Gamespace_Node
 	GameData.Encompass_Node = Encompass_Node

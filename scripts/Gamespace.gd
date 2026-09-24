@@ -60,6 +60,17 @@ func Auth_Rem_ToClient_ItsThisGuysTurn(unit_id: int) -> void:
 	var unit: Unit = GameData.unit_dict.get(unit_id,null)
 	GameData.current_actor = unit
 
+@rpc("authority", "call_remote", "reliable")
+func Auth_Rem_ToClient_SendSkillstructionArray(unit_id: int, skill_id: int, ins_list_packed: PackedByteArray) -> void:
+	if GameData.isServer: return
+	var unit: Unit = GameData.unit_dict.get(unit_id,null)
+	if unit == null: return
+	if unit.skill_list.size() <= skill_id: return
+	var skill: SkillBase = unit.skill_list[skill_id]
+	if not is_instance_valid(skill): return
+	var ins_list: Array[SkillInstruction] = bytes_to_var_with_objects(ins_list_packed) as Array[SkillInstruction]
+	skill.instruction_list = ins_list
+
 func _physics_process(delta: float) -> void:
 	if not GameData.started: return
 	
