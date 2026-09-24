@@ -65,20 +65,6 @@ func Auth_Rem_ToClient_ItsThisGuysTurn(unit_id: int) -> void:
 	var unit: Unit = GameData.unit_dict.get(unit_id,null)
 	GameData.current_actor = unit
 
-@rpc("authority", "call_remote", "reliable")
-func Auth_Rem_ToClient_SendSkillstructionArray(unit_id: int, skill_id: int, ins_list_packed: PackedByteArray) -> void:
-	if GameData.isServer: return
-	var unit: Unit = GameData.unit_dict.get(unit_id,null)
-	if unit == null: return
-	if unit.skill_list.size() <= skill_id: return
-	var skill: SkillBase = unit.skill_list[skill_id]
-	if not is_instance_valid(skill): return
-	var unpickled: Array = GameData.Stronghold_Node.pickler.unpickle(ins_list_packed)
-	var ins_list: Array[SkillInstruction] = []
-	for obj in unpickled:
-		if obj is SkillInstruction: ins_list.push_back(obj)
-	skill.instruction_list = ins_list
-
 func _physics_process(delta: float) -> void:
 	if not GameData.started: return
 	
@@ -148,37 +134,36 @@ func _physics_process(delta: float) -> void:
 				Auth_Rem_ToClient_ItsThisGuysTurn.rpc(selected_actor.unitID)
 				has_actor = true
 		
-		if has_actor:
-			var actor: Unit = GameData.current_actor
-			var skill: SkillBase = ClientData.temp_skill
-			if is_instance_valid(skill):
-				var hex_from: Hex = GameData.hex_dict[actor.pos_hex]
-				
-				for obj: WorldHex in worldhex_list:
-					if skill.IsHexSelectable(hex_from, obj.hex_ref): obj.SetHexColor(Color.GREEN)
-					else: obj.SetHexColor(Color.RED)
-				
-				if is_instance_valid(worldhex_hovered):
-					var hex_to: Hex = worldhex_hovered.hex_ref
-					var canchoose: bool = skill.IsHexSelectable(hex_from, hex_to)
-					
-					if canchoose: ClientData.temp_skillstruction_list = skill.FabricateSkillstructions(hex_from,hex_to)
-					else: ClientData.temp_skillstruction_list = []
-					
-					if ClientData.press_m1 and canchoose:
-						skill.instruction_list = ClientData.temp_skillstruction_list
-						actor.skill_selected = skill
-						actor.pos_hex = hex_to.coord
-						actor.SnapPositionToHexPos()
-						ClientData.temp_skillstruction_list = []
-						ClientData.temp_skill = null
-						GameData.current_actor = null
-						Auth_Rem_ToClient_ItsThisGuysTurn.rpc(-1)
-					
+	if has_actor:
+		var actor: Unit = GameData.current_actor
+		var skill: SkillBase = ClientData.temp_skill
+		if is_instance_valid(skill):
+			var hex_from: Hex = GameData.hex_dict[actor.pos_hex]
 			
-			#GameData.current_actor = null
-			#Auth_Rem_ToClient_ItsThisGuysTurn.rpc(-1)
+			for obj: WorldHex in worldhex_list:
+				if skill.IsHexSelectable(hex_from, obj.hex_ref): obj.SetHexColor(Color.GREEN)
+				else: obj.SetHexColor(Color.RED)
 			
+			if is_instance_valid(worldhex_hovered):
+				var hex_to: Hex = worldhex_hovered.hex_ref
+				var canchoose: bool = skill.IsHexSelectable(hex_from, hex_to)
+				
+				if canchoose: ClientData.temp_skillstruction_list = skill.FabricateSkillstructions(hex_from,hex_to)
+				else: ClientData.temp_skillstruction_list = []
+				
+				if ClientData.press_m1 and canchoose:
+					skill.instruction_list = ClientData.temp_skillstruction_list
+					actor.skill_selected = skill
+					actor.pos_hex = hex_to.coord
+					actor.SnapPositionToHexPos()
+					ClientData.temp_skillstruction_list = []
+					ClientData.temp_skill = null
+					GameData.current_actor = null
+					var packed_ins_list: PackedByteArray = GameData.Stronghold_Node.pickler.pickle(skill.instruction_list)
+					var skill_ID: int = actor.skill_list.find(skill,0)
+					actor.Auth_Rem_ToClient_SendSkillstructionArray.rpc(skill_ID, packed_ins_list)
+					actor.Auth_Rem_ToClient_SelectSkill.rpc(skill_ID)
+					Auth_Rem_ToClient_ItsThisGuysTurn.rpc(-1)
 
 func ProcessTurn() -> void:
 	pass

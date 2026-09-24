@@ -11,10 +11,6 @@ const BaseMove = preload("res://scripts/SkillScripts/SS_BaseMove.gd")
 
 ## Called by Server when spawned, before adding as child to tree.
 func Server_SetupForSpawn(uniqueunitid: int) -> void:
-	var basemove: BaseMove = BaseMove.new()
-	basemove.skillConfig_ref = GameData.skillConfig_dict[&"og_basemove"]
-	skill_list.push_back(basemove)
-	
 	unitID = uniqueunitid
 	SetupHP(1000)
 	## TODO Stress setup
@@ -72,6 +68,11 @@ func free() -> void:
 func _ready() -> void:
 	GameData.unit_dict[unitID] = self
 	GameData.sig_actor_changed.connect(UpdateForActor)
+	
+	var basemove: BaseMove = BaseMove.new()
+	basemove.skillConfig_ref = GameData.skillConfig_dict[&"og_basemove"]
+	skill_list.push_back(basemove)
+	
 	ID_Label.text = str(unitID)
 	_ready_unit()
 	var pos2: Vector2 = HexMath.hex_to_pixel(pos_hex)
@@ -98,6 +99,29 @@ func Request_ActivateCardByTibiaID(id: int = -1) -> void:
 	var senderID: int = multiplayer.get_remote_sender_id()
 	if player.playerID != senderID: return # LOUD INCORRECT BUZZER
 	Server_ActivateCardByTibiaID(id)
+
+@rpc("authority", "call_remote", "reliable")
+func Auth_Rem_ToClient_SelectSkill(skill_ID: int) -> void:
+	if GameData.isServer: return
+	if skill_ID == -1:
+		skill_selected = null
+		return
+	if skill_list.size() <= skill_ID: return
+	var skill: SkillBase = skill_list[skill_ID]
+	if not is_instance_valid(skill): return
+	skill_selected = skill
+
+@rpc("authority", "call_remote", "reliable")
+func Auth_Rem_ToClient_SendSkillstructionArray(skill_ID: int, ins_list_packed: PackedByteArray) -> void:
+	if GameData.isServer: return
+	if skill_list.size() <= skill_ID: return
+	var skill: SkillBase = skill_list[skill_ID]
+	if not is_instance_valid(skill): return
+	var unpickled: Array = GameData.Stronghold_Node.pickler.unpickle(ins_list_packed)
+	var ins_list: Array[SkillInstruction] = []
+	for obj in unpickled:
+		if obj is SkillInstruction: ins_list.push_back(obj)
+	skill.instruction_list = ins_list
 
 func Server_ActivateCardByTibiaID(_id: int) -> void:
 	pass
