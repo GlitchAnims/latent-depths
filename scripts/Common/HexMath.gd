@@ -25,6 +25,27 @@ static func CoordVecLength(coord_vec: Vector2i) -> int:
 	+ abs(coord_vec.y)) / 2
 	return dist
 
+const MASK32: int = 0xFFFFFFFF
+const SIGN32: int = 0x80000000
+const TWO_POW_32: int = 0x100000000
+
+static func Pack_Vector2i_to_Int64(vec: Vector2i) -> int:
+	return Pack_Int32_to_Int64(vec.x,vec.y)
+
+static func Unpack_Int64_to_Vector2i(packed: int) -> Vector2i:
+	return Vector2i(Unpack_Int64_Low(packed),Unpack_Int64_High(packed))
+
+static func Pack_Int32_to_Int64(low: int, high: int) -> int:
+	return ((high & MASK32) << 32) | (low & MASK32)
+
+static func Unpack_Int64_Low(packed: int) -> int:
+	var v := packed & MASK32
+	return v - TWO_POW_32 if (v & SIGN32) else v
+
+static func Unpack_Int64_High(packed: int) -> int:
+	var v := (packed >> 32) & MASK32
+	return v - TWO_POW_32 if (v & SIGN32) else v
+
 const hex_angle_rot: float = PI / 3
 
 const hex_size: float = 0.5
