@@ -73,6 +73,9 @@ func _ready() -> void:
 		var basemove: SkillBase = skillConfig.skill_scene.instantiate()
 		basemove.skillConfig_ref = skillConfig
 		basemove.skillConfig_id = &"og_basemove"
+		var skillsize: int = skill_list.size()
+		skill_list.push_back(basemove)
+		basemove.skill_ID = skillsize
 		SkillSpawner_Node.add_child(basemove,true)
 	
 	ID_Label.text = str(unitID)
@@ -124,6 +127,13 @@ func Auth_Rem_ToClient_SendSkillstructionArray(skill_ID: int, ins_list_packed: P
 	for obj in unpickled:
 		if obj is SkillInstruction: ins_list.push_back(obj)
 	skill.instruction_list = ins_list
+
+@rpc("any_peer", "call_remote", "reliable")
+func Rem_ToServer_TryUseSkill() -> void:
+	if not GameData.isServer: return
+	var sender_id: int = multiplayer.get_remote_sender_id()
+	var hexpack: PackedByteArray = GameData.Stronghold_Node.pickler.pickle(Map.specialhex_list)
+	#Auth_Rem_ToClient_SendSpecialHexData.rpc_id(sender_id,hexpack)
 
 func Server_ActivateCardByTibiaID(_id: int) -> void:
 	pass
