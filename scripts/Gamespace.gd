@@ -5,6 +5,8 @@ class_name Gamespace extends Node3D
 
 @onready var THECamera_Node: Camera3D = $"THECamera"
 
+@onready var AudioManager_Node: AudioManager = $"AudioManager"
+
 const basemap_scene: PackedScene = preload("res://scenes/Maps/testmap.tscn")
 func InitMultiplayer() -> void:
 	Map.NormalizeHexDict()
@@ -104,13 +106,21 @@ func _physics_process(delta: float) -> void:
 	var unit_list: Array[Unit] = GameData.unit_list_temp
 	
 	var has_actor: bool = is_instance_valid(GameData.current_actor)
+	var time_mult: float = delta
 	var time_pass: int = 0
 	if not has_actor:
-		time_pass = floori(BattleTimeline.time_per_second * delta)
+		@warning_ignore("narrowing_conversion")
+		var slowdown_thres: int = BattleTimeline.time_per_second * 0.5
+		var shortest_act_time: int = GetShortestActTime(slowdown_thres)
+		if shortest_act_time < slowdown_thres:
+			time_mult *= (float(shortest_act_time) / slowdown_thres) * 0.8 + 0.2
+		time_pass = floori(BattleTimeline.time_per_second * time_mult)
 		time_pass = maxi(time_pass, 10)
-		time_pass = GetShortestActTime(time_pass)
+		
+		time_pass = clamp(time_pass, 0, shortest_act_time)
 	
 	if time_pass > 0:
+		AudioManager_Node.RunTimelineClick(time_mult*30)
 		for unit: Unit in unit_list:
 			var skill: SkillBase = unit.skill_selected
 			if is_instance_valid(skill):

@@ -9,7 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://deis8xe157xuk" path="res://scenes/HUD/mouse_tooltip.tscn" id="5_cf4id"]
 [ext_resource type="Script" uid="uid://b0v6wf0jodgkf" path="res://scripts/HUD/SkillRack.gd" id="6_cf4id"]
 [ext_resource type="PackedScene" uid="uid://bhpd1ue316s2l" path="res://scenes/HUD/skill_button.tscn" id="6_i5rp2"]
+[ext_resource type="AudioStream" uid="uid://br6603clecgx" path="res://sounds/Timeline/timeline_click.mp3" id="6_kj1sv"]
+[ext_resource type="Script" uid="uid://bdwta6tnidtgd" path="res://scripts/Audio/AudioManager.gd" id="7_uw0md"]
 [ext_resource type="Script" uid="uid://cxv6jr8qhky3l" path="res://scripts/HUD/BattleTimeline.gd" id="7_v57l1"]
+[ext_resource type="AudioStream" uid="uid://ksfsjyaa82e5" path="res://sounds/Timeline/NewActor.wav" id="8_ptabd"]
 [ext_resource type="Texture2D" uid="uid://bsjt2gl6p5fxv" path="res://icon.svg" id="10_1v5lc"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j02l2"]
@@ -44,6 +47,15 @@ spawn_path = NodePath("../Unitry")
 [node name="THECamera" type="Camera3D" parent="Gamespace" unique_id=674794322]
 transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, 0, 5.616629, 6.99713)
 current = true
+
+[node name="AudioManager" type="Node3D" parent="Gamespace" unique_id=1282089987]
+script = ExtResource("7_uw0md")
+
+[node name="TimelineClicker" type="AudioStreamPlayer" parent="Gamespace/AudioManager" unique_id=117448921]
+stream = ExtResource("6_kj1sv")
+
+[node name="TimelineNewActor" type="AudioStreamPlayer" parent="Gamespace/AudioManager" unique_id=1025841184]
+stream = ExtResource("8_ptabd")
 
 [node name="Encompass" type="PanelContainer" parent="." unique_id=1532195454 node_paths=PackedStringArray("SkillRack_Node", "MouseTooltip_Node")]
 offset_right = 717.0
