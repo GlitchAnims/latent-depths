@@ -21,7 +21,8 @@ func FabricateSkillstructions(hex_from: Hex, hex_to: Hex) -> Array[SkillInstruct
 	ins_delay.timer = delay
 	
 	var ins_ability: SkillInstruction = SkillInstruction.new()
-	ins_ability.ins_type = SkillInstruction.INS_TYPE.ability
+	ins_ability.ins_type = SkillInstruction.INS_TYPE.walk
+	#ins_ability.coord_chosen_list.push_back()
 	
 	var ins_cool: SkillInstruction = SkillInstruction.new()
 	ins_cool.timer = 1000

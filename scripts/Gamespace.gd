@@ -29,12 +29,15 @@ func InitMultiplayer() -> void:
 func Rem_ToServer_AskForSpecialHexes() -> void:
 	if not GameData.isServer: return
 	var sender_id: int = multiplayer.get_remote_sender_id()
-	var hexpack: PackedByteArray = var_to_bytes_with_objects(Map.specialhex_list)
+	var hexpack: PackedByteArray = GameData.Stronghold_Node.pickler.pickle(Map.specialhex_list)
 	Auth_Rem_ToClient_SendSpecialHexData.rpc_id(sender_id,hexpack)
 @rpc("authority", "call_remote", "reliable")
 func Auth_Rem_ToClient_SendSpecialHexData(hexpack: PackedByteArray) -> void:
 	if GameData.isServer: return
-	var special_hex_list: Array[Hex] = bytes_to_var_with_objects(hexpack)
+	var unpickled: Array = GameData.Stronghold_Node.pickler.unpickle(hexpack)
+	var special_hex_list: Array[Hex] = []
+	for obj in unpickled:
+		if obj is Hex: special_hex_list.push_back(obj as Hex)
 	Map.ModifyHexMapWithSpecialHex(special_hex_list)
 	if worldhex_list.is_empty():
 		PopulateWorldHexes()
@@ -68,7 +71,10 @@ func Auth_Rem_ToClient_SendSkillstructionArray(unit_id: int, skill_id: int, ins_
 	if unit.skill_list.size() <= skill_id: return
 	var skill: SkillBase = unit.skill_list[skill_id]
 	if not is_instance_valid(skill): return
-	var ins_list: Array[SkillInstruction] = bytes_to_var_with_objects(ins_list_packed) as Array[SkillInstruction]
+	var unpickled: Array = GameData.Stronghold_Node.pickler.unpickle(ins_list_packed)
+	var ins_list: Array[SkillInstruction] = []
+	for obj in unpickled:
+		if obj is SkillInstruction: ins_list.push_back(obj)
 	skill.instruction_list = ins_list
 
 func _physics_process(delta: float) -> void:
