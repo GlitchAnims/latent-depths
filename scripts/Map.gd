@@ -24,3 +24,26 @@ static func NormalizeHexDict() -> void:
 static func ModifyHexMapWithSpecialHex(h_list: Array[Hex]) -> void:
 	for hex in h_list:
 		GameData.hex_dict[hex.coord] = hex
+
+static func BuildDistanceMap(coord_start: Vector2i) -> Dictionary[Vector2i, int]:
+	var distance_map: Dictionary[Vector2i, int] = {}
+	for coord: Vector2i in GameData.hex_dict.keys():
+		distance_map[coord] = -1
+	
+	var queue: Array[Vector2i] = [coord_start]
+	distance_map[coord_start] = 0
+	
+	while not queue.is_empty():
+		var current: Vector2i = queue.pop_front()
+		var current_dist: int = distance_map[current]
+		
+		for offset: Vector2i in HexMath.axial_direction_vectors:
+			var neighbor: Vector2i = current + offset
+			var hex: Hex = GameData.hex_dict.get(neighbor)
+			if hex == null: continue
+			if hex.tile_flags & Hex.TILE_FLAGS.WALL: continue
+			if distance_map[neighbor] != -1: continue
+			distance_map[neighbor] = current_dist + 1
+			queue.push_back(neighbor)
+	
+	return distance_map

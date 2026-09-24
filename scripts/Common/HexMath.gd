@@ -25,6 +25,16 @@ static func CoordVecLength(coord_vec: Vector2i) -> int:
 	+ abs(coord_vec.y)) / 2
 	return dist
 
+const axial_direction_vectors = [
+	Vector2i(+1, 0), Vector2i(+1, -1), Vector2i(0, -1), 
+	Vector2i(-1, 0), Vector2i(-1, +1), Vector2i(0, +1), 
+]
+
+enum AXIAL_DIR{
+	X_PLUS, Z_PLUS, Y_MINUS,
+	X_MINUS, Z_MINUS, Y_PLUS
+}
+
 const MASK32: int = 0xFFFFFFFF
 const SIGN32: int = 0x80000000
 const TWO_POW_32: int = 0x100000000

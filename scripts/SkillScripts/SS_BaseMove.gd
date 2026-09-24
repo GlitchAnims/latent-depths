@@ -1,20 +1,26 @@
 extends SkillBase
 
 func IsHexSelectable(hex_from: Hex, hex_to: Hex) -> bool:
-	var from_coord: Vector2i = hex_from.coord
-	var to_coord: Vector2i = hex_to.coord
-	var coord_vec: Vector2i = to_coord-from_coord
-	
-	var dist: int = HexMath.CoordVecLength(coord_vec)
+	var dist: int = CheckPathDist(hex_from, hex_to)
 	return dist >= 1 and dist <= 4
 
+var last_hex_from: Hex = null
+var distance_map: Dictionary[Vector2i, int]
+
+func CheckPathDist(hex_from: Hex, hex_to: Hex) -> int:
+	var coord_from: Vector2i = hex_from.coord
+	var coord_to: Vector2i = hex_to.coord
+	
+	if last_hex_from != hex_from:
+		last_hex_from = hex_from
+		distance_map = Map.BuildDistanceMap(coord_from)
+	
+	var dist: int = distance_map.get(coord_to, -1)
+	if dist < 1: dist = 999999
+	return dist
 
 func FabricateSkillstructions(hex_from: Hex, hex_to: Hex) -> Array[SkillInstruction]:
-	var from_coord: Vector2i = hex_from.coord
-	var to_coord: Vector2i = hex_to.coord
-	var coord_vec: Vector2i = to_coord-from_coord
-	
-	var dist: int = HexMath.CoordVecLength(coord_vec)
+	var dist: int = CheckPathDist(hex_from, hex_to)
 	var delay: int = 3000 * dist
 	
 	var ins_delay: SkillInstruction = SkillInstruction.new()
@@ -25,6 +31,10 @@ func FabricateSkillstructions(hex_from: Hex, hex_to: Hex) -> Array[SkillInstruct
 	#ins_ability.coord_chosen_list.push_back()
 	
 	var ins_cool: SkillInstruction = SkillInstruction.new()
-	ins_cool.timer = 1000
+	ins_cool.timer = 2000
 	
 	return [ins_delay, ins_ability, ins_cool]
+
+
+
+#class Pathing extends RefCounted:
