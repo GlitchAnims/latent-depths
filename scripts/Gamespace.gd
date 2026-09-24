@@ -152,18 +152,16 @@ func _physics_process(delta: float) -> void:
 				else: ClientData.temp_skillstruction_list = []
 				
 				if ClientData.press_m1 and canchoose:
-					skill.instruction_list = ClientData.temp_skillstruction_list
-					actor.skill_selected = skill
-					actor.pos_hex = hex_to.coord
-					actor.SnapPositionToHexPos()
-					ClientData.temp_skillstruction_list = []
-					ClientData.temp_skill = null
-					GameData.current_actor = null
-					var packed_ins_list: PackedByteArray = GameData.Stronghold_Node.pickler.pickle(skill.instruction_list)
-					var skill_ID: int = actor.skill_list.find(skill,0)
-					actor.Auth_Rem_ToClient_SendSkillstructionArray.rpc(skill_ID, packed_ins_list)
-					actor.Auth_Rem_ToClient_SelectSkill.rpc(skill_ID)
-					Auth_Rem_ToClient_ItsThisGuysTurn.rpc(-1)
+					if GameData.isServer:
+						GameData.current_actor = null
+						Auth_Rem_ToClient_ItsThisGuysTurn.rpc(-1)
+						actor.Server_UseSkill(skill, ClientData.temp_skillstruction_list)
+						ClientData.temp_skillstruction_list = []
+						ClientData.temp_skill = null
+					else:
+						actor.Rem_ToServer_TryUseSkill.rpc_id(1, skill.skill_ID, hex_to.coord)
+					#actor.pos_hex = hex_to.coord
+					#actor.SnapPositionToHexPos()
 
 
 

@@ -129,11 +129,38 @@ func Auth_Rem_ToClient_SendSkillstructionArray(skill_ID: int, ins_list_packed: P
 	skill.instruction_list = ins_list
 
 @rpc("any_peer", "call_remote", "reliable")
-func Rem_ToServer_TryUseSkill() -> void:
+func Rem_ToServer_TryUseSkill(skill_ID: int, coord_target: Vector2i) -> void:
 	if not GameData.isServer: return
+	
+	var actor: Unit = GameData.current_actor
+	if not is_instance_valid(actor) or actor != self: return
+	
 	var sender_id: int = multiplayer.get_remote_sender_id()
-	var hexpack: PackedByteArray = GameData.Stronghold_Node.pickler.pickle(Map.specialhex_list)
-	#Auth_Rem_ToClient_SendSpecialHexData.rpc_id(sender_id,hexpack)
+	var player: Player = GameData.playerDict.get(sender_id, null)
+	if player == null or player.team != team: return
+	
+	if skill_list.size() <= skill_ID || skill_list[skill_ID] == null: return
+	var skill: SkillBase = skill_list[skill_ID]
+	
+	var hex_target: Hex = GameData.hex_dict.get(coord_target, null)
+	if hex_target == null: return
+	
+	var hex_from: Hex = GameData.hex_dict[pos_hex]
+	var valid: bool = skill.IsHexSelectable(hex_from, hex_target)
+	if not valid: return
+	
+	var skillstruction_list: Array[SkillInstruction] = skill.FabricateSkillstructions(hex_from, hex_target)
+	GameData.current_actor = null
+	GameData.Gamespace_Node.Auth_Rem_ToClient_ItsThisGuysTurn.rpc(-1)
+	Server_UseSkill(skill, skillstruction_list)
+
+func Server_UseSkill(skill: SkillBase, skillstruction_list: Array[SkillInstruction]) -> void:
+	skill.instruction_list = skillstruction_list
+	skill_selected = skill
+	var packed_ins_list: PackedByteArray = GameData.Stronghold_Node.pickler.pickle(skillstruction_list)
+	var skill_ID: int = skill.skill_ID
+	Auth_Rem_ToClient_SendSkillstructionArray.rpc(skill_ID, packed_ins_list)
+	Auth_Rem_ToClient_SelectSkill.rpc(skill_ID)
 
 func Server_ActivateCardByTibiaID(_id: int) -> void:
 	pass

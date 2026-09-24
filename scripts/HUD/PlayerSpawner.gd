@@ -21,12 +21,16 @@ func _exit_tree():
 	multiplayer.peer_connected.disconnect(add_player)
 	multiplayer.peer_disconnected.disconnect(del_player)
 
+var last_team: int = 1
+
 const playerScene: PackedScene = preload("res://scenes/player.tscn")
 func add_player(id: int):
 	var player: Player = playerScene.instantiate()
 	
 	player.playerID = id # Set player id.
 	player.name = str(id) # ID but string
+	player.team = last_team
+	last_team += 1
 	var secretPass: int = ClientData.rng.randi_range(-999999999, 999999999)
 	player.password = secretPass
 	player.pilotID = GameData.GetUniquePilotID()

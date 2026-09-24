@@ -1,6 +1,7 @@
 class_name Pilot extends Node
 
 @export var pilotID: int = -1
+@export var team: int = 0
 var unit_ref: Unit = null
 
 var interval: float = 0
