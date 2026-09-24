@@ -6,7 +6,8 @@ var unit_ref: Unit = null
 
 func _ready() -> void:
 	skillConfig_ref = GameData.skillConfig_dict[skillConfig_id]
-	unit_ref = $"..."
+	unit_ref = $"../.."
+	unit_ref.skill_list.push_back(self)
 
 var loudness_value: int = 0
 var instruction_list: Array[SkillInstruction] = []

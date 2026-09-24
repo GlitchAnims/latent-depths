@@ -68,12 +68,12 @@ func _ready() -> void:
 	GameData.unit_dict[unitID] = self
 	GameData.sig_actor_changed.connect(UpdateForActor)
 	
-	var skillConfig: SkillConfig = GameData.skillConfig_dict[&"og_basemove"]
-	var basemove: SkillBase = skillConfig.skill_scene.instantiate()
-	basemove.skillConfig_ref = skillConfig
-	basemove.skillConfig_id = &"og_basemove"
-	skill_list.push_back(basemove)
-	SkillSpawner_Node.add_child(basemove,true)
+	if GameData.isServer:
+		var skillConfig: SkillConfig = GameData.skillConfig_dict[&"og_basemove"]
+		var basemove: SkillBase = skillConfig.skill_scene.instantiate()
+		basemove.skillConfig_ref = skillConfig
+		basemove.skillConfig_id = &"og_basemove"
+		SkillSpawner_Node.add_child(basemove,true)
 	
 	ID_Label.text = str(unitID)
 	_ready_unit()
