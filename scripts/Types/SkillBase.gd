@@ -22,6 +22,8 @@ func CanBeUsed() -> bool: return true
 ## Do not send nulls, please.
 func FabricateSkillstructions(_hex_from: Hex, _hex_to: Hex) -> Array[SkillInstruction]: return []
 
+func DoWorldHexWidgets(_worldHex_dict: Dictionary[Vector2i, WorldHex]) -> void: pass
+
 func GetSumDelay() -> int:
 	return 0
 func GetSumCooloff() -> int:

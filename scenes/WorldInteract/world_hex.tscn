@@ -10,6 +10,16 @@
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_vesgh"]
 height = 0.1
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1x4fa"]
+shading_mode = 0
+
+[sub_resource type="QuadMesh" id="QuadMesh_vesgh"]
+size = Vector2(0.66, 0.15)
+orientation = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_kkjc3"]
+orientation = 1
+
 [node name="WorldHex" type="Node3D" unique_id=193438681]
 script = ExtResource("1_hdsv8")
 
@@ -33,3 +43,19 @@ shape = SubResource("CylinderShape3D_vesgh")
 material_override = ExtResource("5_30eso")
 cast_shadow = 0
 mesh = ExtResource("5_ek2cq")
+
+[node name="WalkArrow" type="Node3D" parent="." unique_id=1857181498]
+
+[node name="ArrowBody" type="MeshInstance3D" parent="WalkArrow" unique_id=1704329754]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0.018807352, -0.34047282)
+material_override = SubResource("StandardMaterial3D_1x4fa")
+cast_shadow = 0
+mesh = SubResource("QuadMesh_vesgh")
+skeleton = NodePath("../..")
+
+[node name="ArrowHead" type="MeshInstance3D" parent="WalkArrow" unique_id=601233236]
+transform = Transform3D(0.14142136, 0, 0.14142136, 0, 0.2, 0, -0.14142136, 0, 0.14142136, 0, 0.023846626, -0.69724846)
+material_override = SubResource("StandardMaterial3D_1x4fa")
+cast_shadow = 0
+mesh = SubResource("QuadMesh_kkjc3")
+skeleton = NodePath("../..")

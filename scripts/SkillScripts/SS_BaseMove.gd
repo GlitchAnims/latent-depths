@@ -5,6 +5,7 @@ func IsHexSelectable(hex_from: Hex, hex_to: Hex) -> bool:
 	return dist >= 1 and dist <= 4
 
 var _last_hex_from: Hex = null
+var _last_hex_to: Hex = null
 var _distance_map: Dictionary[Vector2i, PathHex]
 
 func _CheckPathDist(hex_from: Hex, hex_to: Hex) -> int:
@@ -14,6 +15,8 @@ func _CheckPathDist(hex_from: Hex, hex_to: Hex) -> int:
 	if _last_hex_from != hex_from:
 		_last_hex_from = hex_from
 		_distance_map = Map.BuildDistanceMap(coord_from)
+	
+	if _last_hex_to != hex_to: _last_hex_to = hex_to
 	
 	var path_hex: PathHex = _distance_map.get(coord_to, null)
 	var dist: int = -1
@@ -37,6 +40,20 @@ func FabricateSkillstructions(hex_from: Hex, hex_to: Hex) -> Array[SkillInstruct
 	
 	return [ins_delay, ins_ability, ins_cool]
 
-
+func DoWorldHexWidgets(worldHex_dict: Dictionary[Vector2i, WorldHex]) -> void:
+	if _last_hex_to == null: return
+	
+	var coord_to: Vector2i = _last_hex_to.coord
+	var pathHex: PathHex = _distance_map[coord_to]
+	
+	while pathHex != null and pathHex.dist > 0:
+		var coord_backwalk: Vector2i = pathHex.coord_from
+		var worldHex: WorldHex = worldHex_dict.get(coord_backwalk, null)
+		if worldHex != null:
+			worldHex.SetHexColor(Color.PURPLE)
+			var coord_forwards: Vector2 = HexMath.hex_to_pixel(coord_to)
+			worldHex.AimWalkArrow(Vector3(coord_forwards.x,0,coord_forwards.y))
+		pathHex = _distance_map.get(coord_backwalk, null)
+		coord_to = coord_backwalk
 
 #class Pathing extends RefCounted:

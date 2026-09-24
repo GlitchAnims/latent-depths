@@ -55,8 +55,10 @@ func PopulateWorldHexes() -> void:
 		newnode.position = Vector3(pos.x,0,pos.y)
 		add_child(newnode)
 		worldhex_list.push_back(newnode)
+		worldhex_dict[hex.coord] = newnode
 
 var worldhex_list: Array[WorldHex] = []
+var worldhex_dict: Dictionary[Vector2i, WorldHex] = {}
 var worldhex_hovered: WorldHex = null
 
 @rpc("authority", "call_remote", "reliable")
@@ -75,19 +77,25 @@ func _physics_process(delta: float) -> void:
 	GameData.rayquery_wall.from = from
 	GameData.rayquery_wall.to = to
 	
-	var worldhex: WorldHex = null
+	var worldhex_current: WorldHex = null
 	
 	var result: Dictionary = space_state.intersect_ray(GameData.rayquery_wall)
 	if result and result.collider is WorldPickable:
 		var worldPick: WorldPickable = result.collider as WorldPickable
 		if worldPick.LogicNode is WorldHex:
-			worldhex = worldPick.LogicNode as WorldHex
+			worldhex_current = worldPick.LogicNode as WorldHex
 	
-	if worldhex_hovered != worldhex:
+	var worldhex_do_update: bool = false
+	if worldhex_hovered != worldhex_current:
+		worldhex_do_update = true
 		if worldhex_hovered != null:
 			worldhex_hovered.SetHovered(false)
-		worldhex_hovered = worldhex
-		if worldhex != null: worldhex.SetHovered(true)
+		worldhex_hovered = worldhex_current
+		if worldhex_current != null: worldhex_current.SetHovered(true)
+	
+	if worldhex_do_update:
+		for worldhex: WorldHex in worldhex_list:
+			worldhex.ClearHexWidgets()
 	
 	var unit_list: Array[Unit] = GameData.unit_list_temp
 	
@@ -140,15 +148,18 @@ func _physics_process(delta: float) -> void:
 		if is_instance_valid(skill):
 			var hex_from: Hex = GameData.hex_dict[actor.pos_hex]
 			
-			for obj: WorldHex in worldhex_list:
-				if skill.IsHexSelectable(hex_from, obj.hex_ref): obj.SetHexColor(Color.GREEN)
-				else: obj.SetHexColor(Color.RED)
+			if worldhex_do_update:
+				for obj: WorldHex in worldhex_list:
+					if skill.IsHexSelectable(hex_from, obj.hex_ref): obj.SetHexColor(Color.GREEN)
+					else: obj.SetHexColor(Color.RED)
 			
 			if is_instance_valid(worldhex_hovered):
 				var hex_to: Hex = worldhex_hovered.hex_ref
 				var canchoose: bool = skill.IsHexSelectable(hex_from, hex_to)
 				
-				if canchoose: ClientData.temp_skillstruction_list = skill.FabricateSkillstructions(hex_from,hex_to)
+				if canchoose:
+					ClientData.temp_skillstruction_list = skill.FabricateSkillstructions(hex_from,hex_to)
+					if worldhex_do_update: skill.DoWorldHexWidgets(worldhex_dict)
 				else: ClientData.temp_skillstruction_list = []
 				
 				if ClientData.press_m1 and canchoose:
