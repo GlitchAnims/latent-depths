@@ -1,8 +1,10 @@
-[gd_resource type="Resource" script_class="SkillConfig" format=3 uid="uid://b0gqw2sl3hcmn"]
+[gd_resource type="Resource" format=3 uid="uid://b0gqw2sl3hcmn"]
 
-[ext_resource type="Script" uid="uid://derk5pfmfhjf6" path="res://scripts/Configs/SkillConfig.gd" id="1_bt2nj"]
+[ext_resource type="PackedScene" uid="uid://bj8upukk48hpx" path="res://scenes/Skills/base_move.tscn" id="2_nycrh"]
+[ext_resource type="Script" uid="uid://c1uwxkhr70dh4" path="res://scripts/Configs/InheritSkillConfig/SC_BaseMove.gd" id="2_u7sys"]
 
 [resource]
-script = ExtResource("1_bt2nj")
+script = ExtResource("2_u7sys")
 identifier = &"og_basemove"
+skill_scene = ExtResource("2_nycrh")
 metadata/_custom_type_script = "uid://derk5pfmfhjf6"

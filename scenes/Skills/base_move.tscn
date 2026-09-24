@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bj8upukk48hpx"]
+
+[ext_resource type="PackedScene" uid="uid://cvo0gw86m5uag" path="res://scenes/Skills/skill_template.tscn" id="1_2j2k6"]
+[ext_resource type="Script" uid="uid://dq7ifi7frsp02" path="res://scripts/SkillScripts/SS_BaseMove.gd" id="2_vff85"]
+
+[node name="BaseMove" unique_id=1468544059 instance=ExtResource("1_2j2k6")]
+script = ExtResource("2_vff85")

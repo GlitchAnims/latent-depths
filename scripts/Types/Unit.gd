@@ -6,8 +6,7 @@ class_name Unit extends Node3D
 
 @onready var ID_Label: Label3D = $"ID"
 @onready var TurnMarker_Node: Node3D = $"Tringl"
-
-const BaseMove = preload("res://scripts/SkillScripts/SS_BaseMove.gd")
+@onready var SkillSpawner_Node: SkillSpawner = $"SkillSpawner"
 
 ## Called by Server when spawned, before adding as child to tree.
 func Server_SetupForSpawn(uniqueunitid: int) -> void:
@@ -69,9 +68,12 @@ func _ready() -> void:
 	GameData.unit_dict[unitID] = self
 	GameData.sig_actor_changed.connect(UpdateForActor)
 	
-	var basemove: BaseMove = BaseMove.new()
-	basemove.skillConfig_ref = GameData.skillConfig_dict[&"og_basemove"]
+	var skillConfig: SkillConfig = GameData.skillConfig_dict[&"og_basemove"]
+	var basemove: SkillBase = skillConfig.skill_scene.instantiate()
+	basemove.skillConfig_ref = skillConfig
+	basemove.skillConfig_id = &"og_basemove"
 	skill_list.push_back(basemove)
+	SkillSpawner_Node.add_child(basemove,true)
 	
 	ID_Label.text = str(unitID)
 	_ready_unit()

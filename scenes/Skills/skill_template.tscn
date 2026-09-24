@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cvo0gw86m5uag"]
+
+[ext_resource type="Script" uid="uid://d2hdwsl8nywil" path="res://scripts/Types/SkillBase.gd" id="1_4jktv"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4jktv"]
+properties/0/path = NodePath(".:skillConfig_id")
+properties/0/spawn = true
+properties/0/replication_mode = 0
+
+[node name="SkillTemplate" type="Node" unique_id=1468544059]
+script = ExtResource("1_4jktv")
+metadata/_custom_type_script = "uid://d2hdwsl8nywil"
+
+[node name="SetupSync" type="MultiplayerSynchronizer" parent="." unique_id=1758320027]
+replication_config = SubResource("SceneReplicationConfig_4jktv")

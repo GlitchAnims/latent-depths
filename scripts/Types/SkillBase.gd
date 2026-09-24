@@ -1,7 +1,12 @@
-class_name SkillBase extends RefCounted
+class_name SkillBase extends Node
 
+@export var skillConfig_id: StringName = &""
 var skillConfig_ref: SkillConfig = null
 var unit_ref: Unit = null
+
+func _ready() -> void:
+	skillConfig_ref = GameData.skillConfig_dict[skillConfig_id]
+	unit_ref = $"..."
 
 var loudness_value: int = 0
 var instruction_list: Array[SkillInstruction] = []

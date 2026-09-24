@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bx6iy0abyupfe"]
 
 [ext_resource type="Script" uid="uid://b0ykym1txudf3" path="res://scripts/Types/Unit.gd" id="1_o7ajc"]
+[ext_resource type="Script" uid="uid://d1eus63jer531" path="res://scripts/MultSpawn/SkillSpawner.gd" id="2_k673f"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_o7ajc"]
 properties/0/path = NodePath(".:unitID")
@@ -74,3 +75,7 @@ text = "12"
 [node name="Tringl" type="MeshInstance3D" parent="." unique_id=87896051]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5852852, 0)
 mesh = SubResource("CylinderMesh_vesgh")
+
+[node name="SkillSpawner" type="MultiplayerSpawner" parent="." unique_id=140067730]
+spawn_path = NodePath(".")
+script = ExtResource("2_k673f")
