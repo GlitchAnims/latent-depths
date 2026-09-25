@@ -40,7 +40,7 @@ func add_player(id: int):
 	#var spawnPos: Vector3 = Vector3(ClientData.rng.randf_range(-5.0,5.0), 0.0, ClientData.rng.randf_range(-5.0,5.0))
 	
 	if is_instance_valid(GameData.current_actor):
-		GameData.Gamespace_Node.Auth_Rem_ToClient_ItsThisGuysTurn.rpc_id(id, GameData.current_actor.unitID)
+		GameData.Gamespace_Node.Auth_Rem_ToClient_SetActor.rpc_id(id, GameData.current_actor.unitID)
 
 #@rpc("authority", "call_remote", "reliable")
 #func Auth_Rem_ToClient_SendMissingJoinData(skill_ID: int, ins_list_packed: PackedByteArray) -> void:

@@ -27,12 +27,11 @@ func SetupHP(hp_max_new: int = 1000) -> void:
 @export_storage var stress_enabled: bool = true
 @export_storage var stress: int = 1000
 
-
 @export_storage var overhead_downtime: int = 0
 
 var skill_list: Array[SkillBase] = []
 var skill_selected: SkillBase = null
-@export_storage var skill_selected_i: int = 0
+@export_storage var heard_teams_flags: int = 0
 
 func GetSumDelay() -> int:
 	return 0

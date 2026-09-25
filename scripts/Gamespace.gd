@@ -64,11 +64,20 @@ var worldhex_lock: WorldHex = null
 
 var unit_hovered: Unit = null
 
+func Server_SetActorForAll(unit: Unit) -> void:
+	GameData.current_actor = unit
+	if is_instance_valid(unit):
+		unit.heard_teams_flags = 0
+		Auth_Rem_ToClient_SetActor.rpc(unit.unitID)
+	else:
+		Auth_Rem_ToClient_SetActor.rpc(-1)
+
 @rpc("authority", "call_remote", "reliable")
-func Auth_Rem_ToClient_ItsThisGuysTurn(unit_id: int) -> void:
+func Auth_Rem_ToClient_SetActor(unit_id: int) -> void:
 	if GameData.isServer: return
 	var unit: Unit = GameData.unit_dict.get(unit_id,null)
 	GameData.current_actor = unit
+	unit.heard_teams_flags = 0
 
 func DoWorldHexRay(space_state: PhysicsDirectSpaceState3D, from: Vector3, to: Vector3) -> WorldHex:
 	GameData.rayquery_worldHex.from = from
@@ -185,7 +194,7 @@ func _physics_process(delta: float) -> void:
 			else: # No Possible Actors, find New Turn
 				var selected_actor: Unit = actors[0]
 				GameData.current_actor = selected_actor
-				Auth_Rem_ToClient_ItsThisGuysTurn.rpc(selected_actor.unitID)
+				Server_SetActorForAll(selected_actor)
 				has_actor = true
 	
 	if has_actor:
@@ -211,7 +220,7 @@ func _physics_process(delta: float) -> void:
 				if ClientData.press_space and canchoose:
 					if GameData.isServer:
 						GameData.current_actor = null
-						Auth_Rem_ToClient_ItsThisGuysTurn.rpc(-1)
+						Server_SetActorForAll(null)
 						actor.Server_UseSkill(skill, ClientData.temp_skillstruction_list)
 						ClientData.temp_skillstruction_list = []
 						ClientData.temp_skill = null
