@@ -10,8 +10,11 @@ const timeline_marker_scene: PackedScene = preload("res://scenes/HUD/timeline_ma
 const timeline_seconds_scene: PackedScene = preload("res://scenes/HUD/timeline_marker_seconds.tscn")
 const si_marker_scene: PackedScene = preload("res://scenes/HUD/skillstruction_marker.tscn")
 const si_marker_big_scene: PackedScene = preload("res://scenes/HUD/skillstruction_marker_big.tscn")
-const si_marker_big_width: float = 72.0
-const si_marker_big_height: float = 146.0
+
+
+const const_si_marker_big_size: Vector2 = Vector2(72,146)
+var si_marker_big_size: Vector2 = const_si_marker_big_size
+var si_marker_big_scale: Vector2 = const_si_marker_big_size
 
 var myturn_list: Array[TimelineMarker] = []
 var secondmarker_list: Array[TimelineMarker_Seconds] = []
@@ -23,9 +26,17 @@ var client_scale: float = 1.0
 
 func UpdateSize(set_client_scale: float, item_scale: Vector2) -> void:
 	client_scale = set_client_scale
-	custom_minimum_size = Vector2(64,si_marker_big_height*client_scale*0.9)
+	si_marker_big_scale = item_scale * 0.8
+	si_marker_big_size = const_si_marker_big_size * si_marker_big_scale
+	
+	custom_minimum_size = si_marker_big_size
+	
+	for marker: SkillstructionMarker in si_marker_list:
+		marker.scale = item_scale
 	for marker: SkillstructionMarkerBig in si_marker_big_list:
-		marker.scale = item_scale * 0.9
+		marker.scale = si_marker_big_scale
+	
+	RulerLine_Node.width = 3.0 * client_scale
 
 static func SetTimelineLimit() -> void:
 	var longest: int = time_per_second * 4
@@ -77,10 +88,10 @@ func _physics_process(delta: float) -> void:
 	var ruler_begin: Vector2 = Ruler_Node.get_begin()
 	var ruler_end: Vector2 = Ruler_Node.get_end()
 	var ruler_vec: Vector2 = ruler_end - ruler_begin
-	var ruler_middle: Vector2 = ruler_vec / 2
+	#var ruler_middle: Vector2 = ruler_vec / 2
 	
-	var line_start: Vector2 = Vector2(ruler_vec.x*0.04,ruler_middle.y)
-	var line_end: Vector2 = Vector2(ruler_vec.x*0.96,ruler_middle.y)
+	var line_start: Vector2 = Vector2(ruler_vec.x*0.04,-20)
+	var line_end: Vector2 = Vector2(ruler_vec.x*0.96,-20)
 	
 	RulerLine_Node.set_point_position(0,line_start)
 	RulerLine_Node.set_point_position(1,line_end)
@@ -211,19 +222,21 @@ func _physics_process(delta: float) -> void:
 	)
 	
 	var order_count: int = order_list.size()
+	var actor_ID: int = cur_actor.unitID if cur_actor_is_valid else -1
+	var infomercial_ID: int = ClientData.infomercial_unit.unitID if is_instance_valid(ClientData.infomercial_unit) else -1
+	
 	var si_marker_count: int = si_marker_list.size()
+	var too_close_value: float = -1.0
+	var order_height_level: int = 0
 	for i in si_marker_count:
 		var marker: SkillstructionMarker = si_marker_list[i]
 		var marker_visible: bool = i < order_count
 		marker.visible = marker_visible
-	
-	var too_close_value: float = -1.0
-	var order_height_level: int = 0
-	for i in order_count:
-		var order: SkillInsOrder = order_list[i]
-		var marker: SkillstructionMarker = si_marker_list[i]
+		if not marker_visible: continue
 		
+		var order: SkillInsOrder = order_list[i]
 		var marker_mult: float = float(order.time) / timeline_limit
+		
 		var overlap: bool = marker_mult-too_close_value < 0.06
 		if overlap:
 			order_height_level += 1
@@ -239,14 +252,8 @@ func _physics_process(delta: float) -> void:
 			marker.SetInstructionType(SkillInstruction.INS_TYPE.special)
 		else:
 			var ins_type: SkillInstruction.INS_TYPE = order.ins.ins_type
-			#if i < order_count-1 and ins_type == SkillInstruction.INS_TYPE.down:
-				#marker.visible = false
-				#continue
 			marker.SetInstructionType(ins_type)
 	
-	
-	var actor_ID: int = cur_actor.unitID if cur_actor_is_valid else -1
-	var infomercial_ID: int = ClientData.infomercial_unit.unitID if is_instance_valid(ClientData.infomercial_unit) else -1
 	
 	var si_marker_big_offset: float = 0
 	var si_marker_big_count: int = si_marker_list.size()
@@ -257,8 +264,8 @@ func _physics_process(delta: float) -> void:
 		if not marker_visible: continue
 		
 		var order: SkillInsOrder = order_list[i]
-		marker.position = ruler_vec - Vector2(si_marker_big_offset * client_scale * 0.9,0)
-		si_marker_big_offset += si_marker_big_width
+		marker.position = ruler_vec - Vector2(si_marker_big_offset,0)
+		si_marker_big_offset += si_marker_big_size.x
 		
 		var unit: Unit = order.unit
 		marker.SetTeam(unit.team)
