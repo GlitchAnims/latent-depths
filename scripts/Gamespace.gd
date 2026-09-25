@@ -66,20 +66,21 @@ var unit_hovered_last: Unit = null
 var unit_lock: Unit = null
 
 func Server_SetActorForAll(unit: Unit) -> void:
+	SetActor(unit)
+	Auth_Rem_ToClient_SetActor.rpc(unit.unitID if GameData.current_actor_is_valid else -1)
+
+func SetActor(unit: Unit) -> void:
 	GameData.current_actor = unit
-	if is_instance_valid(unit):
+	GameData.current_actor_is_valid = is_instance_valid(unit)
+	if GameData.current_actor_is_valid:
 		unit.heard_teams_flags = 0
-		Auth_Rem_ToClient_SetActor.rpc(unit.unitID)
-	else:
-		Auth_Rem_ToClient_SetActor.rpc(-1)
+	GameData.sig_actor_changed.emit()
 
 @rpc("authority", "call_remote", "reliable")
 func Auth_Rem_ToClient_SetActor(unit_id: int) -> void:
 	if GameData.isServer: return
 	var unit: Unit = GameData.unit_dict.get(unit_id,null)
-	GameData.current_actor = unit
-	if unit != null:
-		unit.heard_teams_flags = 0
+	SetActor(unit)
 
 func DoWorldHexRay(space_state: PhysicsDirectSpaceState3D, from: Vector3, to: Vector3) -> WorldHex:
 	GameData.rayquery_worldHex.from = from

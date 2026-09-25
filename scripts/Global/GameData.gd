@@ -74,11 +74,10 @@ func _physics_process(_delta: float) -> void:
 		return a_speed < b_speed
 	)
 
+@warning_ignore("unused_signal")
 signal sig_actor_changed
-var current_actor: Unit = null:
-	set(value):
-		current_actor = value
-		sig_actor_changed.emit()
+var current_actor_is_valid: bool = false
+var current_actor: Unit = null
 
 var pilotDict: Dictionary[int, Pilot] = {}
 var playerDict: Dictionary[int, Player] = {}
