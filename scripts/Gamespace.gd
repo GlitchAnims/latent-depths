@@ -67,12 +67,12 @@ var unit_lock: Unit = null
 
 func Server_SetActorForAll(unit: Unit) -> void:
 	SetActor(unit)
-	Auth_Rem_ToClient_SetActor.rpc(unit.unitID if GameData.current_actor_is_valid else -1)
+	Auth_Rem_ToClient_SetActor.rpc(unit.unitID if GameData.cur_actor_is_valid else -1)
 
 func SetActor(unit: Unit) -> void:
-	GameData.current_actor = unit
-	GameData.current_actor_is_valid = is_instance_valid(unit)
-	if GameData.current_actor_is_valid:
+	GameData.cur_actor = unit
+	GameData.cur_actor_is_valid = is_instance_valid(unit)
+	if GameData.cur_actor_is_valid:
 		unit.heard_teams_flags = 0
 	GameData.sig_actor_changed.emit()
 
@@ -94,8 +94,8 @@ func DoWorldHexRay(space_state: PhysicsDirectSpaceState3D, from: Vector3, to: Ve
 func DoUnitRay(space_state: PhysicsDirectSpaceState3D, from: Vector3, to: Vector3) -> Unit:
 	GameData.rayquery_unit.from = from
 	GameData.rayquery_unit.to = to
-	if is_instance_valid(GameData.current_actor):
-		GameData.rayquery_unit.set_exclude([GameData.current_actor.MouseSelector_Node.get_rid()])
+	if is_instance_valid(GameData.cur_actor):
+		GameData.rayquery_unit.set_exclude([GameData.cur_actor.MouseSelector_Node.get_rid()])
 	else: GameData.rayquery_unit.set_exclude([])
 	var result: Dictionary = space_state.intersect_ray(GameData.rayquery_unit)
 	if result and result.collider is WorldPickable:
@@ -147,7 +147,7 @@ func _physics_process(delta: float) -> void:
 	
 	var unit_list: Array[Unit] = GameData.unit_list_temp
 	
-	var has_actor: bool = is_instance_valid(GameData.current_actor)
+	var has_actor: bool = is_instance_valid(GameData.cur_actor)
 	var time_mult: float = delta
 	var time_pass: int = 0
 	if not has_actor:
@@ -200,12 +200,12 @@ func _physics_process(delta: float) -> void:
 				
 			else: # No Possible Actors, find New Turn
 				var selected_actor: Unit = actors[0]
-				GameData.current_actor = selected_actor
+				GameData.cur_actor = selected_actor
 				Server_SetActorForAll(selected_actor)
 				has_actor = true
 	
 	if has_actor:
-		var actor: Unit = GameData.current_actor
+		var actor: Unit = GameData.cur_actor
 		var skill: SkillBase = ClientData.temp_skill
 		if is_instance_valid(skill):
 			var hex_from: Hex = GameData.hex_dict[actor.pos_hex]
@@ -226,7 +226,7 @@ func _physics_process(delta: float) -> void:
 				
 				if ClientData.press_space and canchoose:
 					if GameData.isServer:
-						GameData.current_actor = null
+						GameData.cur_actor = null
 						Server_SetActorForAll(null)
 						actor.Server_UseSkill(skill, ClientData.temp_skillstruction_list)
 						ClientData.temp_skillstruction_list = []

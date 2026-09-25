@@ -134,8 +134,8 @@ func _physics_process(delta: float) -> void:
 	var order_list: Array[SkillInsOrder] = []
 	var time_cumulative: int = 0
 	
-	var cur_actor: Unit = GameData.current_actor
-	var cur_actor_is_valid: bool = GameData.current_actor_is_valid
+	var cur_actor: Unit = GameData.cur_actor
+	var cur_actor_is_valid: bool = GameData.cur_actor_is_valid
 	
 	for unit: Unit in unit_list:
 		time_cumulative = 0
@@ -166,8 +166,8 @@ func _physics_process(delta: float) -> void:
 			order.unit = unit
 			order_list.push_back(order)
 	
-	#if is_instance_valid(GameData.current_actor):
-		#var unit: Unit = GameData.current_actor
+	#if is_instance_valid(GameData.cur_actor):
+		#var unit: Unit = GameData.cur_actor
 		#for ins: SkillInstruction in ins_list:
 			#time_cumulative += ins.timer
 			#var order: SkillInsOrder = SkillInsOrder.new()
@@ -235,7 +235,7 @@ func _physics_process(delta: float) -> void:
 			marker.SetInstructionType(ins_type)
 	
 	
-	var actor_ID: int = GameData.current_actor.unitID if is_instance_valid(GameData.current_actor) else -1
+	var actor_ID: int = GameData.cur_actor.unitID if is_instance_valid(GameData.cur_actor) else -1
 	var infomercial_ID: int = ClientData.infomercial_unit.unitID if is_instance_valid(ClientData.infomercial_unit) else -1
 	
 	const si_marker_big_width: float = 72.0

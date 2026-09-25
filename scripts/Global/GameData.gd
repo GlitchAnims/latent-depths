@@ -76,8 +76,8 @@ func _physics_process(_delta: float) -> void:
 
 @warning_ignore("unused_signal")
 signal sig_actor_changed
-var current_actor_is_valid: bool = false
-var current_actor: Unit = null
+var cur_actor_is_valid: bool = false
+var cur_actor: Unit = null
 
 var pilotDict: Dictionary[int, Pilot] = {}
 var playerDict: Dictionary[int, Player] = {}

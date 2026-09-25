@@ -35,7 +35,7 @@ static func BuildDistanceMap(coord_start: Vector2i) -> Dictionary[Vector2i, Path
 	
 	while not queue.is_empty():
 		var current: Vector2i = queue.pop_front()
-		var current_dist: int = distance_map[current].dist
+		var cur_dist: int = distance_map[current].dist
 		
 		for offset: Vector2i in HexMath.axial_direction_vectors:
 			var neighbor: Vector2i = current + offset
@@ -43,7 +43,7 @@ static func BuildDistanceMap(coord_start: Vector2i) -> Dictionary[Vector2i, Path
 			if hex == null: continue
 			if hex.tile_flags & Hex.TILE_FLAGS.WALL: continue
 			if distance_map[neighbor].dist != -1: continue
-			distance_map[neighbor].dist = current_dist + 1
+			distance_map[neighbor].dist = cur_dist + 1
 			distance_map[neighbor].coord_from = current
 			queue.push_back(neighbor)
 	

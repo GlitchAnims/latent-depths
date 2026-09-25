@@ -144,7 +144,7 @@ vec3 normalize_or_else(vec3 _in, const vec3 _else) {
 	return normalize(_in);
 }
 
-vec4 rotate_hue(vec4 current_color, float hue_rot_angle) {
+vec4 rotate_hue(vec4 cur_color, float hue_rot_angle) {
 	float hue_rot_c = cos(hue_rot_angle);
 	float hue_rot_s = sin(hue_rot_angle);
 	mat4 hue_rot_mat =
@@ -162,7 +162,7 @@ vec4 rotate_hue(vec4 current_color, float hue_rot_angle) {
 					vec4(1.250, -1.050, -0.203, 0.0),
 					vec4(0.000, 0.000, 0.000, 0.0)) *
 					hue_rot_s;
-	return hue_rot_mat * current_color;
+	return hue_rot_mat * cur_color;
 }
 
 float rand_from_seed(inout uint seed) {

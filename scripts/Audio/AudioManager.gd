@@ -14,5 +14,5 @@ func RunTimelineClick(frequency: float = 0.0) -> void:
 		TimelineClicker_Node.play()
 
 func DoNewActorSound() -> void:
-	if is_instance_valid(GameData.current_actor):
+	if is_instance_valid(GameData.cur_actor):
 		TimelineNewActor_Node.play()

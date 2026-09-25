@@ -31,8 +31,8 @@ func MakeTooltip() -> void:
 	
 
 func UpdateForActor() -> void:
-	var current_actor: Unit = GameData.current_actor
-	SkillRack_Node.UpdateSkillRack(current_actor)
+	var cur_actor: Unit = GameData.cur_actor
+	SkillRack_Node.UpdateSkillRack(cur_actor)
 
 func _ProcessHudBar(value: int, lerpspeed: float, hudbar: HudBar, mode: int) -> void:
 	if value != hudbar.goal:

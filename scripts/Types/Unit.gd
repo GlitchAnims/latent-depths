@@ -55,7 +55,7 @@ func SetupLight(max_new: int = 10) -> void:
 	light = floor(float(max_new) / 2)
 
 func UpdateForActor() -> void:
-	var is_actor: bool = GameData.current_actor == self
+	var is_actor: bool = GameData.cur_actor == self
 	TurnMarker_Node.visible = is_actor
 
 func _exit_tree() -> void:
@@ -140,7 +140,7 @@ func Auth_Rem_ToClient_SendSkillstructionArray(skill_ID: int, ins_list_packed: P
 func Rem_ToServer_TryUseSkill(skill_ID: int, coord_target: Vector2i) -> void:
 	if not GameData.isServer: return
 	
-	var actor: Unit = GameData.current_actor
+	var actor: Unit = GameData.cur_actor
 	if not is_instance_valid(actor) or actor != self: return
 	
 	var sender_id: int = multiplayer.get_remote_sender_id()
