@@ -8,5 +8,8 @@ var coord_chosen_list: Array[Vector2i] = []
 enum INS_TYPE{
 	down,
 	ability,
-	walk
+	walk,
+	attack,
+	defend,
+	special
 }

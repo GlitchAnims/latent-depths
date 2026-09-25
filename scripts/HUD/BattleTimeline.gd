@@ -8,10 +8,12 @@ static var timeline_limit: int = time_per_second * 3
 
 const timeline_marker_scene: PackedScene = preload("res://scenes/HUD/timeline_marker.tscn")
 const timeline_seconds_scene: PackedScene = preload("res://scenes/HUD/timeline_marker_seconds.tscn")
+const skillstruction_marker_scene: PackedScene = preload("res://scenes/HUD/skillstruction_marker.tscn")
 
 var myturn_list: Array[TimelineMarker] = []
 var secondmarker_list: Array[TimelineMarker_Seconds] = []
 var skillstruction_line_list: Array[Line2D] = []
+var skillstruction_marker_list: Array[SkillstructionMarker] = []
 
 static func SetTimelineLimit() -> void:
 	var longest: int = time_per_second * 4
@@ -31,6 +33,12 @@ func _ready() -> void:
 		newnode.add_point(Vector2(1,0))
 		RulerLine_Node.add_child(newnode)
 		skillstruction_line_list.push_back(newnode)
+	
+	for i in 30:
+		var newnode: SkillstructionMarker = skillstruction_marker_scene.instantiate()
+		newnode.visible = false
+		RulerLine_Node.add_child(newnode)
+		skillstruction_marker_list.push_back(newnode)
 
 @warning_ignore("unused_parameter")
 func _physics_process(delta: float) -> void:
@@ -71,20 +79,18 @@ func _physics_process(delta: float) -> void:
 			var timeline_pos: float = timeline_mult * (line_end.x-line_start.x)
 			marker.position = line_end - Vector2(timeline_pos,0)
 	
-	var unit_list: Array[Unit] = GameData.unit_dict.values() as Array[Unit]
-	var unit_count: int = unit_list.size()
-	var marker_count: int = myturn_list.size()
-	
-	if unit_count != marker_count:
-		RefreshAllMarkers(unit_list)
-	
+	var unit_list: Array[Unit] = GameData.unit_list_temp
+	#var unit_count: int = unit_list.size()
+	#var marker_count: int = myturn_list.size()
+	#if unit_count != marker_count:
+		#RefreshAllMarkers(unit_list)
 	#for unit: Unit in unit_list:
-	for marker: TimelineMarker in myturn_list:
-		var unit: Unit = marker.unit_ref
-		var downtime: int = unit.GetSumDowntime()
-		var timeline_mult: float = float(downtime) / timeline_limit
-		var timeline_pos: float = timeline_mult * (line_end.x-line_start.x)
-		marker.position = line_end - Vector2(timeline_pos,0)
+	#for marker: TimelineMarker in myturn_list:
+		#var unit: Unit = marker.unit_ref
+		#var downtime: int = unit.GetSumDowntime()
+		#var timeline_mult: float = float(downtime) / timeline_limit
+		#var timeline_pos: float = timeline_mult * (line_end.x-line_start.x)
+		#marker.position = line_end - Vector2(timeline_pos,0)
 	
 	var ins_list: Array[SkillInstruction] = ClientData.temp_skillstruction_list
 	var ins_count: int = ins_list.size()
@@ -105,17 +111,103 @@ func _physics_process(delta: float) -> void:
 		var ins_end_mult: float = float(ins_time) / timeline_limit
 		var ins_end_pos: float = ins_end_mult * (line_end.x-line_start.x)
 		
-		if ins.ins_type == SkillInstruction.INS_TYPE.down:
-			if i == ins_count-1: ins_color = Color.RED
-			line.set_point_position(0,line_end - Vector2(ins_start_pos,0))
-			line.set_point_position(1,line_end - Vector2(ins_end_pos,0))
-		elif ins.ins_type == SkillInstruction.INS_TYPE.ability:
+		if ins.ins_type == SkillInstruction.INS_TYPE.ability:
 			ins_color = Color.BLUE
 			line.set_point_position(0,line_end - Vector2(ins_start_pos,10))
 			line.set_point_position(1,line_end - Vector2(ins_start_pos,-10))
+		else:
+			if ins.ins_type == SkillInstruction.INS_TYPE.down: ins_color = Color.RED
+			line.set_point_position(0,line_end - Vector2(ins_start_pos,0))
+			line.set_point_position(1,line_end - Vector2(ins_end_pos,0))
 		
 		line.default_color = ins_color
 		last_ins_time = ins_time
+	
+	var order_list: Array[SkillInsOrder] = []
+	var time_cumulative: int = 0
+	
+	for unit: Unit in unit_list:
+		if is_instance_valid(unit.skill_selected): continue
+		var order: SkillInsOrder = SkillInsOrder.new()
+		order.is_turn_recovery = true
+		order.time = unit.GetSumDowntime()
+		order.unit = unit
+		order_list.push_back(order)
+	
+	if is_instance_valid(GameData.current_actor):
+		var unit: Unit = GameData.current_actor
+		for ins: SkillInstruction in ins_list:
+			time_cumulative += ins.timer
+			var order: SkillInsOrder = SkillInsOrder.new()
+			order.ins = ins
+			order.time = time_cumulative
+			order.unit = unit
+			order_list.push_back(order)
+	
+	if is_instance_valid(ClientData.infomercial_unit):
+		var unit: Unit = ClientData.infomercial_unit
+		if is_instance_valid(unit.skill_selected):
+			var skill: SkillBase = unit.skill_selected
+			time_cumulative = 0
+			for ins: SkillInstruction in skill.instruction_list:
+				time_cumulative += ins.timer
+				var order: SkillInsOrder = SkillInsOrder.new()
+				order.ins = ins
+				order.time = time_cumulative
+				order.unit = unit
+				order_list.push_back(order)
+	
+	order_list.sort_custom(func(a: SkillInsOrder, b: SkillInsOrder) -> bool:
+		var a_speed: int = a.time
+		var b_speed: int = b.time
+		if a_speed == b_speed:
+			a_speed = a.unit.GetSumSpeed()
+			b_speed = b.unit.GetSumSpeed()
+			if a_speed == b_speed:
+				return a.unit.unitID < b.unit.unitID
+		return a_speed < b_speed
+	)
+	
+	var order_count: int = order_list.size()
+	var skillstruction_marker_count: int = skillstruction_marker_list.size()
+	for i in skillstruction_marker_count:
+		var marker: SkillstructionMarker = skillstruction_marker_list[i]
+		var marker_visible: bool = i < order_count
+		marker.visible = marker_visible
+	
+	var too_close_value: float = -1.0
+	var order_height_level: int = 0
+	for i in order_count:
+		var order: SkillInsOrder = order_list[i]
+		var marker: SkillstructionMarker = skillstruction_marker_list[i]
+		
+		var marker_mult: float = float(order.time) / timeline_limit
+		var overlap: bool = marker_mult-too_close_value < 0.03
+		if overlap:
+			order_height_level += 1
+		else:
+			too_close_value = marker_mult
+			order_height_level = 0
+		var marker_dist: float = marker_mult * (line_end.x-line_start.x)
+		
+		marker.position = line_end - Vector2(marker_dist,0)
+		marker.SetHeightLevel(order_height_level)
+		
+		if order.is_turn_recovery:
+			marker.SetInstructionType(SkillInstruction.INS_TYPE.special)
+		else:
+			var ins_type: SkillInstruction.INS_TYPE = order.ins.ins_type
+			#if i < order_count-1 and ins_type == SkillInstruction.INS_TYPE.down:
+				#marker.visible = false
+				#continue
+			marker.SetInstructionType(ins_type)
+	
+
+class SkillInsOrder extends RefCounted:
+	var ins: SkillInstruction
+	var unit: Unit
+	var time: int
+	var is_turn_recovery: bool = false
 
 func RefreshAllMarkers(unit_list: Array[Unit]) -> void:
 	var marker_count: int = myturn_list.size()

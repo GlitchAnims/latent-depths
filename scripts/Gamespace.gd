@@ -63,6 +63,7 @@ var worldhex_hovered: WorldHex = null
 var worldhex_lock: WorldHex = null
 
 var unit_hovered: Unit = null
+var unit_lock: Unit = null
 
 func Server_SetActorForAll(unit: Unit) -> void:
 	GameData.current_actor = unit
@@ -112,9 +113,13 @@ func _physics_process(delta: float) -> void:
 	var worldHex_pick: WorldHex = DoWorldHexRay(space_state, from, to)
 	if worldHex_pick != null: worldhex_current = worldHex_pick
 	
-	var unit_current: Unit = null
+	var unit_current: Unit = unit_lock
 	var unit_pick: Unit = DoUnitRay(space_state, from, to)
 	if unit_pick != null: unit_current = unit_pick
+	
+	if ClientData.press_m2:
+		unit_lock = unit_current
+	ClientData.infomercial_unit = unit_current
 	
 	if unit_hovered != unit_current:
 		if unit_hovered != null: unit_hovered.SetHovered(false)
