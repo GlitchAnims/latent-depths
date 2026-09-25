@@ -38,6 +38,13 @@ func add_player(id: int):
 	#Authority_GivePassword.rpc_id(id, secretPass)
 	
 	#var spawnPos: Vector3 = Vector3(ClientData.rng.randf_range(-5.0,5.0), 0.0, ClientData.rng.randf_range(-5.0,5.0))
+	
+	if is_instance_valid(GameData.current_actor):
+		GameData.Gamespace_Node.Auth_Rem_ToClient_ItsThisGuysTurn.rpc_id(id, GameData.current_actor.unitID)
+
+#@rpc("authority", "call_remote", "reliable")
+#func Auth_Rem_ToClient_SendMissingJoinData(skill_ID: int, ins_list_packed: PackedByteArray) -> void:
+	#if GameData.isServer: return
 
 @rpc("authority", "call_local", "reliable")
 func Authority_GivePassword(password: int) -> void:
