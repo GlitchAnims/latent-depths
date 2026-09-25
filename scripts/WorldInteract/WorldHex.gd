@@ -16,7 +16,6 @@ func SetHovered(b: bool) -> void:
 	else:
 		var mat: ShaderMaterial = HexModel_Node.material_override
 		mat.set_shader_parameter(&"alpha_mult", 0.4)
-	
 
 func SetHexColor(color: Color = Color.RED) -> void:
 	var mat: ShaderMaterial = HexModel_Node.material_override

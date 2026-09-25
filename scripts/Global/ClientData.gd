@@ -19,6 +19,8 @@ var press_west: bool = false
 var hold_west: bool = false
 
 var hold_shift: bool = false
+var press_space: bool = false
+var hold_space: bool = false
 
 var mousePos: Vector2 = Vector2.ZERO
 var mousePos_old: Vector2 = Vector2.ZERO
@@ -65,6 +67,9 @@ func _physics_process(_delta: float) -> void:
 	hold_east = Input.is_action_pressed(&"ACT_East")
 	
 	hold_shift = Input.is_action_pressed(&"ACT_Shift")
+	
+	press_space = Input.is_action_just_pressed(&"ACT_Space")
+	hold_space = Input.is_action_pressed(&"ACT_Shift")
 
 func _process(_delta):
 	var viewportSize_new: Vector2 = Vector2(get_viewport().size)
@@ -102,3 +107,5 @@ func _unhandled_input(event):
 
 var temp_skill: SkillBase = null
 var temp_skillstruction_list: Array[SkillInstruction] = []
+
+var infomercial_unit_list: Array[Unit] = []

@@ -60,6 +60,7 @@ func PopulateWorldHexes() -> void:
 var worldhex_list: Array[WorldHex] = []
 var worldhex_dict: Dictionary[Vector2i, WorldHex] = {}
 var worldhex_hovered: WorldHex = null
+var worldhex_lock: WorldHex = null
 
 @rpc("authority", "call_remote", "reliable")
 func Auth_Rem_ToClient_ItsThisGuysTurn(unit_id: int) -> void:
@@ -77,7 +78,7 @@ func _physics_process(delta: float) -> void:
 	GameData.rayquery_wall.from = from
 	GameData.rayquery_wall.to = to
 	
-	var worldhex_current: WorldHex = null
+	var worldhex_current: WorldHex = worldhex_lock
 	
 	var result: Dictionary = space_state.intersect_ray(GameData.rayquery_wall)
 	if result and result.collider is WorldPickable:
@@ -86,6 +87,11 @@ func _physics_process(delta: float) -> void:
 			worldhex_current = worldPick.LogicNode as WorldHex
 	
 	var worldhex_do_update: bool = false
+	
+	if ClientData.press_m1:
+		worldhex_lock = worldhex_current
+		worldhex_do_update = true
+	
 	if worldhex_hovered != worldhex_current:
 		worldhex_do_update = true
 		if worldhex_hovered != null:
@@ -167,8 +173,8 @@ func _physics_process(delta: float) -> void:
 					if skill.IsHexSelectable(hex_from, obj.hex_ref): obj.SetHexColor(Color.GREEN)
 					else: obj.SetHexColor(Color.RED)
 			
-			if is_instance_valid(worldhex_hovered):
-				var hex_to: Hex = worldhex_hovered.hex_ref
+			if is_instance_valid(worldhex_lock):
+				var hex_to: Hex = worldhex_lock.hex_ref
 				var canchoose: bool = skill.IsHexSelectable(hex_from, hex_to)
 				
 				if canchoose:
@@ -176,7 +182,7 @@ func _physics_process(delta: float) -> void:
 					if worldhex_do_update: skill.DoWorldHexWidgets(worldhex_dict)
 				else: ClientData.temp_skillstruction_list = []
 				
-				if ClientData.press_m1 and canchoose:
+				if ClientData.press_space and canchoose:
 					if GameData.isServer:
 						GameData.current_actor = null
 						Auth_Rem_ToClient_ItsThisGuysTurn.rpc(-1)
