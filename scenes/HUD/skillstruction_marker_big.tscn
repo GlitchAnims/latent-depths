@@ -27,24 +27,15 @@ script = ExtResource("1_cwjhi")
 metadata/_custom_type_script = "uid://bpr0hk4cpc3xw"
 metadata/_edit_lock_ = true
 
-[node name="GraphHolder" type="Control" parent="." unique_id=1819909001]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-mouse_filter = 2
-metadata/_edit_lock_ = true
-
-[node name="Encompass" type="Panel" parent="GraphHolder" unique_id=1136800 node_paths=PackedStringArray("Logic_Node")]
+[node name="Encompass" type="Panel" parent="." unique_id=1136800 node_paths=PackedStringArray("Logic_Node")]
 layout_mode = 0
 offset_left = -72.0
 offset_top = -146.0
 theme_override_styles/panel = ExtResource("2_5mdd4")
 script = ExtResource("3_eahn4")
-Logic_Node = NodePath("../..")
+Logic_Node = NodePath("..")
 
-[node name="FocusColor" type="ColorRect" parent="GraphHolder" unique_id=1239727081]
+[node name="FocusColor" type="ColorRect" parent="." unique_id=1239727081]
 layout_mode = 0
 offset_left = -70.0
 offset_top = -144.0
@@ -53,7 +44,7 @@ offset_bottom = -2.0
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
-[node name="Timer" type="Label" parent="GraphHolder" unique_id=1653088211]
+[node name="Timer" type="Label" parent="." unique_id=1653088211]
 layout_mode = 0
 offset_left = -70.0
 offset_top = -31.0
@@ -63,7 +54,7 @@ text = "1.0s"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="UnitIcon" type="TextureRect" parent="GraphHolder" unique_id=379927329]
+[node name="UnitIcon" type="TextureRect" parent="." unique_id=379927329]
 layout_mode = 0
 offset_left = -68.0
 offset_top = -142.0
@@ -74,7 +65,7 @@ texture = ExtResource("3_01pf5")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="InstructionIcon" type="TextureRect" parent="GraphHolder" unique_id=255875173]
+[node name="InstructionIcon" type="TextureRect" parent="." unique_id=255875173]
 layout_mode = 0
 offset_left = -59.0
 offset_top = -74.0
@@ -85,7 +76,7 @@ texture = ExtResource("2_01pf5")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Team" type="Label" parent="GraphHolder" unique_id=1875343027]
+[node name="Team" type="Label" parent="." unique_id=1875343027]
 layout_mode = 0
 offset_left = -70.0
 offset_top = -174.0

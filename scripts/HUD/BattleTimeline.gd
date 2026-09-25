@@ -11,6 +11,7 @@ const timeline_seconds_scene: PackedScene = preload("res://scenes/HUD/timeline_m
 const si_marker_scene: PackedScene = preload("res://scenes/HUD/skillstruction_marker.tscn")
 const si_marker_big_scene: PackedScene = preload("res://scenes/HUD/skillstruction_marker_big.tscn")
 const si_marker_big_width: float = 72.0
+const si_marker_big_height: float = 146.0
 
 var myturn_list: Array[TimelineMarker] = []
 var secondmarker_list: Array[TimelineMarker_Seconds] = []
@@ -22,7 +23,7 @@ var client_scale: float = 1.0
 
 func UpdateSize(set_client_scale: float, item_scale: Vector2) -> void:
 	client_scale = set_client_scale
-	custom_minimum_size = Vector2(64,si_marker_big_width*client_scale)
+	custom_minimum_size = Vector2(64,si_marker_big_height*client_scale*0.9)
 	for marker: SkillstructionMarkerBig in si_marker_big_list:
 		marker.scale = item_scale * 0.9
 
@@ -256,7 +257,7 @@ func _physics_process(delta: float) -> void:
 		if not marker_visible: continue
 		
 		var order: SkillInsOrder = order_list[i]
-		marker.position = line_end - Vector2(si_marker_big_offset * client_scale * 0.9,0)
+		marker.position = ruler_vec - Vector2(si_marker_big_offset * client_scale * 0.9,0)
 		si_marker_big_offset += si_marker_big_width
 		
 		var unit: Unit = order.unit

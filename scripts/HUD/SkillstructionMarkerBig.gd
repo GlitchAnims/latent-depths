@@ -1,22 +1,17 @@
 class_name SkillstructionMarkerBig extends Control
 
-@onready var GraphHolder_Node: Control = $"GraphHolder"
-@onready var Encompass_Node: Panel = $"GraphHolder/Encompass"
-@onready var TimerLabel_Node: Label = $"GraphHolder/Timer"
-@onready var TeamLabel_Node: Label = $"GraphHolder/Team"
-@onready var UnitIcon_Node: TextureRect = $"GraphHolder/UnitIcon"
-@onready var InstructionIcon_Node: TextureRect = $"GraphHolder/InstructionIcon"
-@onready var FocusColor_Node: ColorRect = $"GraphHolder/FocusColor"
+@onready var Encompass_Node: Panel = $"Encompass"
+@onready var TimerLabel_Node: Label = $"Timer"
+@onready var TeamLabel_Node: Label = $"Team"
+@onready var UnitIcon_Node: TextureRect = $"UnitIcon"
+@onready var InstructionIcon_Node: TextureRect = $"InstructionIcon"
+@onready var FocusColor_Node: ColorRect = $"FocusColor"
 
 const icon_walk: AtlasTexture = preload("res://sprites/Icons/Atlas/walk.tres")
 const icon_special: AtlasTexture = preload("res://sprites/Icons/Atlas/special.tres")
 const icon_default: Texture = preload("res://sprites/UnitSprites/Firefist/dmg.png")
 var unit_ref: Unit = null
 
-func SetHeightLevel(level: int) -> void:
-	
-	var graph_height: float = level * 20.0
-	GraphHolder_Node.position.y = -graph_height
 
 func SetTimer(timer: int) -> void:
 	TimerLabel_Node.text = String.num(float(timer) / BattleTimeline.time_per_second, 2) + "s"
