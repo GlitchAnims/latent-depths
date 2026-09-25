@@ -3,6 +3,24 @@
 [ext_resource type="Script" uid="uid://hv4i1rg05cd1" path="res://scripts/HUD/SkillstructionMarker.gd" id="1_hxq75"]
 [ext_resource type="Texture2D" uid="uid://b5ksnyu2r0o73" path="res://sprites/Icons/Atlas/walk.tres" id="2_joqjr"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_joqjr"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.10980392, 0.10980392, 0.10980392, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
 [node name="SkillstructionMarker" type="Control" unique_id=698649434]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
@@ -28,6 +46,7 @@ offset_top = -31.0
 offset_right = 19.0
 offset_bottom = -12.0
 pivot_offset_ratio = Vector2(0.5, 1)
+theme_override_styles/panel = SubResource("StyleBoxFlat_joqjr")
 metadata/_edit_lock_ = true
 
 [node name="UnitID" type="Label" parent="GraphHolder" unique_id=1653088211]

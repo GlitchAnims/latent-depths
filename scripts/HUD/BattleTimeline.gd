@@ -32,7 +32,7 @@ func UpdateSize(set_client_scale: float, item_scale: Vector2) -> void:
 	custom_minimum_size = si_marker_big_size
 	
 	for marker: SkillstructionMarker in si_marker_list:
-		marker.scale = item_scale
+		marker.scale = item_scale * 1.2
 	for marker: SkillstructionMarkerBig in si_marker_big_list:
 		marker.scale = si_marker_big_scale
 	
@@ -237,15 +237,17 @@ func _physics_process(delta: float) -> void:
 		var order: SkillInsOrder = order_list[i]
 		var marker_mult: float = float(order.time) / timeline_limit
 		
-		var overlap: bool = marker_mult-too_close_value < 0.06
+		var overlap: bool = marker_mult-too_close_value < 0.03
 		if overlap:
 			order_height_level += 1
 		else:
 			too_close_value = marker_mult
 			order_height_level = 0
 		var marker_dist: float = marker_mult * (line_end.x-line_start.x)
-		
 		marker.position = line_end - Vector2(marker_dist,0)
+		
+		var unit: Unit = order.unit
+		marker.SetFocus(unit.unitID == actor_ID, unit.unitID == infomercial_ID)
 		marker.SetHeightLevel(order_height_level)
 		marker.SetUnitID(order.unit.unitID)
 		if order.is_turn_recovery:

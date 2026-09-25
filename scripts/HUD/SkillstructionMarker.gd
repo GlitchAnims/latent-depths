@@ -3,6 +3,7 @@ class_name SkillstructionMarker extends Control
 @onready var GraphHolder_Node: Control = $"GraphHolder"
 @onready var UnitIDLabel_Node: Label = $"GraphHolder/UnitID"
 @onready var Icon_Node: TextureRect = $"GraphHolder/InstructionIcon"
+@onready var Panel_Node: Panel = $"GraphHolder/Panel"
 
 const icon_walk: AtlasTexture = preload("res://sprites/Icons/Atlas/walk.tres")
 const icon_special: AtlasTexture = preload("res://sprites/Icons/Atlas/special.tres")
@@ -12,6 +13,11 @@ func SetHeightLevel(level: int) -> void:
 	
 	var graph_height: float = level * 20.0
 	GraphHolder_Node.position.y = -graph_height
+
+func SetFocus(is_actor: bool, is_infomercial: bool) -> void:
+	if is_actor: Panel_Node.self_modulate = Color.PURPLE*0.7
+	elif is_infomercial: Panel_Node.self_modulate = Color.RED*0.7
+	else: Panel_Node.self_modulate = Color(0.012,0.012,0.012)
 
 func SetUnitID(unit_ID: int) -> void:
 	UnitIDLabel_Node.text = str(unit_ID)
