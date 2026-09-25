@@ -182,7 +182,7 @@ func _physics_process(delta: float) -> void:
 		var marker: SkillstructionMarker = skillstruction_marker_list[i]
 		
 		var marker_mult: float = float(order.time) / timeline_limit
-		var overlap: bool = marker_mult-too_close_value < 0.03
+		var overlap: bool = marker_mult-too_close_value < 0.06
 		if overlap:
 			order_height_level += 1
 		else:
@@ -192,7 +192,7 @@ func _physics_process(delta: float) -> void:
 		
 		marker.position = line_end - Vector2(marker_dist,0)
 		marker.SetHeightLevel(order_height_level)
-		
+		marker.SetUnitID(order.unit.unitID)
 		if order.is_turn_recovery:
 			marker.SetInstructionType(SkillInstruction.INS_TYPE.special)
 		else:

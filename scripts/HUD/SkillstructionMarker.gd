@@ -1,12 +1,35 @@
 class_name SkillstructionMarker extends Control
 
 @onready var GraphHolder_Node: Control = $"GraphHolder"
-@onready var Label_Node: Label = $"GraphHolder/Label"
+@onready var UnitIDLabel_Node: Label = $"GraphHolder/UnitID"
+@onready var Icon_Node: TextureRect = $"GraphHolder/InstructionIcon"
+
+const icon_walk: AtlasTexture = preload("res://sprites/Icons/Atlas/walk.tres")
+const icon_special: AtlasTexture = preload("res://sprites/Icons/Atlas/special.tres")
+const icon_default: Texture = preload("res://sprites/UnitSprites/Firefist/dmg.png")
 
 func SetHeightLevel(level: int) -> void:
 	
 	var graph_height: float = level * 20.0
 	GraphHolder_Node.position.y = -graph_height
 
+func SetUnitID(unit_ID: int) -> void:
+	UnitIDLabel_Node.text = str(unit_ID)
+
 func SetInstructionType(ins_type: SkillInstruction.INS_TYPE) -> void:
-	Label_Node.text = str(ins_type)
+	var set_color: Color = Color.RED
+	var set_texture: Texture = icon_default
+	
+	match ins_type:
+		SkillInstruction.INS_TYPE.down:
+			set_texture = icon_special
+			set_color = Color.GREEN
+		SkillInstruction.INS_TYPE.walk:
+			set_texture = icon_walk
+			set_color = Color.WHITE
+		SkillInstruction.INS_TYPE.special:
+			set_texture = icon_special
+			set_color = Color.WHITE
+	
+	Icon_Node.texture = set_texture
+	Icon_Node.modulate = set_color

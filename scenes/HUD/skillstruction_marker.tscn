@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b50p4i2erermh"]
 
 [ext_resource type="Script" uid="uid://hv4i1rg05cd1" path="res://scripts/HUD/SkillstructionMarker.gd" id="1_hxq75"]
+[ext_resource type="Texture2D" uid="uid://b5ksnyu2r0o73" path="res://sprites/Icons/Atlas/walk.tres" id="2_joqjr"]
 
 [node name="SkillstructionMarker" type="Control" unique_id=698649434]
 custom_minimum_size = Vector2(10, 10)
@@ -22,20 +23,30 @@ mouse_filter = 2
 
 [node name="Panel" type="Panel" parent="GraphHolder" unique_id=1136800]
 layout_mode = 0
-offset_left = -9.0
-offset_top = -30.0
-offset_right = 9.0
+offset_left = -19.0
+offset_top = -31.0
+offset_right = 19.0
 offset_bottom = -12.0
 pivot_offset_ratio = Vector2(0.5, 1)
+metadata/_edit_lock_ = true
 
-[node name="Label" type="Label" parent="GraphHolder" unique_id=1653088211]
+[node name="UnitID" type="Label" parent="GraphHolder" unique_id=1653088211]
 layout_mode = 0
-offset_left = -20.0
-offset_top = -33.0
-offset_right = 20.0
-offset_bottom = -10.0
+offset_left = -29.0
+offset_top = -34.0
+offset_right = 11.0
+offset_bottom = -11.0
 text = "1"
 horizontal_alignment = 1
+
+[node name="InstructionIcon" type="TextureRect" parent="GraphHolder" unique_id=255875173]
+layout_mode = 0
+offset_top = -30.0
+offset_right = 17.0
+offset_bottom = -13.0
+texture = ExtResource("2_joqjr")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Tringl" type="Polygon2D" parent="." unique_id=439480763]
 offset = Vector2(0, -3)

@@ -158,8 +158,7 @@ func Rem_ToServer_TryUseSkill(skill_ID: int, coord_target: Vector2i) -> void:
 	if not valid: return
 	
 	var skillstruction_list: Array[SkillInstruction] = skill.FabricateSkillstructions(hex_from, hex_target)
-	GameData.current_actor = null
-	GameData.Gamespace_Node.Auth_Rem_ToClient_ItsThisGuysTurn.rpc(-1)
+	GameData.Gamespace_Node.Server_SetActorForAll(null)
 	Server_UseSkill(skill, skillstruction_list)
 
 func Server_UseSkill(skill: SkillBase, skillstruction_list: Array[SkillInstruction]) -> void:

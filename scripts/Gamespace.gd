@@ -78,7 +78,8 @@ func Auth_Rem_ToClient_SetActor(unit_id: int) -> void:
 	if GameData.isServer: return
 	var unit: Unit = GameData.unit_dict.get(unit_id,null)
 	GameData.current_actor = unit
-	unit.heard_teams_flags = 0
+	if unit != null:
+		unit.heard_teams_flags = 0
 
 func DoWorldHexRay(space_state: PhysicsDirectSpaceState3D, from: Vector3, to: Vector3) -> WorldHex:
 	GameData.rayquery_worldHex.from = from
