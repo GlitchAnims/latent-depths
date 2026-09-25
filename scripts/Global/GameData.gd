@@ -13,7 +13,8 @@ var started: bool = false
 var isServer: bool = false
 var isDedicated: bool = false
 
-var rayquery_wall: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(Vector3.ZERO, Vector3.ZERO, 0b1111)
+var rayquery_worldHex: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(Vector3.ZERO, Vector3.ZERO, 0b1000)
+var rayquery_unit: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(Vector3.ZERO, Vector3.ZERO, 0b0001)
 
 var hex_dict: Dictionary[Vector2i, Hex] = {}
 

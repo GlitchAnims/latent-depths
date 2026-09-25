@@ -62,29 +62,55 @@ var worldhex_dict: Dictionary[Vector2i, WorldHex] = {}
 var worldhex_hovered: WorldHex = null
 var worldhex_lock: WorldHex = null
 
+var unit_hovered: Unit = null
+
 @rpc("authority", "call_remote", "reliable")
 func Auth_Rem_ToClient_ItsThisGuysTurn(unit_id: int) -> void:
 	if GameData.isServer: return
 	var unit: Unit = GameData.unit_dict.get(unit_id,null)
 	GameData.current_actor = unit
 
+func DoWorldHexRay(space_state: PhysicsDirectSpaceState3D, from: Vector3, to: Vector3) -> WorldHex:
+	GameData.rayquery_worldHex.from = from
+	GameData.rayquery_worldHex.to = to
+	var result: Dictionary = space_state.intersect_ray(GameData.rayquery_worldHex)
+	if result and result.collider is WorldPickable:
+		var worldPick: WorldPickable = result.collider as WorldPickable
+		if worldPick.LogicNode is WorldHex: return worldPick.LogicNode as WorldHex
+	return null
+
+func DoUnitRay(space_state: PhysicsDirectSpaceState3D, from: Vector3, to: Vector3) -> Unit:
+	GameData.rayquery_unit.from = from
+	GameData.rayquery_unit.to = to
+	if is_instance_valid(GameData.current_actor):
+		GameData.rayquery_unit.set_exclude([GameData.current_actor.MouseSelector_Node.get_rid()])
+	else: GameData.rayquery_unit.set_exclude([])
+	var result: Dictionary = space_state.intersect_ray(GameData.rayquery_unit)
+	if result and result.collider is WorldPickable:
+		var worldPick: WorldPickable = result.collider as WorldPickable
+		if worldPick.LogicNode is Unit: return worldPick.LogicNode as Unit
+	return null
+
 func _physics_process(delta: float) -> void:
 	if not GameData.started: return
 	
 	var mousePos: Vector2 = ClientData.mousePos
-	var space_state = get_world_3d().direct_space_state
+	var space_state: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
 	var from: Vector3 = THECamera_Node.project_ray_origin(mousePos)
 	var to: Vector3 = THECamera_Node.global_position + THECamera_Node.project_ray_normal(mousePos) * 200.0
-	GameData.rayquery_wall.from = from
-	GameData.rayquery_wall.to = to
 	
 	var worldhex_current: WorldHex = worldhex_lock
+	var worldHex_pick: WorldHex = DoWorldHexRay(space_state, from, to)
+	if worldHex_pick != null: worldhex_current = worldHex_pick
 	
-	var result: Dictionary = space_state.intersect_ray(GameData.rayquery_wall)
-	if result and result.collider is WorldPickable:
-		var worldPick: WorldPickable = result.collider as WorldPickable
-		if worldPick.LogicNode is WorldHex:
-			worldhex_current = worldPick.LogicNode as WorldHex
+	var unit_current: Unit = null
+	var unit_pick: Unit = DoUnitRay(space_state, from, to)
+	if unit_pick != null: unit_current = unit_pick
+	
+	if unit_hovered != unit_current:
+		if unit_hovered != null: unit_hovered.SetHovered(false)
+		unit_hovered = unit_current
+		if unit_hovered != null: unit_hovered.SetHovered(true)
 	
 	var worldhex_do_update: bool = false
 	

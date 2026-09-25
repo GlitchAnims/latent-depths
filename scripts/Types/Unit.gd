@@ -7,6 +7,8 @@ class_name Unit extends Node3D
 @onready var ID_Label: Label3D = $"ID"
 @onready var TurnMarker_Node: Node3D = $"Tringl"
 @onready var SkillSpawner_Node: SkillSpawner = $"SkillSpawner"
+@onready var MouseSelector_Node: WorldPickable = $"MouseSelector"
+@onready var Hover_Node: MeshInstance3D = $"Hover"
 
 ## Called by Server when spawned, before adding as child to tree.
 func Server_SetupForSpawn(uniqueunitid: int) -> void:
@@ -93,6 +95,13 @@ func _physics_process_unit(_delta: float) -> void: pass
 func SnapPositionToHexPos() -> void:
 	var pos2: Vector2 = HexMath.hex_to_pixel(pos_hex)
 	position = Vector3(pos2.x,0,pos2.y)
+
+func SetHovered(b: bool) -> void:
+	Hover_Node.visible = b
+	if b:
+		pass
+	else:
+		pass
 
 ## Request from Client to Server only.[br]
 ## Checks if Client Player ID is same as this unit's Pilot Player, 

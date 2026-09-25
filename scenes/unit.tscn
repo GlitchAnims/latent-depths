@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b0ykym1txudf3" path="res://scripts/Types/Unit.gd" id="1_o7ajc"]
 [ext_resource type="Script" uid="uid://d1eus63jer531" path="res://scripts/MultSpawn/SkillSpawner.gd" id="2_k673f"]
+[ext_resource type="Script" uid="uid://ds4ygwk08iv3x" path="res://scripts/WorldInteract/WorldPickable.gd" id="3_1jvru"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_o7ajc"]
 properties/0/path = NodePath(".:unitID")
@@ -58,6 +59,22 @@ rings = 0
 cap_top = false
 cap_bottom = false
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_1jvru"]
+height = 0.7956848
+radius = 0.3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wbcaw"]
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_kkjc3"]
+material = SubResource("StandardMaterial3D_wbcaw")
+top_radius = 0.6
+height = 0.001
+cap_top = false
+cap_bottom = false
+
 [node name="Unit" type="Node3D" unique_id=756562779]
 script = ExtResource("1_o7ajc")
 metadata/_custom_type_script = "uid://b0ykym1txudf3"
@@ -82,3 +99,18 @@ mesh = SubResource("CylinderMesh_vesgh")
 [node name="SkillSpawner" type="MultiplayerSpawner" parent="." unique_id=140067730]
 spawn_path = NodePath(".")
 script = ExtResource("2_k673f")
+
+[node name="MouseSelector" type="StaticBody3D" parent="." unique_id=723733733 node_paths=PackedStringArray("LogicNode")]
+collision_mask = 0
+input_ray_pickable = false
+script = ExtResource("3_1jvru")
+LogicNode = NodePath("..")
+
+[node name="ColShape" type="CollisionShape3D" parent="MouseSelector" unique_id=1273891763]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.44618243, 0)
+shape = SubResource("CylinderShape3D_1jvru")
+
+[node name="Hover" type="MeshInstance3D" parent="." unique_id=179766220]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.10514641, 0)
+visible = false
+mesh = SubResource("CylinderMesh_kkjc3")
