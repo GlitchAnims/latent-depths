@@ -59,10 +59,10 @@ func PopulateWorldHexes() -> void:
 
 var worldhex_list: Array[WorldHex] = []
 var worldhex_dict: Dictionary[Vector2i, WorldHex] = {}
-var worldhex_hovered: WorldHex = null
+var worldhex_hovered_last: WorldHex = null
 var worldhex_lock: WorldHex = null
 
-var unit_hovered: Unit = null
+var unit_hovered_last: Unit = null
 var unit_lock: Unit = null
 
 func Server_SetActorForAll(unit: Unit) -> void:
@@ -110,35 +110,35 @@ func _physics_process(delta: float) -> void:
 	var from: Vector3 = THECamera_Node.project_ray_origin(mousePos)
 	var to: Vector3 = THECamera_Node.global_position + THECamera_Node.project_ray_normal(mousePos) * 200.0
 	
-	var worldhex_current: WorldHex = worldhex_lock
+	var worldHex_hovered: WorldHex = worldhex_lock
 	var worldHex_pick: WorldHex = DoWorldHexRay(space_state, from, to)
-	if worldHex_pick != null: worldhex_current = worldHex_pick
+	if worldHex_pick != null: worldHex_hovered = worldHex_pick
 	
-	var unit_current: Unit = unit_lock
+	var unit_hovered: Unit = unit_lock
 	var unit_pick: Unit = DoUnitRay(space_state, from, to)
-	if unit_pick != null: unit_current = unit_pick
+	if unit_pick != null: unit_hovered = unit_pick
 	
 	if ClientData.press_m2:
-		unit_lock = unit_current
-	ClientData.infomercial_unit = unit_current
+		unit_lock = unit_hovered
+	ClientData.infomercial_unit = unit_hovered
 	
-	if unit_hovered != unit_current:
-		if unit_hovered != null: unit_hovered.SetHovered(false)
-		unit_hovered = unit_current
-		if unit_hovered != null: unit_hovered.SetHovered(true)
+	if unit_hovered_last != unit_hovered:
+		if unit_hovered_last != null: unit_hovered_last.SetHovered(false)
+		unit_hovered_last = unit_hovered
+		if unit_hovered_last != null: unit_hovered_last.SetHovered(true)
 	
 	var worldhex_do_update: bool = false
 	
 	if ClientData.press_m1:
-		worldhex_lock = worldhex_current
+		worldhex_lock = worldHex_hovered
 		worldhex_do_update = true
 	
-	if worldhex_hovered != worldhex_current:
+	if worldhex_hovered_last != worldHex_hovered:
 		worldhex_do_update = true
-		if worldhex_hovered != null:
-			worldhex_hovered.SetHovered(false)
-		worldhex_hovered = worldhex_current
-		if worldhex_current != null: worldhex_current.SetHovered(true)
+		if worldhex_hovered_last != null:
+			worldhex_hovered_last.SetHovered(false)
+		worldhex_hovered_last = worldHex_hovered
+		if worldHex_hovered != null: worldHex_hovered.SetHovered(true)
 	
 	if worldhex_do_update:
 		for worldhex: WorldHex in worldhex_list:
