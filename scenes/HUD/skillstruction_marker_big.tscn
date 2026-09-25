@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b5ksnyu2r0o73" path="res://sprites/Icons/Atlas/walk.tres" id="2_01pf5"]
 [ext_resource type="StyleBox" uid="uid://cb557q7ea5wmd" path="res://styles/skillstruction_marker_big_encompass.tres" id="2_5mdd4"]
 [ext_resource type="Texture2D" uid="uid://bsjt2gl6p5fxv" path="res://icon.svg" id="3_01pf5"]
+[ext_resource type="Script" uid="uid://bxcxqmt7spuqv" path="res://scripts/HUD/HUDPickable.gd" id="3_eahn4"]
 
 [node name="SkillstructionMarkerBig" type="Control" unique_id=1755494158]
 custom_minimum_size = Vector2(10, 10)
@@ -35,11 +36,13 @@ offset_bottom = 40.0
 mouse_filter = 2
 metadata/_edit_lock_ = true
 
-[node name="Encompass" type="Panel" parent="GraphHolder" unique_id=1136800]
+[node name="Encompass" type="Panel" parent="GraphHolder" unique_id=1136800 node_paths=PackedStringArray("Logic_Node")]
 layout_mode = 0
 offset_left = -72.0
 offset_top = -146.0
 theme_override_styles/panel = ExtResource("2_5mdd4")
+script = ExtResource("3_eahn4")
+Logic_Node = NodePath("../..")
 
 [node name="FocusColor" type="ColorRect" parent="GraphHolder" unique_id=1239727081]
 layout_mode = 0
@@ -47,6 +50,7 @@ offset_left = -70.0
 offset_top = -144.0
 offset_right = -2.0
 offset_bottom = -2.0
+mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="Timer" type="Label" parent="GraphHolder" unique_id=1653088211]
@@ -55,19 +59,9 @@ offset_left = -70.0
 offset_top = -31.0
 offset_right = -2.0
 offset_bottom = -2.0
-text = "1"
+text = "1.0s"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="InstructionIcon" type="TextureRect" parent="GraphHolder" unique_id=255875173]
-layout_mode = 0
-offset_left = -59.0
-offset_top = -74.0
-offset_right = -13.0
-offset_bottom = -28.0
-texture = ExtResource("2_01pf5")
-expand_mode = 1
-stretch_mode = 5
 
 [node name="UnitIcon" type="TextureRect" parent="GraphHolder" unique_id=379927329]
 layout_mode = 0
@@ -75,7 +69,19 @@ offset_left = -68.0
 offset_top = -142.0
 offset_right = -4.0
 offset_bottom = -78.0
+mouse_filter = 2
 texture = ExtResource("3_01pf5")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="InstructionIcon" type="TextureRect" parent="GraphHolder" unique_id=255875173]
+layout_mode = 0
+offset_left = -59.0
+offset_top = -74.0
+offset_right = -13.0
+offset_bottom = -28.0
+mouse_filter = 2
+texture = ExtResource("2_01pf5")
 expand_mode = 1
 stretch_mode = 5
 

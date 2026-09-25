@@ -3,6 +3,7 @@ class_name Encompass extends PanelContainer
 @export var SkillRack_Node: SkillRack = null
 #@export var MouseShite_Node: Node2D = null
 @export var MouseTooltip_Node: MouseTooltip = null
+@export var Timeline_Node: BattleTimeline = null
 
 func _ready() -> void:
 	ClientData.viewportSize_changed.connect(UpdateSize)
@@ -17,9 +18,11 @@ func UpdateSize() -> void:
 	set_begin(Vector2.ZERO)
 	set_end(ClientData.viewportSize)
 	
-	var itemscale: Vector2 = Vector2(1,1) * minf(ClientData.viewportScale, 1.0)
+	var client_scale: float = minf(ClientData.viewportScale, 1.0)
+	var itemscale: Vector2 = Vector2(1,1) * client_scale
 	SkillRack_Node.scale = itemscale * 0.4
 	MouseTooltip_Node.scale = itemscale
+	Timeline_Node.UpdateSize(client_scale, itemscale)
 
 func ClearTooltip() -> void:
 	MouseTooltip_Node.visible = false

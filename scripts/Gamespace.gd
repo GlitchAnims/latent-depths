@@ -106,17 +106,30 @@ func DoUnitRay(space_state: PhysicsDirectSpaceState3D, from: Vector3, to: Vector
 func _physics_process(delta: float) -> void:
 	if not GameData.started: return
 	
+	var control_hovered: Control = get_viewport().gui_get_hovered_control()
+	var control_hovered_is_valid: bool = is_instance_valid(control_hovered)
+	
 	var mousePos: Vector2 = ClientData.mousePos
 	var space_state: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
 	var from: Vector3 = THECamera_Node.project_ray_origin(mousePos)
 	var to: Vector3 = THECamera_Node.global_position + THECamera_Node.project_ray_normal(mousePos) * 200.0
 	
 	var worldHex_hovered: WorldHex = worldhex_lock
-	var worldHex_pick: WorldHex = DoWorldHexRay(space_state, from, to)
-	if worldHex_pick != null: worldHex_hovered = worldHex_pick
-	
 	var unit_hovered: Unit = unit_lock
-	var unit_pick: Unit = DoUnitRay(space_state, from, to)
+	
+	var worldHex_pick: WorldHex = null
+	var unit_pick: Unit = null
+	if control_hovered_is_valid:
+		if control_hovered is HUDPickable:
+			var hud_pickable: HUDPickable = control_hovered as HUDPickable
+			var logic_node: Node = hud_pickable.Logic_Node
+			if logic_node is SkillstructionMarkerBig:
+				unit_pick = logic_node.unit_ref
+	else:
+		worldHex_pick = DoWorldHexRay(space_state, from, to)
+		unit_pick = DoUnitRay(space_state, from, to)
+	
+	if worldHex_pick != null: worldHex_hovered = worldHex_pick
 	if unit_pick != null: unit_hovered = unit_pick
 	
 	if ClientData.press_m2:

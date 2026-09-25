@@ -10,12 +10,21 @@ const timeline_marker_scene: PackedScene = preload("res://scenes/HUD/timeline_ma
 const timeline_seconds_scene: PackedScene = preload("res://scenes/HUD/timeline_marker_seconds.tscn")
 const si_marker_scene: PackedScene = preload("res://scenes/HUD/skillstruction_marker.tscn")
 const si_marker_big_scene: PackedScene = preload("res://scenes/HUD/skillstruction_marker_big.tscn")
+const si_marker_big_width: float = 72.0
 
 var myturn_list: Array[TimelineMarker] = []
 var secondmarker_list: Array[TimelineMarker_Seconds] = []
 var skillstruction_line_list: Array[Line2D] = []
 var si_marker_list: Array[SkillstructionMarker] = []
 var si_marker_big_list: Array[SkillstructionMarkerBig] = []
+
+var client_scale: float = 1.0
+
+func UpdateSize(set_client_scale: float, item_scale: Vector2) -> void:
+	client_scale = set_client_scale
+	custom_minimum_size = Vector2(64,si_marker_big_width*client_scale)
+	for marker: SkillstructionMarkerBig in si_marker_big_list:
+		marker.scale = item_scale * 0.9
 
 static func SetTimelineLimit() -> void:
 	var longest: int = time_per_second * 4
@@ -235,11 +244,9 @@ func _physics_process(delta: float) -> void:
 			marker.SetInstructionType(ins_type)
 	
 	
-	var actor_ID: int = GameData.cur_actor.unitID if is_instance_valid(GameData.cur_actor) else -1
+	var actor_ID: int = cur_actor.unitID if cur_actor_is_valid else -1
 	var infomercial_ID: int = ClientData.infomercial_unit.unitID if is_instance_valid(ClientData.infomercial_unit) else -1
 	
-	const si_marker_big_width: float = 72.0
-	var client_scale: float = minf(ClientData.viewportScale, 1.0) * 0.9
 	var si_marker_big_offset: float = 0
 	var si_marker_big_count: int = si_marker_list.size()
 	for i in si_marker_big_count:
@@ -249,8 +256,7 @@ func _physics_process(delta: float) -> void:
 		if not marker_visible: continue
 		
 		var order: SkillInsOrder = order_list[i]
-		marker.position = line_end - Vector2(si_marker_big_offset * client_scale,0)
-		marker.scale = Vector2.ONE * client_scale
+		marker.position = line_end - Vector2(si_marker_big_offset * client_scale * 0.9,0)
 		si_marker_big_offset += si_marker_big_width
 		
 		var unit: Unit = order.unit
@@ -258,6 +264,7 @@ func _physics_process(delta: float) -> void:
 		marker.SetIsActor(unit.unitID == actor_ID)
 		marker.SetIsInfomercial(unit.unitID == infomercial_ID)
 		marker.SetTimer(order.time)
+		marker.unit_ref = unit
 		if order.is_turn_recovery: marker.SetInstructionType(SkillInstruction.INS_TYPE.special)
 		else: marker.SetInstructionType(order.ins.ins_type)
 	

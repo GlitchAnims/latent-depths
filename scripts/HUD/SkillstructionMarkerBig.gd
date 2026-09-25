@@ -11,6 +11,7 @@ class_name SkillstructionMarkerBig extends Control
 const icon_walk: AtlasTexture = preload("res://sprites/Icons/Atlas/walk.tres")
 const icon_special: AtlasTexture = preload("res://sprites/Icons/Atlas/special.tres")
 const icon_default: Texture = preload("res://sprites/UnitSprites/Firefist/dmg.png")
+var unit_ref: Unit = null
 
 func SetHeightLevel(level: int) -> void:
 	

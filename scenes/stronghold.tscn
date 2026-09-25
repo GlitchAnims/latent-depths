@@ -13,13 +13,12 @@
 [ext_resource type="Script" uid="uid://bdwta6tnidtgd" path="res://scripts/Audio/AudioManager.gd" id="7_uw0md"]
 [ext_resource type="Script" uid="uid://cxv6jr8qhky3l" path="res://scripts/HUD/BattleTimeline.gd" id="7_v57l1"]
 [ext_resource type="AudioStream" uid="uid://ksfsjyaa82e5" path="res://sounds/Timeline/NewActor.wav" id="8_ptabd"]
-[ext_resource type="Texture2D" uid="uid://bsjt2gl6p5fxv" path="res://icon.svg" id="10_1v5lc"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j02l2"]
-content_margin_left = 10.0
-content_margin_top = 10.0
-content_margin_right = 10.0
-content_margin_bottom = 10.0
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
 
 [node name="Stronghold" type="Node" unique_id=495344873]
 script = ExtResource("1_mw8q0")
@@ -58,7 +57,7 @@ stream = ExtResource("6_kj1sv")
 stream = ExtResource("8_ptabd")
 volume_db = -9.0
 
-[node name="Encompass" type="PanelContainer" parent="." unique_id=1532195454 node_paths=PackedStringArray("SkillRack_Node", "MouseTooltip_Node")]
+[node name="Encompass" type="PanelContainer" parent="." unique_id=1532195454 node_paths=PackedStringArray("SkillRack_Node", "MouseTooltip_Node", "Timeline_Node")]
 offset_right = 717.0
 offset_bottom = 480.0
 mouse_filter = 2
@@ -66,6 +65,7 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_j02l2")
 script = ExtResource("2_hber8")
 SkillRack_Node = NodePath("VBox1/HBox1/VBox1/Skills/SkillRack")
 MouseTooltip_Node = NodePath("MouseShite/MouseTooltip")
+Timeline_Node = NodePath("VBox1/Timeline")
 metadata/_edit_lock_ = true
 
 [node name="MouseShite" type="Node2D" parent="Encompass" unique_id=1435703666]
@@ -125,7 +125,6 @@ mouse_filter = 2
 
 [node name="Timeline" type="HBoxContainer" parent="Encompass/VBox1" unique_id=1828398779]
 layout_mode = 2
-size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 mouse_filter = 2
 script = ExtResource("7_v57l1")
@@ -139,8 +138,3 @@ mouse_filter = 2
 [node name="RulerLine" type="Line2D" parent="Encompass/VBox1/Timeline/Ruler" unique_id=2024940109]
 points = PackedVector2Array(0, 20, 600, 20)
 width = 4.0
-
-[node name="TextureRect" type="TextureRect" parent="Encompass/VBox1/Timeline" unique_id=1941467643]
-layout_mode = 2
-texture = ExtResource("10_1v5lc")
-expand_mode = 2
