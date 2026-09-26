@@ -25,10 +25,18 @@ static func ModifyHexMapWithSpecialHex(h_list: Array[Hex]) -> void:
 	for hex in h_list:
 		GameData.hex_dict[hex.coord] = hex
 
-static func BuildDistanceMap(coord_start: Vector2i) -> Dictionary[Vector2i, PathHex]:
+static func BuildDistanceMap(coord_start: Vector2i, discard_unwalkable: bool = true) -> Dictionary[Vector2i, PathHex]:
 	var distance_map: Dictionary[Vector2i, PathHex] = {}
-	for coord: Vector2i in GameData.hex_dict.keys():
-		distance_map[coord] = PathHex.new(-1)
+	
+	if discard_unwalkable:
+		var occupied_list: Array[Vector2i] = []
+		for unit: Unit in GameData.unit_list_temp:
+			occupied_list.push_back(unit.pos_hex)
+		for coord: Vector2i in GameData.hex_dict.keys():
+			distance_map[coord] = PathHex.new(-2 if occupied_list.has(coord) else -1)
+	else:
+		for coord: Vector2i in GameData.hex_dict.keys():
+			distance_map[coord] = PathHex.new(-1)
 	
 	var queue: Array[Vector2i] = [coord_start]
 	distance_map[coord_start].dist = 0
