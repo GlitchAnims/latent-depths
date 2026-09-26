@@ -102,6 +102,8 @@ func SetHovered(b: bool) -> void:
 	else:
 		pass
 
+func Incantate(_incantation: Incantation, _delta: float) -> void: pass
+
 ## Request from Client to Server only.[br]
 ## Checks if Client Player ID is same as this unit's Pilot Player, 
 ## then calls [method Unit.Server_ActivateCardByTibiaID].

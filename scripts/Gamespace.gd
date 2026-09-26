@@ -279,7 +279,7 @@ func _process(delta: float) -> void:
 	
 	if has_incantation:
 		var incantation: Incantation = ClientData.incantation_list[0]
-		
+		incantation.CallAnim(delta)
 	
 
 func GetShortestActTime(lowest: int) -> int:

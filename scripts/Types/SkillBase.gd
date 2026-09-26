@@ -25,6 +25,7 @@ func FabricateSkillstructions(_hex_from: Hex, _hex_to: Hex) -> Array[SkillInstru
 func Server_PerformInstruction(_ins: SkillInstruction) -> void: pass
 
 func DoWorldHexWidgets(_worldHex_dict: Dictionary[Vector2i, WorldHex]) -> void: pass
+func Incantate(_incantation: Incantation, _delta: float) -> void: pass
 
 func GetSumDelay() -> int:
 	return 0

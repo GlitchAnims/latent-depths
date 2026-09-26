@@ -81,27 +81,73 @@ func OnSelectAndUse() -> void:
 func Server_PerformInstruction(ins: SkillInstruction) -> void:
 	if ins.ins_type != SkillInstruction.INS_TYPE.walk: return
 	var coord_dest: Vector2i = unit_ref.pos_hex
+	var coord_next: Vector2i = coord_dest
+	var visual_walk_pos_list: PackedVector2Array = []
 	for coord_dir: Vector2i in ins.coord_chosen_list:
-		var coord_next_temp: Vector2i = coord_dest + coord_dir
-		var hex_next_temp: Hex = GameData.hex_dict.get(coord_next_temp, null)
-		if hex_next_temp == null: continue
-		if hex_next_temp.tile_flags & Hex.TILE_FLAGS.WALL: continue
+		coord_next = coord_dest + coord_dir
+		visual_walk_pos_list.push_back(HexMath.hex_to_pixel(coord_next))
+		var hex_next_temp: Hex = GameData.hex_dict.get(coord_next, null)
+		if hex_next_temp == null: break
+		if hex_next_temp.tile_flags & Hex.TILE_FLAGS.WALL: break
 		# Don't know why no work, check later
-		#if not hex_next_temp.tile_flags & Hex.TILE_FLAGS.FREE: continue
+		#if not hex_next_temp.tile_flags & Hex.TILE_FLAGS.FREE: break
 		var occupied: bool = false
 		for unit: Unit in GameData.unit_list_temp:
-			occupied = unit.pos_hex == coord_next_temp
+			occupied = unit.pos_hex == coord_next
 			if occupied: break
-		if occupied: continue
-		coord_dest = coord_next_temp
+		if occupied: break
+		coord_dest = coord_next
 	
 	GameData.Server_SetDoneAnimsAllPlayers(false)
 	
-	Auth_Rem_ToClient_BaseWalkAbility(coord_dest)
-	Auth_Rem_ToClient_BaseWalkAbility.rpc(coord_dest)
+	var cut_short: bool = coord_dest != coord_next
+	Auth_Rem_ToClient_BaseWalkAbility(coord_dest, visual_walk_pos_list, cut_short)
+	Auth_Rem_ToClient_BaseWalkAbility.rpc(coord_dest, visual_walk_pos_list, cut_short)
 
 @rpc("authority", "call_remote", "reliable")
-func Auth_Rem_ToClient_BaseWalkAbility(coord: Vector2i) -> void:
+func Auth_Rem_ToClient_BaseWalkAbility(coord: Vector2i, visual_walk_pos_list: PackedVector2Array, cut_short: bool) -> void:
 	unit_ref.pos_hex = coord
-	unit_ref.SnapPositionToHexPos()
+	var incantation_new: Incantation_Custom = Incantation_Custom.new(self)
+	incantation_new.visual_walk_pos_list = visual_walk_pos_list
+	incantation_new.cut_short = cut_short
+	ClientData.incantation_list.push_back(incantation_new)
+	
 #class Pathing extends RefCounted:
+
+func Incantate(incantation: Incantation, delta: float) -> void:
+	var end: bool = false
+	var inc: Incantation_Custom = incantation as Incantation_Custom
+	
+	if inc.visual_walk_pos_list.is_empty():
+		end = true
+	else:
+		var pos3_cur: Vector3 = unit_ref.position
+		#var pos2_cur: Vector2 = Vector2(pos3_cur.x,pos3_cur.z)
+		var pos2_next: Vector2 = inc.visual_walk_pos_list[0]
+		var pos3_next: Vector3 = Vector3(pos2_next.x, 0, pos2_next.y)
+		
+		var pos3_vec: Vector3 = pos3_next - pos3_cur
+		var pos3_norm: Vector3 = pos3_vec.normalized()
+		
+		
+		if inc.cut_short and inc.visual_walk_pos_list.size() == 1:
+			inc.visual_walk_pos_list.remove_at(0)
+			# TODO Blocked path
+		else:
+			var dist: float = pos3_vec.length()
+			if dist <= 0.01:
+				unit_ref.position = pos3_next
+				inc.visual_walk_pos_list.remove_at(0)
+			else:
+				unit_ref.position += pos3_norm * minf(delta*2.5, dist)
+	
+	#var prog: float = inc.anim_progress
+	#prog += delta
+	#inc.anim_progress = prog
+	
+	if end:
+		ClientData.incantation_list.erase(incantation)
+
+class Incantation_Custom extends Incantation:
+	var visual_walk_pos_list: PackedVector2Array = []
+	var cut_short: bool = false
