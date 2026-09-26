@@ -213,12 +213,13 @@ func _physics_process(delta: float) -> void:
 	order_list.sort_custom(func(a: SkillInsOrder, b: SkillInsOrder) -> bool:
 		var a_speed: int = a.time
 		var b_speed: int = b.time
-		if a_speed == b_speed:
-			a_speed = a.unit.GetSumSpeed()
-			b_speed = b.unit.GetSumSpeed()
-			if a_speed == b_speed:
-				return a.unit.unitID < b.unit.unitID
-		return a_speed < b_speed
+		if a_speed != b_speed: return a_speed < b_speed
+		
+		a_speed = a.unit.GetSumSpeed()
+		b_speed = b.unit.GetSumSpeed()
+		if a_speed != b_speed: return a_speed > b_speed
+		
+		return a.unit.unitID < b.unit.unitID
 	)
 	
 	var order_count: int = order_list.size()

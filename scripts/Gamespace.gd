@@ -70,10 +70,12 @@ func Server_SetActorForAll(unit: Unit) -> void:
 	Auth_Rem_ToClient_SetActor.rpc(unit.unitID if GameData.cur_actor_is_valid else -1)
 
 func SetActor(unit: Unit) -> void:
+	ClientData.temp_skillstruction_list = []
 	GameData.cur_actor = unit
 	GameData.cur_actor_is_valid = is_instance_valid(unit)
 	if GameData.cur_actor_is_valid:
 		unit.heard_teams_flags = 0
+		unit.overhead_downtime = 0
 	GameData.sig_actor_changed.emit()
 
 @rpc("authority", "call_remote", "reliable")
@@ -202,10 +204,7 @@ func _physics_process(delta: float) -> void:
 				unit.overhead_downtime -= time_pass
 	elif GameData.isServer:
 		if not has_actor:
-			var actors: Array[Unit] = []
-			for unit: Unit in unit_list:
-				var downtime: int = unit.GetSumDowntime()
-				if downtime < 1: actors.push_back(unit)
+			var actors: Array[Unit] = GetPossibleActorsFromUnitList(unit_list)
 			
 			if actors.is_empty(): # Means a Skill somewhere is now at 0 instruction timer
 				var bad_actor: Unit = null
@@ -225,8 +224,9 @@ func _physics_process(delta: float) -> void:
 				if bad_actor != null && is_all_players_done_anims:
 					bad_skill.instruction_list.pop_front()
 					var packed_ins_list: PackedByteArray = GameData.Stronghold_Node.pickler.pickle(bad_skill.instruction_list)
-					bad_actor.Auth_Rem_ToClient_SendSkillstructionArray(bad_skill.skill_ID, packed_ins_list)
+					bad_actor.Auth_Rem_ToClient_SendSkillstructionArray.rpc(bad_skill.skill_ID, packed_ins_list)
 					bad_skill.Server_PerformInstruction(bad_skillstruction)
+					if bad_skill.instruction_list.is_empty(): bad_actor.Server_ClearSkill()
 				
 			else:
 				var selected_actor: Unit = actors[0]
@@ -256,7 +256,6 @@ func _physics_process(delta: float) -> void:
 				
 				if ClientData.press_space and canchoose:
 					if GameData.isServer:
-						GameData.cur_actor = null
 						Server_SetActorForAll(null)
 						actor.Server_UseSkill(skill, skill.FabricateSkillstructions(hex_from,hex_to))
 						ClientData.temp_skillstruction_list = []
@@ -282,12 +281,23 @@ func _process(delta: float) -> void:
 		incantation.CallAnim(delta)
 	
 
+func GetPossibleActorsFromUnitList(unit_list: Array[Unit]) -> Array[Unit]:
+	var possible_actor_list: Array[Unit] = []
+	for unit: Unit in unit_list:
+		var downtime: int = unit.GetSumDowntime()
+		if downtime > 0: continue
+		if is_instance_valid(unit.skill_selected): continue
+		possible_actor_list.push_back(unit)
+	return possible_actor_list
+
 func GetShortestActTime(lowest: int) -> int:
 	for unit: Unit in GameData.unit_list_temp:
 		var skill: SkillBase = unit.skill_selected
 		if is_instance_valid(skill):
-			var instruction: SkillInstruction = skill.instruction_list[0]
-			if instruction.timer < lowest: lowest = instruction.timer
+			if skill.instruction_list.is_empty(): lowest = 0
+			else:
+				var instruction: SkillInstruction = skill.instruction_list[0]
+				if instruction.timer < lowest: lowest = instruction.timer
 		else:
 			var downtime: int = unit.GetSumDowntime()
 			if downtime < lowest: lowest = downtime

@@ -77,6 +77,17 @@ cap_bottom = false
 
 [node name="Unit" type="Node3D" unique_id=756562779]
 script = ExtResource("1_o7ajc")
+unitID = null
+team = null
+pos_hex = null
+hp_max = null
+hp = null
+stress_enabled = null
+stress = null
+overhead_downtime = null
+heard_teams_flags = null
+light_max = null
+light = null
 metadata/_custom_type_script = "uid://b0ykym1txudf3"
 
 [node name="SetupSync" type="MultiplayerSynchronizer" parent="." unique_id=125540850]

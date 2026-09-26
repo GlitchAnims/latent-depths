@@ -69,9 +69,8 @@ func _physics_process(_delta: float) -> void:
 	unit_list_temp.sort_custom(func(a: Unit, b: Unit) -> bool:
 		var a_speed: int = a.GetSumSpeed()
 		var b_speed: int = b.GetSumSpeed()
-		if a_speed == b_speed:
-			return a.unitID < b.unitID # Tiebreaker
-		return a_speed < b_speed
+		if a_speed != b_speed: return a_speed > b_speed
+		return a.unitID < b.unitID
 	)
 
 @warning_ignore("unused_signal")

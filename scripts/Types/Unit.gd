@@ -136,7 +136,8 @@ func Auth_Rem_ToClient_SendSkillstructionArray(skill_ID: int, ins_list_packed: P
 	var unpickled: Array = GameData.Stronghold_Node.pickler.unpickle(ins_list_packed)
 	var ins_list: Array[SkillInstruction] = []
 	for obj in unpickled:
-		if obj is SkillInstruction: ins_list.push_back(obj)
+		if obj is SkillInstruction:
+			ins_list.push_back(obj)
 	skill.instruction_list = ins_list
 
 @rpc("any_peer", "call_remote", "reliable")
@@ -173,6 +174,10 @@ func Server_UseSkill(skill: SkillBase, skillstruction_list: Array[SkillInstructi
 	GameData.Server_SetDoneAnimsAllPlayers(false)
 	Auth_Rem_ToClient_SendSkillstructionArray.rpc(skill_ID, packed_ins_list)
 	Auth_Rem_ToClient_SelectSkill.rpc(skill_ID)
+
+func Server_ClearSkill() -> void:
+	skill_selected = null
+	Auth_Rem_ToClient_SelectSkill.rpc(-1)
 
 func Server_ActivateCardByTibiaID(_id: int) -> void:
 	pass
