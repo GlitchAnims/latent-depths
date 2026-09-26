@@ -18,7 +18,6 @@ func SetTimer(timer: int) -> void:
 
 func SetTeam(team: int) -> void:
 	FocusColor_Node.color = Color.BLACK
-	print (team)
 	Encompass_Node.modulate = Color.RED if team == 1 else Color.BLUE
 	TeamLabel_Node.text = "Team " + str(team)
 
