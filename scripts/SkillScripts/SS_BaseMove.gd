@@ -75,6 +75,9 @@ func DoWorldHexWidgets(worldHex_dict: Dictionary[Vector2i, WorldHex]) -> void:
 		pathHex = _distance_map.get(coord_backwalk, null)
 		coord_to = coord_backwalk
 
+func OnSelectAndUse() -> void:
+	pass
+
 func Server_PerformInstruction(ins: SkillInstruction) -> void:
 	if ins.ins_type != SkillInstruction.INS_TYPE.walk: return
 	var coord_dest: Vector2i = unit_ref.pos_hex

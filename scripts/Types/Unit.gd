@@ -123,6 +123,7 @@ func Auth_Rem_ToClient_SelectSkill(skill_ID: int) -> void:
 	var skill: SkillBase = skill_list[skill_ID]
 	if not is_instance_valid(skill): return
 	skill_selected = skill
+	skill.OnSelectAndUse()
 
 @rpc("authority", "call_remote", "reliable")
 func Auth_Rem_ToClient_SendSkillstructionArray(skill_ID: int, ins_list_packed: PackedByteArray) -> void:
@@ -164,6 +165,7 @@ func Rem_ToServer_TryUseSkill(skill_ID: int, coord_target: Vector2i) -> void:
 func Server_UseSkill(skill: SkillBase, skillstruction_list: Array[SkillInstruction]) -> void:
 	skill.instruction_list = skillstruction_list
 	skill_selected = skill
+	skill.OnSelectAndUse()
 	var packed_ins_list: PackedByteArray = GameData.Stronghold_Node.pickler.pickle(skillstruction_list)
 	var skill_ID: int = skill.skill_ID
 	GameData.Server_SetDoneAnimsAllPlayers(false)

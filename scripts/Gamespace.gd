@@ -267,10 +267,20 @@ func _physics_process(delta: float) -> void:
 					#actor.pos_hex = hex_to.coord
 					#actor.SnapPositionToHexPos()
 
-
-
-func ProcessTurn() -> void:
-	pass
+func _process(delta: float) -> void:
+	var cam_movespeed: float = delta * 4.0
+	
+	if ClientData.hold_north: THECamera_Node.position.z -= cam_movespeed
+	elif ClientData.hold_south: THECamera_Node.position.z += cam_movespeed
+	if ClientData.hold_west: THECamera_Node.position.x -= cam_movespeed
+	elif ClientData.hold_east: THECamera_Node.position.x += cam_movespeed
+	
+	var has_incantation: bool = not ClientData.incantation_list.is_empty()
+	
+	if has_incantation:
+		var incantation: Incantation = ClientData.incantation_list[0]
+		
+	
 
 func GetShortestActTime(lowest: int) -> int:
 	for unit: Unit in GameData.unit_list_temp:
@@ -287,15 +297,6 @@ func GetShortestActTime(lowest: int) -> int:
 func TickDownSkill(skill: SkillBase, time_pass: int) -> void:
 	var instruction: SkillInstruction = skill.instruction_list[0]
 	instruction.timer -= time_pass
-
-func _process(delta: float) -> void:
-	
-	var cam_movespeed: float = delta * 4.0
-	
-	if ClientData.hold_north: THECamera_Node.position.z -= cam_movespeed
-	elif ClientData.hold_south: THECamera_Node.position.z += cam_movespeed
-	if ClientData.hold_west: THECamera_Node.position.x -= cam_movespeed
-	elif ClientData.hold_east: THECamera_Node.position.x += cam_movespeed
 
 func AddUnitSceneAutoSpawn(path: String) -> void:
 	UnitSpawner_Node.add_spawnable_scene(path)
