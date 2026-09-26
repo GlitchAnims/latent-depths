@@ -84,7 +84,7 @@ var playerDict: Dictionary[int, Player] = {}
 
 func Server_SetDoneAnimsAllPlayers(b: bool) -> void:
 	for player: Player in playerDict.values():
-		player.done_anims = b
+		player.SetDoneAnims(b)
 
 var pilotID_counter: int = 0
 func GetUniquePilotID() -> int:

@@ -12,17 +12,26 @@ func Server_AreYouDoneAnims() -> void:
 		Auth_Rem_ToClient_AreYouDoneAnims.rpc_id(playerID)
 @rpc("authority", "call_remote", "reliable")
 func Auth_Rem_ToClient_AreYouDoneAnims() -> void:
-	if ClientData.incantation_list.is_empty(): Client_SetDoneAnims(true)
+	if ClientData.incantation_list.is_empty(): SetDoneAnims(true)
 
-func Client_SetDoneAnims(b: bool) -> void:
-	#done_anims = b
-	if GameData.isServer: done_anims = b
+func SetDoneAnims(b: bool) -> void:
+	if GameData.isServer: Server_SetDoneAnims(b)
 	else: _Rem_ToServer_SetDoneAnims.rpc_id(1, b)
+
 @rpc("any_peer", "call_remote", "reliable")
 func _Rem_ToServer_SetDoneAnims(b: bool) -> void:
 	if not GameData.isServer: return
 	if multiplayer.get_remote_sender_id() != playerID: return
+	Server_SetDoneAnims(b)
+
+func Server_SetDoneAnims(b: bool) -> void:
 	done_anims = b
+	Auth_Rem_ToClient_SetDoneAnims.rpc(b)
+
+@rpc("authority", "call_remote", "reliable")
+func Auth_Rem_ToClient_SetDoneAnims(b: bool) -> void:
+	done_anims = b
+
 
 var password: int = -1
 
