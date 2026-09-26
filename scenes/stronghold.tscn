@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://d2t127lkc868q" path="res://scripts/Gamespace.gd" id="3_eav5i"]
 [ext_resource type="Resource" uid="uid://b0gqw2sl3hcmn" path="res://configs/SkillConfigs/BaseSkills/BaseMove.tres" id="3_kj1sv"]
 [ext_resource type="Script" uid="uid://js26ljisydam" path="res://scripts/HUD/PlayerSpawner.gd" id="4_evvgm"]
+[ext_resource type="Resource" uid="uid://djx3rbtsrkwn8" path="res://configs/SkillConfigs/BaseSkills/BaseMoveAlt.tres" id="4_ptabd"]
 [ext_resource type="PackedScene" uid="uid://deis8xe157xuk" path="res://scenes/HUD/mouse_tooltip.tscn" id="5_cf4id"]
 [ext_resource type="Script" uid="uid://b0v6wf0jodgkf" path="res://scripts/HUD/SkillRack.gd" id="6_cf4id"]
 [ext_resource type="PackedScene" uid="uid://bhpd1ue316s2l" path="res://scenes/HUD/skill_button.tscn" id="6_i5rp2"]
@@ -22,7 +23,7 @@ content_margin_bottom = 5.0
 
 [node name="Stronghold" type="Node" unique_id=495344873]
 script = ExtResource("1_mw8q0")
-og_skillconfigs = Array[ExtResource("2_umgfj")]([ExtResource("3_kj1sv")])
+og_skillconfigs = Array[ExtResource("2_umgfj")]([ExtResource("3_kj1sv"), ExtResource("4_ptabd")])
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="." unique_id=874524148]
 _spawnable_scenes = PackedStringArray("uid://7u5rpxdcfusb")

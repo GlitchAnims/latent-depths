@@ -1,0 +1,14 @@
+[gd_resource type="Resource" format=3 uid="uid://djx3rbtsrkwn8"]
+
+[ext_resource type="Texture2D" uid="uid://b5bpp3wv1lu4l" path="res://sprites/Icons/Atlas/haste.tres" id="1_rcmvg"]
+[ext_resource type="Script" uid="uid://c1uwxkhr70dh4" path="res://scripts/Configs/InheritSkillConfig/SC_BaseMove.gd" id="1_wmexx"]
+[ext_resource type="PackedScene" uid="uid://bj8upukk48hpx" path="res://scenes/Skills/base_move.tscn" id="2_rcmvg"]
+
+[resource]
+script = ExtResource("1_wmexx")
+identifier = &"og_basemovealt"
+icon = ExtResource("1_rcmvg")
+has_alt_skill = true
+is_alt_skill = true
+skill_scene = ExtResource("2_rcmvg")
+metadata/_custom_type_script = "uid://derk5pfmfhjf6"

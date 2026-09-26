@@ -70,14 +70,8 @@ func _ready() -> void:
 	GameData.sig_actor_changed.connect(UpdateForActor)
 	
 	if GameData.isServer:
-		var skillConfig: SkillConfig = GameData.skillConfig_dict[&"og_basemove"]
-		var basemove: SkillBase = skillConfig.skill_scene.instantiate()
-		basemove.skillConfig_ref = skillConfig
-		basemove.skillConfig_id = &"og_basemove"
-		var skillsize: int = skill_list.size()
-		skill_list.push_back(basemove)
-		basemove.skill_ID = skillsize
-		SkillSpawner_Node.add_child(basemove,true)
+		Server_AddSkillToList(&"og_basemove")
+		Server_AddSkillToList(&"og_basemovealt")
 	
 	ID_Label.text = str(unitID)
 	_ready_unit()
@@ -85,6 +79,17 @@ func _ready() -> void:
 	position.x = pos2.x
 	position.z = pos2.y
 func _ready_unit() -> void: pass
+
+func Server_AddSkillToList(config_identifier: StringName) -> void:
+	var skillConfig: SkillConfig = GameData.skillConfig_dict.get(config_identifier, null)
+	if skillConfig == null: return
+	var newnode: SkillBase = skillConfig.skill_scene.instantiate()
+	newnode.skillConfig_ref = skillConfig
+	newnode.skillConfig_id = config_identifier
+	var skillsize: int = skill_list.size()
+	skill_list.push_back(newnode)
+	newnode.skill_ID = skillsize
+	SkillSpawner_Node.add_child(newnode,true)
 
 func _physics_process(delta: float) -> void:
 	# You do stuff here
