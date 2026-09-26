@@ -30,12 +30,10 @@ func ClearTooltip() -> void:
 func MakeTooltip() -> void:
 	MouseTooltip_Node.visible = true
 	MouseTooltip_Node.position = ClientData.mousePos
-	
-	
 
 func UpdateForActor() -> void:
 	var cur_actor: Unit = GameData.cur_actor
-	SkillRack_Node.UpdateSkillRack(cur_actor)
+	SkillRack_Node.UpdateSkillRack(cur_actor, false)
 
 func _ProcessHudBar(value: int, lerpspeed: float, hudbar: HudBar, mode: int) -> void:
 	if value != hudbar.goal:

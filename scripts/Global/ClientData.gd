@@ -18,6 +18,7 @@ var hold_south: bool = false
 var press_west: bool = false
 var hold_west: bool = false
 
+var press_shift: bool = false
 var hold_shift: bool = false
 var press_space: bool = false
 var hold_space: bool = false
@@ -66,6 +67,7 @@ func _physics_process(_delta: float) -> void:
 	press_east = Input.is_action_just_pressed(&"ACT_East")
 	hold_east = Input.is_action_pressed(&"ACT_East")
 	
+	press_shift = Input.is_action_just_pressed(&"ACT_Shift")
 	hold_shift = Input.is_action_pressed(&"ACT_Shift")
 	
 	press_space = Input.is_action_just_pressed(&"ACT_Space")
