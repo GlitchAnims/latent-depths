@@ -18,6 +18,8 @@ func SetTimer(timer: int) -> void:
 
 func SetTeam(team: int) -> void:
 	FocusColor_Node.color = Color.BLACK
+	print (team)
+	Encompass_Node.modulate = Color.RED if team == 1 else Color.BLUE
 	TeamLabel_Node.text = "Team " + str(team)
 
 func SetIsActor(b: bool) -> void:
@@ -37,10 +39,12 @@ func SetInstructionType(ins_type: SkillInstruction.INS_TYPE) -> void:
 		SkillInstruction.INS_TYPE.walk:
 			set_texture = icon_walk
 			set_color = Color.WHITE
+		SkillInstruction.INS_TYPE.attack:
+			set_texture = SkillstructionMarker.icon_attack
+			set_color = Color.RED * 0.4 + Color.WHITE * 0.4
 		SkillInstruction.INS_TYPE.special:
 			set_texture = icon_special
 			set_color = Color.WHITE
 	
 	InstructionIcon_Node.texture = set_texture
 	InstructionIcon_Node.modulate = set_color
-	Encompass_Node.modulate = Color.BLUE

@@ -6,6 +6,7 @@ class_name SkillstructionMarker extends Control
 @onready var Panel_Node: Panel = $"GraphHolder/Panel"
 
 const icon_walk: AtlasTexture = preload("res://sprites/Icons/Atlas/walk.tres")
+const icon_attack: AtlasTexture = preload("res://sprites/Icons/Atlas/attack.tres")
 const icon_special: AtlasTexture = preload("res://sprites/Icons/Atlas/special.tres")
 const icon_default: Texture = preload("res://sprites/UnitSprites/Firefist/dmg.png")
 
@@ -33,6 +34,9 @@ func SetInstructionType(ins_type: SkillInstruction.INS_TYPE) -> void:
 		SkillInstruction.INS_TYPE.walk:
 			set_texture = icon_walk
 			set_color = Color.WHITE
+		SkillInstruction.INS_TYPE.attack:
+			set_texture = icon_attack
+			set_color = Color.RED * 0.4 + Color.WHITE * 0.4
 		SkillInstruction.INS_TYPE.special:
 			set_texture = icon_special
 			set_color = Color.WHITE
