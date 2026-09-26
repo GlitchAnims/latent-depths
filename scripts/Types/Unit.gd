@@ -166,6 +166,7 @@ func Server_UseSkill(skill: SkillBase, skillstruction_list: Array[SkillInstructi
 	skill_selected = skill
 	var packed_ins_list: PackedByteArray = GameData.Stronghold_Node.pickler.pickle(skillstruction_list)
 	var skill_ID: int = skill.skill_ID
+	ClientData.thisPlayer.done_anims = false
 	Auth_Rem_ToClient_SendSkillstructionArray.rpc(skill_ID, packed_ins_list)
 	Auth_Rem_ToClient_SelectSkill.rpc(skill_ID)
 
