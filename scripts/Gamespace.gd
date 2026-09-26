@@ -103,19 +103,25 @@ func DoUnitRay(space_state: PhysicsDirectSpaceState3D, from: Vector3, to: Vector
 		if worldPick.LogicNode is Unit: return worldPick.LogicNode as Unit
 	return null
 
+var slowtick_timer: float = 0.4
+
 func _physics_process(delta: float) -> void:
 	if not GameData.started: return
+	var is_server: bool = GameData.isServer
+	slowtick_timer -= delta
+	var slowtick: bool = slowtick_timer <= 0
+	if slowtick: slowtick_timer = 0.4
 	
 	var is_all_players_done_anims: bool = true
 	for player: Player in GameData.playerDict.values():
 		if not player.done_anims:
 			is_all_players_done_anims = false
-			break
+			if is_server and slowtick: player.Server_AreYouDoneAnims()
 	
-	var this_player: Player = ClientData.thisPlayer
-	if this_player != null and not this_player.done_anims:
-		if ClientData.incantation_list.is_empty():
-			this_player.Client_SetDoneAnims(true)
+	#var this_player: Player = ClientData.thisPlayer
+	#if this_player != null and not this_player.done_anims:
+		#if ClientData.incantation_list.is_empty():
+			#if slowtick: this_player.Client_SetDoneAnims(true)
 	
 	var control_hovered: Control = get_viewport().gui_get_hovered_control()
 	var control_hovered_is_valid: bool = is_instance_valid(control_hovered)

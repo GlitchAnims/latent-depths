@@ -5,6 +5,15 @@ class_name Player extends Pilot
 @export_storage var isReady: bool = false
 @export_storage var done_anims: bool = true
 
+func Server_AreYouDoneAnims() -> void:
+	if ClientData.thisPlayer == self:
+		Auth_Rem_ToClient_AreYouDoneAnims()
+	else:
+		Auth_Rem_ToClient_AreYouDoneAnims.rpc_id(playerID)
+@rpc("authority", "call_remote", "reliable")
+func Auth_Rem_ToClient_AreYouDoneAnims() -> void:
+	if ClientData.incantation_list.is_empty(): Client_SetDoneAnims(true)
+
 func Client_SetDoneAnims(b: bool) -> void:
 	#done_anims = b
 	if GameData.isServer: done_anims = b
@@ -14,12 +23,6 @@ func _Rem_ToServer_SetDoneAnims(b: bool) -> void:
 	if not GameData.isServer: return
 	if multiplayer.get_remote_sender_id() != playerID: return
 	done_anims = b
-
-@rpc("authority", "call_remote", "reliable")
-func Auth_Rem_ToClient_AreYouDoneAnims() -> void:
-	if GameData.isServer: return
-	# if I am done animations
-	Client_SetDoneAnims(done_anims)
 
 var password: int = -1
 
