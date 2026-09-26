@@ -2,7 +2,8 @@ extends SkillBase
 
 func IsHexSelectable(hex_from: Hex, hex_to: Hex) -> bool:
 	var dist: int = _CheckPathDist(hex_from, hex_to)
-	return dist >= 1 and dist <= 4
+	if skillConfig_ref.is_alt_skill: return dist >= 2 and dist <= 5
+	else: return dist >= 1 and dist <= 4
 
 var _last_hex_from: Hex = null
 var _last_hex_to: Hex = null
@@ -26,10 +27,9 @@ func _CheckPathDist(hex_from: Hex, hex_to: Hex) -> int:
 
 func FabricateSkillstructions(hex_from: Hex, hex_to: Hex) -> Array[SkillInstruction]:
 	var dist: int = _CheckPathDist(hex_from, hex_to)
-	var delay: int = 3000 * dist
 	
+	var ins_cool: SkillInstruction = SkillInstruction.new()
 	var ins_ability: SkillInstruction = SkillInstruction.new()
-	ins_ability.timer = delay
 	ins_ability.ins_type = SkillInstruction.INS_TYPE.walk
 	
 	var hex_walk_list: Array[Hex] = GetHexWalkList(hex_to)
@@ -40,8 +40,16 @@ func FabricateSkillstructions(hex_from: Hex, hex_to: Hex) -> Array[SkillInstruct
 		coord_old = coord_new
 		ins_ability.coord_chosen_list.push_back(coord_vec)
 	
-	var ins_cool: SkillInstruction = SkillInstruction.new()
-	ins_cool.timer = 2000
+	
+	if skillConfig_ref.is_alt_skill: # Sprint
+		var delay: int = 3000 * dist
+		ins_ability.timer = delay
+		ins_cool.timer = 2000
+	else: # Base Move
+		var delay: int = 3000 * dist
+		ins_ability.timer = delay
+		ins_cool.timer = 2000
+	
 	
 	return [ins_ability, ins_cool]
 

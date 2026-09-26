@@ -72,6 +72,7 @@ func _ready() -> void:
 	if GameData.isServer:
 		Server_AddSkillToList(&"og_basemove")
 		Server_AddSkillToList(&"og_basemovealt")
+		Server_AddSkillToList(&"og_basemelee")
 	
 	ID_Label.text = str(unitID)
 	_ready_unit()

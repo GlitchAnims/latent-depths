@@ -1,0 +1,12 @@
+[gd_resource type="Resource" format=3 uid="uid://degaaqatru7qb"]
+
+[ext_resource type="Texture2D" uid="uid://bhirdy0n3aym2" path="res://sprites/Icons/Atlas/attack.tres" id="1_fa6yr"]
+[ext_resource type="Script" uid="uid://c1uwxkhr70dh4" path="res://scripts/Configs/InheritSkillConfig/SC_BaseMove.gd" id="2_00hke"]
+[ext_resource type="PackedScene" uid="uid://cd3x6cltqqlb8" path="res://scenes/Skills/base_melee.tscn" id="3_fa6yr"]
+
+[resource]
+script = ExtResource("2_00hke")
+identifier = &"og_basemelee"
+icon = ExtResource("1_fa6yr")
+skill_scene = ExtResource("3_fa6yr")
+metadata/_custom_type_script = "uid://derk5pfmfhjf6"
