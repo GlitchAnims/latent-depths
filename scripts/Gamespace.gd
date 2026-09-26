@@ -106,6 +106,17 @@ func DoUnitRay(space_state: PhysicsDirectSpaceState3D, from: Vector3, to: Vector
 func _physics_process(delta: float) -> void:
 	if not GameData.started: return
 	
+	var is_all_players_done_anims: bool = true
+	for player: Player in GameData.playerDict.values():
+		if not player.done_anims:
+			is_all_players_done_anims = false
+			break
+	
+	var this_player: Player = ClientData.thisPlayer
+	if this_player != null and not this_player.done_anims:
+		if ClientData.incantation_list.is_empty():
+			this_player.Client_SetDoneAnims(true)
+	
 	var control_hovered: Control = get_viewport().gui_get_hovered_control()
 	var control_hovered_is_valid: bool = is_instance_valid(control_hovered)
 	
@@ -166,13 +177,14 @@ func _physics_process(delta: float) -> void:
 	if not has_actor:
 		@warning_ignore("narrowing_conversion")
 		var slowdown_thres: int = BattleTimeline.time_per_second * 0.5
-		var shortest_act_time: int = GetShortestActTime(slowdown_thres)
-		if shortest_act_time < slowdown_thres:
-			time_mult *= (float(shortest_act_time) / slowdown_thres) * 0.8 + 0.2
-		time_pass = floori(BattleTimeline.time_per_second * time_mult)
-		time_pass = maxi(time_pass, 10)
 		
-		time_pass = clamp(time_pass, 0, shortest_act_time)
+		if is_all_players_done_anims:
+			var shortest_act_time: int = GetShortestActTime(slowdown_thres)
+			if shortest_act_time < slowdown_thres:
+				time_mult *= (float(shortest_act_time) / slowdown_thres) * 0.8 + 0.2
+			time_pass = floori(BattleTimeline.time_per_second * time_mult)
+			time_pass = maxi(time_pass, 10)
+			time_pass = clamp(time_pass, 0, shortest_act_time)
 	
 	if time_pass > 0:
 		AudioManager_Node.RunTimelineClick(time_mult*30)
@@ -190,7 +202,6 @@ func _physics_process(delta: float) -> void:
 				if downtime < 1: actors.push_back(unit)
 			
 			if actors.is_empty(): # Means a Skill somewhere is now at 0 instruction timer
-				
 				var bad_actor: Unit = null
 				var bad_skill: SkillBase = null
 				var bad_skillstruction: SkillInstruction = null
@@ -205,17 +216,17 @@ func _physics_process(delta: float) -> void:
 							bad_actor = unit
 							break
 				
-				if bad_actor != null:
+				if bad_actor != null && is_all_players_done_anims:
 					bad_skill.instruction_list.pop_front()
 					var packed_ins_list: PackedByteArray = GameData.Stronghold_Node.pickler.pickle(bad_skill.instruction_list)
 					bad_actor.Auth_Rem_ToClient_SendSkillstructionArray(bad_skill.skill_ID, packed_ins_list)
 					bad_skill.Server_PerformInstruction(bad_skillstruction)
 				
-			else: # No Possible Actors, find New Turn
+			else:
 				var selected_actor: Unit = actors[0]
-				GameData.cur_actor = selected_actor
 				Server_SetActorForAll(selected_actor)
-				has_actor = true
+	
+	has_actor = GameData.cur_actor != null
 	
 	if has_actor:
 		var actor: Unit = GameData.cur_actor

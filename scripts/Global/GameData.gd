@@ -82,6 +82,10 @@ var cur_actor: Unit = null
 var pilotDict: Dictionary[int, Pilot] = {}
 var playerDict: Dictionary[int, Player] = {}
 
+func Server_SetDoneAnimsAllPlayers(b: bool) -> void:
+	for player: Player in playerDict.values():
+		player.done_anims = b
+
 var pilotID_counter: int = 0
 func GetUniquePilotID() -> int:
 	pilotID_counter += 1

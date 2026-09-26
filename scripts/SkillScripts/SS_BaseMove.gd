@@ -92,6 +92,8 @@ func Server_PerformInstruction(ins: SkillInstruction) -> void:
 		if occupied: continue
 		coord_dest = coord_next_temp
 	
+	GameData.Server_SetDoneAnimsAllPlayers(false)
+	
 	Auth_Rem_ToClient_BaseWalkAbility(coord_dest)
 	Auth_Rem_ToClient_BaseWalkAbility.rpc(coord_dest)
 

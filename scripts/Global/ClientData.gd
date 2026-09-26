@@ -109,3 +109,5 @@ var temp_skill: SkillBase = null
 var temp_skillstruction_list: Array[SkillInstruction] = []
 
 var infomercial_unit: Unit = null
+
+var incantation_list: Array[Incantation] = []

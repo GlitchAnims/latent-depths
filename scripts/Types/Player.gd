@@ -3,11 +3,12 @@ class_name Player extends Pilot
 @export var playerID: int = 0
 
 @export_storage var isReady: bool = false
-@export_storage var done_anims: bool = false
+@export_storage var done_anims: bool = true
 
 func Client_SetDoneAnims(b: bool) -> void:
 	#done_anims = b
-	_Rem_ToServer_SetDoneAnims.rpc_id(1, b)
+	if GameData.isServer: done_anims = b
+	else: _Rem_ToServer_SetDoneAnims.rpc_id(1, b)
 @rpc("any_peer", "call_remote", "reliable")
 func _Rem_ToServer_SetDoneAnims(b: bool) -> void:
 	if not GameData.isServer: return
