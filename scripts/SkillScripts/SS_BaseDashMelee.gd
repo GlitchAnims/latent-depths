@@ -202,38 +202,45 @@ func Incantate(incantation: Incantation, delta: float) -> void:
 		var unit_count: int = inc.unit_list.size()
 		
 		var prog: float = inc.anim_progress
-		prog += delta * 1.3
+		prog += delta * 3
 		inc.anim_progress = prog
 		
 		if unit_count > 0:
 			var inc_step: int = inc.step
-			match inc_step:
-				0:
-					if prog >= 0.2:
-						for i in unit_count:
-							var unit: Unit = inc.unit_list[i]
-							var dmg: int = floori(float(inc.dmg_list[i]) * 0.3)
-							inc.dmg_list[i] -= dmg
-							unit.Vis_InflictShake()
-							unit.Vis_TakeDamage(dmg)
-						inc.step += 1
-				1:
-					if prog >= 0.5:
-						for i in unit_count:
-							var unit: Unit = inc.unit_list[i]
-							var dmg: int = floori(float(inc.dmg_list[i]) * 0.35)
-							inc.dmg_list[i] -= dmg
-							unit.Vis_InflictShake()
-							unit.Vis_TakeDamage(dmg)
-						inc.step += 1
-				2:
-					if prog >= 0.8:
-						for i in unit_count:
-							var unit: Unit = inc.unit_list[i]
-							var dmg: int = inc.dmg_list[i]
-							unit.Vis_InflictShake()
-							unit.Vis_TakeDamage(dmg)
-						inc.step += 1
+			if inc_step == 0 and prog >= 0.2:
+				for i in unit_count:
+					var unit: Unit = inc.unit_list[i]
+					var dmg: int = inc.dmg_list[i]
+					unit.Vis_InflictShake()
+					unit.Vis_TakeDamage(dmg)
+				inc.step += 1
+			#match inc_step:
+				#0:
+					#if prog >= 0.2:
+						#for i in unit_count:
+							#var unit: Unit = inc.unit_list[i]
+							#var dmg: int = floori(float(inc.dmg_list[i]) * 0.3)
+							#inc.dmg_list[i] -= dmg
+							#unit.Vis_InflictShake()
+							#unit.Vis_TakeDamage(dmg)
+						#inc.step += 1
+				#1:
+					#if prog >= 0.5:
+						#for i in unit_count:
+							#var unit: Unit = inc.unit_list[i]
+							#var dmg: int = floori(float(inc.dmg_list[i]) * 0.35)
+							#inc.dmg_list[i] -= dmg
+							#unit.Vis_InflictShake()
+							#unit.Vis_TakeDamage(dmg)
+						#inc.step += 1
+				#2:
+					#if prog >= 0.8:
+						#for i in unit_count:
+							#var unit: Unit = inc.unit_list[i]
+							#var dmg: int = inc.dmg_list[i]
+							#unit.Vis_InflictShake()
+							#unit.Vis_TakeDamage(dmg)
+						#inc.step += 1
 		
 		if prog >= 1.0:
 			ClientData.incantation_list.erase(incantation)

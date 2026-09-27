@@ -257,11 +257,12 @@ func _physics_process(delta: float) -> void:
 				
 				if ClientData.press_space and canchoose:
 					if GameData.isServer:
-						Server_SetActorForAll(null)
-						actor.Server_UseSkill(skill, skill.FabricateSkillstructions(hex_from,hex_to))
-						ClientData.temp_skillstruction_list = []
-						ClientData.temp_skill = null
-						worldhex_lock = null
+						if ClientData.thisPlayer.team == actor.team:
+							Server_SetActorForAll(null)
+							actor.Server_UseSkill(skill, skill.FabricateSkillstructions(hex_from,hex_to))
+							ClientData.temp_skillstruction_list = []
+							ClientData.temp_skill = null
+							worldhex_lock = null
 					else:
 						actor.Rem_ToServer_TryUseSkill.rpc_id(1, skill.skill_ID, hex_to.coord)
 					#actor.pos_hex = hex_to.coord
