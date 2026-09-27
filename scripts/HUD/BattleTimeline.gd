@@ -168,8 +168,7 @@ func _physics_process(delta: float) -> void:
 				order.time = time_cumulative
 				order.unit = unit
 				order_list.push_back(order)
-		
-		if is_instance_valid(unit.skill_selected):
+		elif unit.Client_CanIHearYou() and is_instance_valid(unit.skill_selected):
 			var skill: SkillBase = unit.skill_selected
 			for ins: SkillInstruction in skill.instruction_list:
 				time_cumulative += ins.timer
