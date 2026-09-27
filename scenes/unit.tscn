@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b0ykym1txudf3" path="res://scripts/Types/Unit.gd" id="1_o7ajc"]
 [ext_resource type="Script" uid="uid://d1eus63jer531" path="res://scripts/MultSpawn/SkillSpawner.gd" id="2_k673f"]
 [ext_resource type="Script" uid="uid://ds4ygwk08iv3x" path="res://scripts/WorldInteract/WorldPickable.gd" id="3_1jvru"]
+[ext_resource type="PackedScene" uid="uid://bgpqr4gcpcdna" path="res://scenes/HUD/unit_over_status.tscn" id="4_gic7v"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_o7ajc"]
 properties/0/path = NodePath(".:unitID")
@@ -75,6 +76,21 @@ height = 0.001
 cap_top = false
 cap_bottom = false
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_tb304"]
+viewport_path = NodePath("StatusViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tb304"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_tb304")
+billboard_mode = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_gic7v"]
+resource_local_to_scene = true
+size = Vector2(1, 2)
+center_offset = Vector3(1, 0, 0)
+
 [node name="Unit" type="Node3D" unique_id=756562779]
 script = ExtResource("1_o7ajc")
 metadata/_custom_type_script = "uid://b0ykym1txudf3"
@@ -94,6 +110,7 @@ text = "12"
 
 [node name="Tringl" type="MeshInstance3D" parent="." unique_id=87896051]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5852852, 0)
+visible = false
 mesh = SubResource("CylinderMesh_vesgh")
 
 [node name="SkillSpawner" type="MultiplayerSpawner" parent="." unique_id=140067730]
@@ -114,3 +131,17 @@ shape = SubResource("CylinderShape3D_1jvru")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.10514641, 0)
 visible = false
 mesh = SubResource("CylinderMesh_kkjc3")
+
+[node name="StatusViewport" type="SubViewport" parent="." unique_id=1482828061]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(256, 512)
+
+[node name="UnitOverheadStatus" parent="StatusViewport" unique_id=1902215833 instance=ExtResource("4_gic7v")]
+offset_right = -256.0
+offset_bottom = -512.0
+
+[node name="OverheadDisplay" type="MeshInstance3D" parent="." unique_id=1872660049]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5671039, 0)
+material_override = SubResource("StandardMaterial3D_tb304")
+mesh = SubResource("QuadMesh_gic7v")
