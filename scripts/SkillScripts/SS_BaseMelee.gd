@@ -67,12 +67,23 @@ func Server_PerformInstruction(ins: SkillInstruction) -> void:
 	
 	GameData.Server_SetDoneAnimsAllPlayers(false)
 	
+	var dmg: int = 0
 	var unit_struck: Unit = null
-	var unit_struck_ID: int = unit_struck.unitID if is_instance_valid(unit_struck) else -1
+	var unit_struck_ID: int = -1
+	for unit: Unit in GameData.unit_list_temp:
+		var same_tile: bool = unit.pos_hex == coord_strike
+		
+		if same_tile:
+			unit_struck = unit
+			unit_struck_ID = unit.unitID
+			break
+		
+	if is_instance_valid(unit_struck):
+		unit_struck.SetHP(unit_struck.hp - 100)
+		dmg = 100
+	
 	
 	var strike_solid: bool = false
-	var dmg: int = 0
-	
 	Auth_Rem_ToClient_BaseMelee(coord_strike, strike_solid, dmg, unit_struck_ID)
 	Auth_Rem_ToClient_BaseMelee.rpc(coord_strike, strike_solid, dmg, unit_struck_ID)
 
@@ -85,23 +96,49 @@ func Auth_Rem_ToClient_BaseMelee(coord_strike: Vector2i, strike_solid: bool, dmg
 	if unit_struck_ID > -1: incantation_new.unit_struck = GameData.unit_dict[unit_struck_ID]
 	ClientData.incantation_list.push_back(incantation_new)
 
+
 func Incantate(incantation: Incantation, delta: float) -> void:
 	var inc: Incantation_Custom = incantation as Incantation_Custom
 	#var coord_strike: Vector2i = inc.coord_strike
 	
+	var unit_struck: Unit = inc.unit_struck
+	
 	var prog: float = inc.anim_progress
 	prog += delta * 1.3
 	inc.anim_progress = prog
-	#unit_ref.rotate(Vector3.FORWARD, TAU*3*delta)
 	
+	if unit_struck != null:
+		var inc_step: int = inc.step
+		match inc_step:
+			0:
+				if prog >= 0.2:
+					var dmg: int = floori(float(inc.dmg) * 0.3)
+					unit_struck.Vis_InflictShake()
+					unit_struck.Vis_TakeDamage(dmg)
+					inc.dmg -= dmg
+					inc.step += 1
+			1:
+				if prog >= 0.5:
+					var dmg: int = floori(float(inc.dmg) * 0.3)
+					unit_struck.Vis_InflictShake()
+					unit_struck.Vis_TakeDamage(dmg)
+					inc.dmg -= dmg
+					inc.step += 1
+			2:
+				if prog >= 0.8:
+					var dmg: int = inc.dmg
+					unit_struck.Vis_InflictShake()
+					unit_struck.Vis_TakeDamage(dmg)
+					inc.dmg = 0
+					inc.step += 1
 	
 	if prog >= 1.0:
 		ClientData.incantation_list.erase(incantation)
-		unit_ref.Vis_InflictShake()
-		#unit_ref.rotation = Vector3.ZERO
+		unit_struck.Vis_RefreshHP()
 
 class Incantation_Custom extends Incantation:
 	var strike_solid: bool = false
 	var coord_strike: Vector2i = Vector2i.ZERO
 	var dmg: int = 0
 	var unit_struck: Unit = null
+	var step: int = 0

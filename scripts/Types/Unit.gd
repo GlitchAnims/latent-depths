@@ -27,6 +27,8 @@ func Server_SetupForSpawn(uniqueunitid: int) -> void:
 func SetupHP(hp_max_new: int = 1000) -> void:
 	hp_max = hp_max_new
 	hp = hp_max_new
+func SetHP(v: int) -> void:
+	hp = clampi(v, 0, hp_max)
 
 @export_storage var stress_enabled: bool = true
 @export_storage var stress: int = 1000
@@ -203,3 +205,8 @@ func SelectSkill(skill: SkillBase) -> void:
 
 func Vis_InflictShake() -> void:
 	Vis_Node.GainShake()
+
+func Vis_TakeDamage(dmg: int) -> void:
+	UnitOverheadStatus_Node.TakeDamage(dmg)
+func Vis_RefreshHP() -> void:
+	UnitOverheadStatus_Node.SetHP(hp)

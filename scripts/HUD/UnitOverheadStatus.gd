@@ -19,8 +19,7 @@ func _ready() -> void:
 	InstructionPanel_Node.visible = false
 	ActionBar_Node.max_value = 10
 	ActionBar_Node.value = 10
-	SetHealth(unit_ref.hp)
-	
+	SetHP(unit_ref.hp)
 
 func _physics_process(_delta: float) -> void:
 	if is_instance_valid(skill_ref):
@@ -30,10 +29,15 @@ func _physics_process(_delta: float) -> void:
 			SetActionProgress(unit_ref.overhead_downtime)
 	else: SetActionProgress(unit_ref.overhead_downtime)
 
-func SetHealth(hp: int) -> void:
+func SetHP(hp: int) -> void:
 	var hp_max: int = unit_ref.hp_max
 	HealthBar_Node.max_value = hp_max
 	HealthBar_Node.value = hp
+
+func TakeDamage(dmg: int) -> void:
+	@warning_ignore("narrowing_conversion")
+	var hp: int = HealthBar_Node.value
+	HealthBar_Node.value = maxi(hp-dmg,0)
 
 func SetSkill(skill: SkillBase) -> void:
 	skill_ref = skill
