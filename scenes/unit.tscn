@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://d1eus63jer531" path="res://scripts/MultSpawn/SkillSpawner.gd" id="2_k673f"]
 [ext_resource type="Script" uid="uid://ds4ygwk08iv3x" path="res://scripts/WorldInteract/WorldPickable.gd" id="3_1jvru"]
 [ext_resource type="PackedScene" uid="uid://bgpqr4gcpcdna" path="res://scenes/HUD/unit_over_status.tscn" id="4_gic7v"]
+[ext_resource type="Script" uid="uid://c30lcdnv7wde6" path="res://scripts/Vis/Vis.gd" id="5_tb304"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_o7ajc"]
 properties/0/path = NodePath(".:unitID")
@@ -39,10 +40,6 @@ properties/9/replication_mode = 0
 properties/10/path = NodePath(".:heard_teams_flags")
 properties/10/spawn = true
 properties/10/replication_mode = 0
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_vesgh"]
-radius = 0.3
-height = 1.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kkjc3"]
 cull_mode = 1
@@ -91,6 +88,10 @@ resource_local_to_scene = true
 size = Vector2(1, 2)
 center_offset = Vector3(1, 0, 0)
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_vesgh"]
+radius = 0.3
+height = 1.5
+
 [node name="Unit" type="Node3D" unique_id=756562779]
 script = ExtResource("1_o7ajc")
 metadata/_custom_type_script = "uid://b0ykym1txudf3"
@@ -98,10 +99,6 @@ metadata/_custom_type_script = "uid://b0ykym1txudf3"
 [node name="SetupSync" type="MultiplayerSynchronizer" parent="." unique_id=125540850]
 replication_config = SubResource("SceneReplicationConfig_o7ajc")
 visibility_update_mode = 2
-
-[node name="Capsule" type="MeshInstance3D" parent="." unique_id=1837716725]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72187877, 0)
-mesh = SubResource("CapsuleMesh_vesgh")
 
 [node name="ID" type="Label3D" parent="." unique_id=153694226]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7796253, 0)
@@ -145,3 +142,11 @@ offset_bottom = -512.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5671039, 0)
 material_override = SubResource("StandardMaterial3D_tb304")
 mesh = SubResource("QuadMesh_gic7v")
+
+[node name="Vis" type="Node3D" parent="." unique_id=1721071178]
+script = ExtResource("5_tb304")
+
+[node name="Capsule" type="MeshInstance3D" parent="Vis" unique_id=1837716725]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72187877, 0)
+mesh = SubResource("CapsuleMesh_vesgh")
+skeleton = NodePath("../..")

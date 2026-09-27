@@ -92,12 +92,13 @@ func Incantate(incantation: Incantation, delta: float) -> void:
 	var prog: float = inc.anim_progress
 	prog += delta * 1.3
 	inc.anim_progress = prog
-	unit_ref.rotate(Vector3.FORWARD, TAU*3*delta)
+	#unit_ref.rotate(Vector3.FORWARD, TAU*3*delta)
 	
 	
 	if prog >= 1.0:
 		ClientData.incantation_list.erase(incantation)
-		unit_ref.rotation = Vector3.ZERO
+		unit_ref.Vis_InflictShake()
+		#unit_ref.rotation = Vector3.ZERO
 
 class Incantation_Custom extends Incantation:
 	var strike_solid: bool = false

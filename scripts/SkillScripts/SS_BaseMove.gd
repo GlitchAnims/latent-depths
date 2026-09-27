@@ -151,6 +151,7 @@ func Incantate(incantation: Incantation, delta: float) -> void:
 		
 		if inc.cut_short and inc.visual_walk_pos_list.size() == 1:
 			inc.visual_walk_pos_list.remove_at(0)
+			unit_ref.Vis_InflictShake()
 			# TODO Blocked path
 		else:
 			var dist: float = pos3_vec.length()

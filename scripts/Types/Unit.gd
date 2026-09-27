@@ -10,6 +10,8 @@ class_name Unit extends Node3D
 @onready var MouseSelector_Node: WorldPickable = $"MouseSelector"
 @onready var Hover_Node: MeshInstance3D = $"Hover"
 
+@onready var Vis_Node: Vis = $"Vis"
+
 @onready var UnitOverheadStatus_Node: UnitOverheadStatus = $"StatusViewport/UnitOverheadStatus"
 
 ## Called by Server when spawned, before adding as child to tree.
@@ -198,3 +200,6 @@ func SelectSkill(skill: SkillBase) -> void:
 	if is_instance_valid(skill):
 		skill.OnSelectAndUse()
 	UnitOverheadStatus_Node.SetSkill(skill)
+
+func Vis_InflictShake() -> void:
+	Vis_Node.GainShake()
