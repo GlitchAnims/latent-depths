@@ -10,6 +10,8 @@ class_name Unit extends Node3D
 @onready var MouseSelector_Node: WorldPickable = $"MouseSelector"
 @onready var Hover_Node: MeshInstance3D = $"Hover"
 
+@onready var UnitOverheadStatus_Node: UnitOverheadStatus = $"StatusViewport/UnitOverheadStatus"
+
 ## Called by Server when spawned, before adding as child to tree.
 func Server_SetupForSpawn(uniqueunitid: int) -> void:
 	unitID = uniqueunitid
@@ -110,28 +112,16 @@ func SetHovered(b: bool) -> void:
 
 func Incantate(_incantation: Incantation, _delta: float) -> void: pass
 
-## Request from Client to Server only.[br]
-## Checks if Client Player ID is same as this unit's Pilot Player, 
-## then calls [method Unit.Server_ActivateCardByTibiaID].
-@rpc("any_peer", "call_remote", "reliable")
-func Request_ActivateCardByTibiaID(id: int = -1) -> void:
-	if not GameData.isServer: return
-	var player: Player = null # TODO player?
-	var senderID: int = multiplayer.get_remote_sender_id()
-	if player.playerID != senderID: return # LOUD INCORRECT BUZZER
-	Server_ActivateCardByTibiaID(id)
-
 @rpc("authority", "call_remote", "reliable")
 func Auth_Rem_ToClient_SelectSkill(skill_ID: int) -> void:
 	if GameData.isServer: return
 	if skill_ID == -1:
-		skill_selected = null
+		SelectSkill(null)
 		return
 	if skill_list.size() <= skill_ID: return
 	var skill: SkillBase = skill_list[skill_ID]
 	if not is_instance_valid(skill): return
-	skill_selected = skill
-	skill.OnSelectAndUse()
+	SelectSkill(skill)
 
 @rpc("authority", "call_remote", "reliable")
 func Auth_Rem_ToClient_SendSkillstructionArray(skill_ID: int, ins_list_packed: PackedByteArray) -> void:
@@ -173,17 +163,23 @@ func Rem_ToServer_TryUseSkill(skill_ID: int, coord_target: Vector2i) -> void:
 
 func Server_UseSkill(skill: SkillBase, skillstruction_list: Array[SkillInstruction]) -> void:
 	skill.instruction_list = skillstruction_list
-	skill_selected = skill
-	skill.OnSelectAndUse()
+	SelectSkill(skill)
+	GameData.Server_SetDoneAnimsAllPlayers(false)
+	
 	var packed_ins_list: PackedByteArray = GameData.Stronghold_Node.pickler.pickle(skillstruction_list)
 	var skill_ID: int = skill.skill_ID
-	GameData.Server_SetDoneAnimsAllPlayers(false)
+	
 	Auth_Rem_ToClient_SendSkillstructionArray.rpc(skill_ID, packed_ins_list)
 	Auth_Rem_ToClient_SelectSkill.rpc(skill_ID)
 
 func Server_ClearSkill() -> void:
-	skill_selected = null
+	SelectSkill(null)
 	Auth_Rem_ToClient_SelectSkill.rpc(-1)
 
-func Server_ActivateCardByTibiaID(_id: int) -> void:
-	pass
+func SelectSkill(skill: SkillBase) -> void:
+	skill_selected = skill
+	if is_instance_valid(skill):
+		skill.OnSelectAndUse()
+	UnitOverheadStatus_Node.SetHealth(hp)
+	UnitOverheadStatus_Node.SetSkill(skill)
+	#UnitOverheadStatus_Node.SetInstruction(skill.instruction_list[0])
