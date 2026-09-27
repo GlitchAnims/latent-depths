@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://ds4ygwk08iv3x" path="res://scripts/WorldInteract/WorldPickable.gd" id="3_1jvru"]
 [ext_resource type="PackedScene" uid="uid://bgpqr4gcpcdna" path="res://scenes/HUD/unit_over_status.tscn" id="4_gic7v"]
 [ext_resource type="Script" uid="uid://c30lcdnv7wde6" path="res://scripts/Vis/Vis.gd" id="5_tb304"]
+[ext_resource type="AudioStream" uid="uid://dy7rrj185wvy7" path="res://sounds/Attacks/Hit.wav" id="6_ruro2"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_o7ajc"]
 properties/0/path = NodePath(".:unitID")
@@ -150,3 +151,9 @@ script = ExtResource("5_tb304")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72187877, 0)
 mesh = SubResource("CapsuleMesh_vesgh")
 skeleton = NodePath("../..")
+
+[node name="HitSound" type="AudioStreamPlayer3D" parent="." unique_id=838731362]
+stream = ExtResource("6_ruro2")
+volume_db = -8.0
+max_polyphony = 3
+attenuation_filter_cutoff_hz = 20500.0

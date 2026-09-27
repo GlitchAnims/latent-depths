@@ -9,6 +9,7 @@ class_name Unit extends Node3D
 @onready var SkillSpawner_Node: SkillSpawner = $"SkillSpawner"
 @onready var MouseSelector_Node: WorldPickable = $"MouseSelector"
 @onready var Hover_Node: MeshInstance3D = $"Hover"
+@onready var HitSound_Node: AudioStreamPlayer3D = $"HitSound"
 
 @onready var Vis_Node: Vis = $"Vis"
 
@@ -209,5 +210,6 @@ func Vis_InflictShake() -> void:
 func Vis_TakeDamage(dmg: int) -> void:
 	UnitOverheadStatus_Node.TakeDamage(dmg)
 	GameData.Gamespace_Node.CreateDmgPopup(self, dmg)
+	HitSound_Node.play()
 func Vis_RefreshHP() -> void:
 	UnitOverheadStatus_Node.SetHP(hp)
