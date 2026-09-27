@@ -2,6 +2,9 @@ class_name SkillRack extends VBoxContainer
 
 const skillbutton_scene: PackedScene = preload("res://scenes/HUD/skill_button.tscn")
 
+func _ready() -> void:
+	_ClearSkillButtons()
+
 func _ClearSkillButtons() -> void:
 	for child in get_children():
 		child.queue_free()
