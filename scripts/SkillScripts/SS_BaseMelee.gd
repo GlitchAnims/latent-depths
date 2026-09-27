@@ -29,8 +29,8 @@ func FabricateSkillstructions(hex_from: Hex, hex_to: Hex) -> Array[SkillInstruct
 		if dist == 1:
 			_attack_vec = coord_vec
 			ins_ability.coord_chosen_list.push_back(_attack_vec)
-			ins_ability.timer = 1000
-			ins_cool.timer = 1000
+			ins_ability.timer = 1500
+			ins_cool.timer = 1500
 	
 	return [ins_ability, ins_cool]
 
@@ -79,8 +79,9 @@ func Server_PerformInstruction(ins: SkillInstruction) -> void:
 			break
 		
 	if is_instance_valid(unit_struck):
-		unit_struck.SetHP(unit_struck.hp - 100)
-		dmg = 100
+		dmg = 200
+		unit_struck.SetHP(unit_struck.hp - dmg)
+		
 	
 	
 	var strike_solid: bool = false
@@ -134,7 +135,7 @@ func Incantate(incantation: Incantation, delta: float) -> void:
 	
 	if prog >= 1.0:
 		ClientData.incantation_list.erase(incantation)
-		unit_struck.Vis_RefreshHP()
+		if unit_struck != null: unit_struck.Vis_RefreshHP()
 
 class Incantation_Custom extends Incantation:
 	var strike_solid: bool = false

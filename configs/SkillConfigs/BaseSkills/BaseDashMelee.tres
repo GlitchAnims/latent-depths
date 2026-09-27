@@ -1,0 +1,12 @@
+[gd_resource type="Resource" format=3 uid="uid://0glmmuqdboir"]
+
+[ext_resource type="Texture2D" uid="uid://bhirdy0n3aym2" path="res://sprites/Icons/Atlas/attack.tres" id="1_p26hp"]
+[ext_resource type="Script" uid="uid://c1uwxkhr70dh4" path="res://scripts/Configs/InheritSkillConfig/SC_BaseMove.gd" id="2_xbaa3"]
+[ext_resource type="PackedScene" uid="uid://ch5oevmyvoma7" path="res://scenes/Skills/base_dashmelee.tscn" id="3_p26hp"]
+
+[resource]
+script = ExtResource("2_xbaa3")
+identifier = &"og_basedashmelee"
+icon = ExtResource("1_p26hp")
+skill_scene = ExtResource("3_p26hp")
+metadata/_custom_type_script = "uid://derk5pfmfhjf6"

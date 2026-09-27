@@ -90,6 +90,7 @@ func _ready() -> void:
 		Server_AddSkillToList(&"og_basemove")
 		Server_AddSkillToList(&"og_basemovealt")
 		Server_AddSkillToList(&"og_basemelee")
+		Server_AddSkillToList(&"og_basedashmelee")
 	
 	ID_Label.text = str(unitID)
 	_ready_unit()

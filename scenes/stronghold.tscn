@@ -9,6 +9,7 @@
 [ext_resource type="Resource" uid="uid://djx3rbtsrkwn8" path="res://configs/SkillConfigs/BaseSkills/BaseMoveAlt.tres" id="4_ptabd"]
 [ext_resource type="PackedScene" uid="uid://deis8xe157xuk" path="res://scenes/HUD/mouse_tooltip.tscn" id="5_cf4id"]
 [ext_resource type="Resource" uid="uid://degaaqatru7qb" path="res://configs/SkillConfigs/BaseSkills/BaseMelee.tres" id="5_i5rp2"]
+[ext_resource type="Resource" uid="uid://0glmmuqdboir" path="res://configs/SkillConfigs/BaseSkills/BaseDashMelee.tres" id="6_6u3qi"]
 [ext_resource type="Script" uid="uid://b0v6wf0jodgkf" path="res://scripts/HUD/SkillRack.gd" id="6_cf4id"]
 [ext_resource type="PackedScene" uid="uid://bhpd1ue316s2l" path="res://scenes/HUD/skill_button.tscn" id="6_i5rp2"]
 [ext_resource type="AudioStream" uid="uid://br6603clecgx" path="res://sounds/Timeline/timeline_click.mp3" id="6_kj1sv"]
@@ -26,7 +27,7 @@ content_margin_bottom = 5.0
 
 [node name="Stronghold" type="Node" unique_id=495344873]
 script = ExtResource("1_mw8q0")
-og_skillconfigs = Array[ExtResource("2_umgfj")]([ExtResource("3_kj1sv"), ExtResource("4_ptabd"), ExtResource("5_i5rp2")])
+og_skillconfigs = Array[ExtResource("2_umgfj")]([ExtResource("3_kj1sv"), ExtResource("4_ptabd"), ExtResource("5_i5rp2"), ExtResource("6_6u3qi")])
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="." unique_id=874524148]
 _spawnable_scenes = PackedStringArray("uid://7u5rpxdcfusb")

@@ -25,6 +25,35 @@ static func CoordVecLength(coord_vec: Vector2i) -> int:
 	+ abs(coord_vec.y)) / 2
 	return dist
 
+static func CoordRotate(coord: Vector2i, hex_angle: int = 1) -> Vector2i:
+	var times: int = abs(hex_angle)
+	if times == 3: return -coord
+	var counter_clockwise: bool = hex_angle < 0
+	
+	for i in times:
+		if counter_clockwise:
+			var hold: int = coord.x
+			coord.x += coord.y
+			coord.y = -hold
+		else:
+			var hold: int = coord.y
+			coord.y += coord.x
+			coord.x = -hold
+	return coord
+
+static func CoordNormalize(coord: Vector2i) -> Vector2i:
+	return Vector2i(clampi(coord.x,-1,1),clampi(coord.y,-1,1))
+
+static func GetRotationFromCoordNorm(coord_norm: Vector2i) -> int:
+	match coord_norm:
+		Vector2i(0,-1): return 0
+		Vector2i(1,-1): return 1
+		Vector2i(1,0): return 2
+		Vector2i(0,1): return 3
+		Vector2i(-1,0): return -1
+		Vector2i(-1,1): return -2
+	return 0
+
 const axial_direction_vectors = [
 	Vector2i(+1, 0), Vector2i(+1, -1), Vector2i(0, -1), 
 	Vector2i(-1, 0), Vector2i(-1, +1), Vector2i(0, +1), 

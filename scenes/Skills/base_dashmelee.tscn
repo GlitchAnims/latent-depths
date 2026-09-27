@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://ch5oevmyvoma7"]
+
+[ext_resource type="PackedScene" uid="uid://cvo0gw86m5uag" path="res://scenes/Skills/skill_template.tscn" id="1_bcqml"]
+[ext_resource type="Script" uid="uid://b03cbfjfwoyd7" path="res://scripts/SkillScripts/SS_BaseDashMelee.gd" id="2_27ra3"]
+
+[node name="BaseMelee" unique_id=1468544059 instance=ExtResource("1_bcqml")]
+script = ExtResource("2_27ra3")
