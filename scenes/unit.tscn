@@ -35,10 +35,10 @@ properties/8/spawn = true
 properties/8/replication_mode = 0
 properties/9/path = NodePath(".:team")
 properties/9/spawn = true
-properties/9/replication_mode = 1
+properties/9/replication_mode = 0
 properties/10/path = NodePath(".:heard_teams_flags")
 properties/10/spawn = true
-properties/10/replication_mode = 1
+properties/10/replication_mode = 0
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_vesgh"]
 radius = 0.3

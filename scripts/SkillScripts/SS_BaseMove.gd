@@ -42,10 +42,12 @@ func FabricateSkillstructions(hex_from: Hex, hex_to: Hex) -> Array[SkillInstruct
 	
 	
 	if skillConfig_ref.is_alt_skill: # Sprint
+		reserved_heard_range = 3
 		var delay: int = 3000 * dist
 		ins_ability.timer = delay
 		ins_cool.timer = 2000
 	else: # Base Move
+		reserved_heard_range = 2
 		var delay: int = 3000 * dist
 		ins_ability.timer = delay
 		ins_cool.timer = 2000
@@ -82,6 +84,17 @@ func DoWorldHexWidgets(worldHex_dict: Dictionary[Vector2i, WorldHex]) -> void:
 			worldHex.AimWalkArrow(Vector3(coord_forwards.x,0,coord_forwards.y))
 		pathHex = _distance_map.get(coord_backwalk, null)
 		coord_to = coord_backwalk
+	
+	var loud_coord_source: Vector2i = _last_hex_from.coord
+	var rings: int = reserved_heard_range
+	var diameter: int = rings*2+1
+	for x in diameter:
+		var xcoord: int = x-rings
+		for y in diameter-abs(xcoord):
+			var ycoord: int = y-mini(x,rings)
+			var coord: Vector2i = Vector2i(xcoord,ycoord) + loud_coord_source
+			var worldHex: WorldHex = worldHex_dict.get(coord, null)
+			if worldHex != null: worldHex.SetLoud()
 
 func OnSelectAndUse() -> void:
 	pass

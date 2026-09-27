@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://ds4ygwk08iv3x" path="res://scripts/WorldInteract/WorldPickable.gd" id="4_40m0n"]
 [ext_resource type="Material" uid="uid://1q58ymgwu3es" path="res://materials/Hex/shd_standard_ring_red.tres" id="5_30eso"]
 [ext_resource type="ArrayMesh" uid="uid://blitm18gxdrld" path="res://meshes/Hexagonal/hexmesh_ring.tres" id="5_ek2cq"]
+[ext_resource type="Texture2D" uid="uid://cmpn0l4h8kkry" path="res://sprites/Icons/Atlas/loud.tres" id="7_30eso"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_vesgh"]
 height = 0.1
@@ -59,3 +60,11 @@ material_override = SubResource("StandardMaterial3D_1x4fa")
 cast_shadow = 0
 mesh = SubResource("QuadMesh_kkjc3")
 skeleton = NodePath("../..")
+
+[node name="LoudIndicator" type="Node3D" parent="." unique_id=869820868]
+
+[node name="LoudSprite" type="Sprite3D" parent="LoudIndicator" unique_id=297876896]
+modulate = Color(1, 1, 1, 0.505)
+pixel_size = 0.005
+axis = 1
+texture = ExtResource("7_30eso")

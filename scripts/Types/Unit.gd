@@ -38,6 +38,12 @@ func Client_CanIHearYou() -> bool:
 	var team_me: int = ClientData.thisPlayer.team
 	if team_me == team: return true
 	return heard_teams_flags & (1 << (team_me-1))
+@rpc("authority", "call_remote", "reliable")
+func Auth_Rem_ToClient_SetHeardFlags(set_flags: int) -> void:
+	heard_teams_flags = set_flags
+func Server_SetHeardFlags(set_flags: int) -> void:
+	heard_teams_flags = set_flags
+	Auth_Rem_ToClient_SetHeardFlags.rpc(set_flags)
 
 func GetSumDelay() -> int:
 	return 0
@@ -167,6 +173,13 @@ func Rem_ToServer_TryUseSkill(skill_ID: int, coord_target: Vector2i) -> void:
 
 func Server_UseSkill(skill: SkillBase, skillstruction_list: Array[SkillInstruction]) -> void:
 	skill.instruction_list = skillstruction_list
+	var heard_range: int = skill.reserved_heard_range
+	var set_heard_flags: int = 0
+	for unit: Unit in GameData.unit_list_temp:
+		if unit.team == team: continue
+		if HexMath.CoordVecLength(unit.pos_hex - pos_hex) <= heard_range:
+			set_heard_flags |= (1 << (unit.team-1))
+	if set_heard_flags != 0: Server_SetHeardFlags(set_heard_flags)
 	SelectSkill(skill)
 	GameData.Server_SetDoneAnimsAllPlayers(false)
 	
@@ -184,6 +197,4 @@ func SelectSkill(skill: SkillBase) -> void:
 	skill_selected = skill
 	if is_instance_valid(skill):
 		skill.OnSelectAndUse()
-	#UnitOverheadStatus_Node.SetHealth(hp)
 	UnitOverheadStatus_Node.SetSkill(skill)
-	#UnitOverheadStatus_Node.SetInstruction(skill.instruction_list[0])

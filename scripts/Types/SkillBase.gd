@@ -5,6 +5,8 @@ class_name SkillBase extends Node
 var skillConfig_ref: SkillConfig = null
 var unit_ref: Unit = null
 
+var reserved_heard_range: int = 0
+
 func _ready() -> void:
 	skillConfig_ref = GameData.skillConfig_dict[skillConfig_id]
 	unit_ref = $"../.."

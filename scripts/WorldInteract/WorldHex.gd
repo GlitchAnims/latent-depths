@@ -3,6 +3,7 @@ class_name WorldHex extends Node3D
 @onready var HexModel_Node: MeshInstance3D = $"HexModel"
 @onready var RingModel_Node: MeshInstance3D = $"HexRing"
 @onready var WalkArrow_Node: Node3D = $"WalkArrow"
+@onready var LoudIndicator_Node: Node3D = $"LoudIndicator"
 
 var hex_ref: Hex = null
 
@@ -29,7 +30,11 @@ func AimWalkArrow(aim_pos: Vector3 = Vector3.ZERO) -> void:
 	WalkArrow_Node.visible = true
 	WalkArrow_Node.look_at(aim_pos)
 
+func SetLoud(b: bool = true) -> void:
+	LoudIndicator_Node.visible = b
+
 func ClearHexWidgets() -> void:
 	SetHexColor()
 	SetRingColor()
 	WalkArrow_Node.visible = false
+	LoudIndicator_Node.visible = false
