@@ -126,7 +126,7 @@ func Server_PerformInstruction(ins: SkillInstruction) -> void:
 @rpc("authority", "call_remote", "reliable")
 func Auth_Rem_ToClient_BaseWalkAbility(coord: Vector2i, visual_walk_pos_list: PackedVector2Array, cut_short: bool) -> void:
 	unit_ref.pos_hex = coord
-	var incantation_new: Incantation_Custom = Incantation_Custom.new(self)
+	var incantation_new: Incantation.Standard_Walk = Incantation.Standard_Walk.new(self)
 	incantation_new.visual_walk_pos_list = visual_walk_pos_list
 	incantation_new.cut_short = cut_short
 	ClientData.incantation_list.push_back(incantation_new)
@@ -134,20 +134,17 @@ func Auth_Rem_ToClient_BaseWalkAbility(coord: Vector2i, visual_walk_pos_list: Pa
 #class Pathing extends RefCounted:
 
 func Incantate(incantation: Incantation, delta: float) -> void:
-	var end: bool = false
-	var inc: Incantation_Custom = incantation as Incantation_Custom
+	var inc: Incantation.Standard_Walk = incantation as Incantation.Standard_Walk
 	
 	if inc.visual_walk_pos_list.is_empty():
-		end = true
+		ClientData.incantation_list.erase(incantation)
 	else:
 		var pos3_cur: Vector3 = unit_ref.position
-		#var pos2_cur: Vector2 = Vector2(pos3_cur.x,pos3_cur.z)
 		var pos2_next: Vector2 = inc.visual_walk_pos_list[0]
 		var pos3_next: Vector3 = Vector3(pos2_next.x, 0, pos2_next.y)
 		
 		var pos3_vec: Vector3 = pos3_next - pos3_cur
 		var pos3_norm: Vector3 = pos3_vec.normalized()
-		
 		
 		if inc.cut_short and inc.visual_walk_pos_list.size() == 1:
 			inc.visual_walk_pos_list.remove_at(0)
@@ -160,14 +157,3 @@ func Incantate(incantation: Incantation, delta: float) -> void:
 				inc.visual_walk_pos_list.remove_at(0)
 			else:
 				unit_ref.position += pos3_norm * minf(delta*2.5, dist)
-	
-	#var prog: float = inc.anim_progress
-	#prog += delta
-	#inc.anim_progress = prog
-	
-	if end:
-		ClientData.incantation_list.erase(incantation)
-
-class Incantation_Custom extends Incantation:
-	var visual_walk_pos_list: PackedVector2Array = []
-	var cut_short: bool = false

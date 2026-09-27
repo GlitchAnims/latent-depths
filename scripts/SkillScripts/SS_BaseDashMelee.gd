@@ -150,14 +150,14 @@ func Server_PerformInstruction(ins: SkillInstruction) -> void:
 @rpc("authority", "call_remote", "reliable")
 func Auth_Rem_ToClient_BaseWalk(coord: Vector2i, visual_walk_pos_list: PackedVector2Array, cut_short: bool) -> void:
 	unit_ref.pos_hex = coord
-	var incantation_new: Incantation_Walk = Incantation_Walk.new(self)
+	var incantation_new: Incantation.Standard_Walk = Incantation.Standard_Walk.new(self)
 	incantation_new.visual_walk_pos_list = visual_walk_pos_list
 	incantation_new.cut_short = cut_short
 	ClientData.incantation_list.push_back(incantation_new)
 
 @rpc("authority", "call_remote", "reliable")
 func Auth_Rem_ToClient_BaseSwipe(coord_strike: Vector2i, packed_list: PackedInt64Array) -> void:
-	var incantation_new: Incantation_Swipe = Incantation_Swipe.new(self)
+	var incantation_new: Incantation.Standard_MultiTarget = Incantation.Standard_MultiTarget.new(self)
 	incantation_new.coord_strike = coord_strike
 	
 	for packed: int in packed_list:
@@ -171,8 +171,8 @@ func Auth_Rem_ToClient_BaseSwipe(coord_strike: Vector2i, packed_list: PackedInt6
 
 
 func Incantate(incantation: Incantation, delta: float) -> void:
-	if incantation is Incantation_Walk:
-		var inc: Incantation_Walk = incantation as Incantation_Walk
+	if incantation is Incantation.Standard_Walk:
+		var inc: Incantation.Standard_Walk = incantation as Incantation.Standard_Walk
 		
 		if inc.visual_walk_pos_list.is_empty():
 			ClientData.incantation_list.erase(incantation)
@@ -196,8 +196,8 @@ func Incantate(incantation: Incantation, delta: float) -> void:
 				else:
 					unit_ref.position += pos3_norm * minf(delta*2.5, dist)
 		
-	if incantation is Incantation_Swipe:
-		var inc: Incantation_Swipe = incantation as Incantation_Swipe
+	if incantation is Incantation.Standard_MultiTarget:
+		var inc: Incantation.Standard_MultiTarget = incantation as Incantation.Standard_MultiTarget
 		
 		var unit_count: int = inc.unit_list.size()
 		
@@ -246,14 +246,3 @@ func Incantate(incantation: Incantation, delta: float) -> void:
 			ClientData.incantation_list.erase(incantation)
 			for unit: Unit in inc.unit_list:
 				unit.Vis_RefreshHP()
-
-class Incantation_Walk extends Incantation:
-	var visual_walk_pos_list: PackedVector2Array = []
-	var cut_short: bool = false
-
-class Incantation_Swipe extends Incantation:
-	var coord_strike: Vector2i = Vector2i.ZERO
-	var step: int = 0
-	
-	var unit_list: Array[Unit] = []
-	var dmg_list: Array[int] = []

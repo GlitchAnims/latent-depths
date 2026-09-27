@@ -90,7 +90,7 @@ func Server_PerformInstruction(ins: SkillInstruction) -> void:
 
 @rpc("authority", "call_remote", "reliable")
 func Auth_Rem_ToClient_BaseMelee(coord_strike: Vector2i, strike_solid: bool, dmg: int, unit_struck_ID: int) -> void:
-	var incantation_new: Incantation_Custom = Incantation_Custom.new(self)
+	var incantation_new: Incantation.Standard_SingleTarget = Incantation.Standard_SingleTarget.new(self)
 	incantation_new.coord_strike = coord_strike
 	incantation_new.strike_solid = strike_solid
 	incantation_new.dmg = dmg
@@ -99,7 +99,7 @@ func Auth_Rem_ToClient_BaseMelee(coord_strike: Vector2i, strike_solid: bool, dmg
 
 
 func Incantate(incantation: Incantation, delta: float) -> void:
-	var inc: Incantation_Custom = incantation as Incantation_Custom
+	var inc: Incantation.Standard_SingleTarget = incantation as Incantation.Standard_SingleTarget
 	#var coord_strike: Vector2i = inc.coord_strike
 	
 	var unit_struck: Unit = inc.unit_struck
@@ -136,10 +136,3 @@ func Incantate(incantation: Incantation, delta: float) -> void:
 	if prog >= 1.0:
 		ClientData.incantation_list.erase(incantation)
 		if unit_struck != null: unit_struck.Vis_RefreshHP()
-
-class Incantation_Custom extends Incantation:
-	var strike_solid: bool = false
-	var coord_strike: Vector2i = Vector2i.ZERO
-	var dmg: int = 0
-	var unit_struck: Unit = null
-	var step: int = 0

@@ -4,6 +4,7 @@ var _call_mode: int = 0
 var incantation_ID: int = 0
 var node_ref: Node = null
 var anim_progress: float = 0
+var step: int = 0
 
 func _init(set_node_ref: Node) -> void:
 	node_ref = set_node_ref
@@ -22,3 +23,19 @@ func CallAnim(delta: float) -> void:
 		1:
 			var skill: SkillBase = node_ref as SkillBase
 			skill.Incantate(self, delta)
+
+class Standard_Walk extends Incantation:
+	var visual_walk_pos_list: PackedVector2Array = []
+	var cut_short: bool = false
+
+class Standard_SingleTarget extends Incantation:
+	var strike_solid: bool = false
+	var coord_strike: Vector2i = Vector2i.ZERO
+	var dmg: int = 0
+	var unit_struck: Unit = null
+
+class Standard_MultiTarget extends Incantation:
+	var coord_strike: Vector2i = Vector2i.ZERO
+	
+	var unit_list: Array[Unit] = []
+	var dmg_list: Array[int] = []
