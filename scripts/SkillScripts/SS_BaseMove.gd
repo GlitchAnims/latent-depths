@@ -2,7 +2,7 @@ extends SkillBase
 
 func IsHexSelectable(hex_from: Hex, hex_to: Hex) -> bool:
 	var dist: int = _CheckPathDist(hex_from, hex_to)
-	if skillConfig_ref.is_alt_skill: return dist >= 2 and dist <= 5
+	if skillConfig_ref.is_alt_skill: return dist >= 3 and dist <= 6
 	else: return dist >= 1 and dist <= 4
 
 var _last_hex_from: Hex = null
@@ -43,13 +43,11 @@ func FabricateSkillstructions(hex_from: Hex, hex_to: Hex) -> Array[SkillInstruct
 	
 	if skillConfig_ref.is_alt_skill: # Sprint
 		reserved_heard_range = 3
-		var delay: int = 3000 * dist
-		ins_ability.timer = delay
-		ins_cool.timer = 2000
+		ins_ability.timer = 2500 * dist
+		ins_cool.timer = 1500 * dist
 	else: # Base Move
 		reserved_heard_range = 2
-		var delay: int = 3000 * dist
-		ins_ability.timer = delay
+		ins_ability.timer = 3000 * dist
 		ins_cool.timer = 2000
 	
 	

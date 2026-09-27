@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://bdwta6tnidtgd" path="res://scripts/Audio/AudioManager.gd" id="7_uw0md"]
 [ext_resource type="Script" uid="uid://cxv6jr8qhky3l" path="res://scripts/HUD/BattleTimeline.gd" id="7_v57l1"]
 [ext_resource type="AudioStream" uid="uid://ksfsjyaa82e5" path="res://sounds/Timeline/NewActor.wav" id="8_ptabd"]
+[ext_resource type="StyleBox" uid="uid://cs8kplqaoud3o" path="res://styles/styleboxempty.tres" id="15_v57l1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j02l2"]
 content_margin_left = 5.0
@@ -125,6 +126,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
+theme_override_styles/panel = ExtResource("15_v57l1")
 
 [node name="Timeline" type="HBoxContainer" parent="Encompass/VBox1" unique_id=1828398779]
 layout_mode = 2

@@ -8,7 +8,7 @@ static var specialhex_list: Array[Hex] = []
 static func NormalizeHexDict() -> void:
 	GameData.hex_dict.clear()
 	
-	const rings: int = 8
+	const rings: int = 10
 	const diameter: int = rings*2+1
 	for x in diameter:
 		var xcoord: int = x-rings

@@ -9,6 +9,7 @@ func IsHexSelectable(hex_from: Hex, hex_to: Hex) -> bool:
 	else:
 		if dist == 1:
 			_attack_vec = coord_vec
+			reserved_heard_range = 1
 			return true
 	return false
 
@@ -45,6 +46,17 @@ func DoWorldHexWidgets(worldHex_dict: Dictionary[Vector2i, WorldHex]) -> void:
 	worldHex = worldHex_dict.get(coord_to, null)
 	if worldHex != null:
 		worldHex.SetHexColor(Color.PURPLE)
+	
+	var loud_coord_source: Vector2i = coord_from
+	var rings: int = reserved_heard_range
+	var diameter: int = rings*2+1
+	for x in diameter:
+		var xcoord: int = x-rings
+		for y in diameter-abs(xcoord):
+			var ycoord: int = y-mini(x,rings)
+			var coord: Vector2i = Vector2i(xcoord,ycoord) + loud_coord_source
+			worldHex = worldHex_dict.get(coord, null)
+			if worldHex != null: worldHex.SetLoud()
 
 func OnSelectAndUse() -> void:
 	pass
