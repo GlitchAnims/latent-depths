@@ -208,5 +208,6 @@ func Vis_InflictShake() -> void:
 
 func Vis_TakeDamage(dmg: int) -> void:
 	UnitOverheadStatus_Node.TakeDamage(dmg)
+	GameData.Gamespace_Node.CreateDmgPopup(self, dmg)
 func Vis_RefreshHP() -> void:
 	UnitOverheadStatus_Node.SetHP(hp)

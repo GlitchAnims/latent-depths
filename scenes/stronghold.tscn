@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://bdwta6tnidtgd" path="res://scripts/Audio/AudioManager.gd" id="7_uw0md"]
 [ext_resource type="Script" uid="uid://cxv6jr8qhky3l" path="res://scripts/HUD/BattleTimeline.gd" id="7_v57l1"]
 [ext_resource type="AudioStream" uid="uid://ksfsjyaa82e5" path="res://sounds/Timeline/NewActor.wav" id="8_ptabd"]
+[ext_resource type="Script" uid="uid://kf7cyts08ej0" path="res://scripts/Vis/PopupsManager.gd" id="11_rry8n"]
 [ext_resource type="StyleBox" uid="uid://cs8kplqaoud3o" path="res://styles/styleboxempty.tres" id="15_v57l1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j02l2"]
@@ -59,6 +60,9 @@ stream = ExtResource("6_kj1sv")
 [node name="TimelineNewActor" type="AudioStreamPlayer" parent="Gamespace/AudioManager" unique_id=1025841184]
 stream = ExtResource("8_ptabd")
 volume_db = -9.0
+
+[node name="PopupsManager" type="Node3D" parent="Gamespace" unique_id=1518330530]
+script = ExtResource("11_rry8n")
 
 [node name="Encompass" type="PanelContainer" parent="." unique_id=1532195454 node_paths=PackedStringArray("SkillRack_Node", "MouseTooltip_Node", "Timeline_Node")]
 offset_right = 717.0

@@ -6,6 +6,7 @@ class_name Gamespace extends Node3D
 @onready var THECamera_Node: Camera3D = $"THECamera"
 
 @onready var AudioManager_Node: AudioManager = $"AudioManager"
+@onready var PopupsManager_Node: PopupsManager = $"PopupsManager"
 
 const basemap_scene: PackedScene = preload("res://scenes/Maps/testmap.tscn")
 func InitMultiplayer() -> void:
@@ -312,3 +313,6 @@ func AddUnitSceneAutoSpawn(path: String) -> void:
 	UnitSpawner_Node.add_spawnable_scene(path)
 #func AddBufSceneAutoSpawn(path: String) -> void:
 	#BufSpawner_Node.add_spawnable_scene(path)
+
+func CreateDmgPopup(victim: Unit, dmg: int) -> void:
+	PopupsManager_Node.CreateDmgPopup(victim, dmg)
