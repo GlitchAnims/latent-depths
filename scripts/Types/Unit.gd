@@ -30,6 +30,11 @@ func SetupHP(hp_max_new: int = 1000) -> void:
 	hp = hp_max_new
 func SetHP(v: int) -> void:
 	hp = clampi(v, 0, hp_max)
+	if GameData.isServer: Auth_Rem_ToClient_SetHP.rpc(hp)
+
+@rpc("authority", "call_remote", "reliable")
+func Auth_Rem_ToClient_SetHP(v: int) -> void:
+	SetHP(v)
 
 @export_storage var stress_enabled: bool = true
 @export_storage var stress: int = 1000
