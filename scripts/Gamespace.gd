@@ -72,6 +72,8 @@ func Server_SetActorForAll(unit: Unit) -> void:
 
 func SetActor(unit: Unit) -> void:
 	ClientData.temp_skillstruction_list = []
+	worldhex_lock = null
+	unit_lock = null
 	GameData.cur_actor = unit
 	GameData.cur_actor_is_valid = is_instance_valid(unit)
 	if GameData.cur_actor_is_valid:

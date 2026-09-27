@@ -83,9 +83,6 @@ func UpdateForActor() -> void:
 func _exit_tree() -> void:
 	GameData.unit_dict.erase(unitID)
 	GameData.sig_actor_changed.disconnect(UpdateForActor)
-func free() -> void:
-	pass
-	super()
 
 func _ready() -> void:
 	GameData.unit_dict[unitID] = self
