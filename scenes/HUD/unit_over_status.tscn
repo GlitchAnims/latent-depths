@@ -11,7 +11,7 @@ bg_color = Color(1, 0, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tmg46"]
 bg_color = Color(0.72639036, 0.7263904, 0.7263903, 1)
 
-[node name="UnitOverheadStatus" type="Control" unique_id=1902215833 node_paths=PackedStringArray("HealthBar_Node", "ActionBar_Node", "InstructionIcon_Node", "SkillIcon_Node")]
+[node name="UnitOverheadStatus" type="Control" unique_id=1902215833 node_paths=PackedStringArray("HealthBar_Node", "ActionBar_Node", "InstructionPanel_Node", "SkillPanel_Node", "InstructionIcon_Node", "SkillIcon_Node", "Crossout_Node")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,8 +23,11 @@ grow_vertical = 2
 script = ExtResource("1_jp3gu")
 HealthBar_Node = NodePath("HealthBarPanel/HealthBar")
 ActionBar_Node = NodePath("ActionBarPanel/ActionBar")
+InstructionPanel_Node = NodePath("InstructionPanel")
+SkillPanel_Node = NodePath("SkillPanel")
 InstructionIcon_Node = NodePath("InstructionPanel/InstructionIcon")
 SkillIcon_Node = NodePath("SkillPanel/SkillIcon")
+Crossout_Node = NodePath("SkillPanel/Crossout")
 
 [node name="HealthBarPanel" type="Panel" parent="." unique_id=1896717417]
 layout_mode = 0
@@ -67,6 +70,7 @@ rounded = true
 show_percentage = false
 
 [node name="InstructionPanel" type="Panel" parent="." unique_id=1412691390]
+visible = false
 layout_mode = 0
 offset_right = 173.0
 offset_bottom = 173.0
@@ -92,3 +96,7 @@ offset_top = 15.0
 offset_right = 156.0
 offset_bottom = 156.0
 texture = ExtResource("2_hk6iu")
+
+[node name="Crossout" type="Line2D" parent="SkillPanel" unique_id=549066590]
+position = Vector2(16, 17)
+points = PackedVector2Array(0, 0, 140, 140)

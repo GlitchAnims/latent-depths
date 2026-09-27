@@ -34,6 +34,10 @@ func SetupHP(hp_max_new: int = 1000) -> void:
 var skill_list: Array[SkillBase] = []
 var skill_selected: SkillBase = null
 @export_storage var heard_teams_flags: int = 0
+func Client_CanIHearYou() -> bool:
+	var team_me: int = ClientData.thisPlayer.team
+	if team_me == team: return true
+	return heard_teams_flags & (1 << (team_me-1))
 
 func GetSumDelay() -> int:
 	return 0
@@ -180,6 +184,6 @@ func SelectSkill(skill: SkillBase) -> void:
 	skill_selected = skill
 	if is_instance_valid(skill):
 		skill.OnSelectAndUse()
-	UnitOverheadStatus_Node.SetHealth(hp)
+	#UnitOverheadStatus_Node.SetHealth(hp)
 	UnitOverheadStatus_Node.SetSkill(skill)
 	#UnitOverheadStatus_Node.SetInstruction(skill.instruction_list[0])
