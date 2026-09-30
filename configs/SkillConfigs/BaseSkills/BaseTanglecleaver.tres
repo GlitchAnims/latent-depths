@@ -1,0 +1,12 @@
+[gd_resource type="Resource" format=3 uid="uid://c42mku3fht24n"]
+
+[ext_resource type="Texture2D" uid="uid://bhirdy0n3aym2" path="res://sprites/Icons/Atlas/attack.tres" id="1_dssvc"]
+[ext_resource type="Script" uid="uid://c1uwxkhr70dh4" path="res://scripts/Configs/InheritSkillConfig/SC_BaseMove.gd" id="2_6j0wn"]
+[ext_resource type="PackedScene" uid="uid://bjtcnk6u7qim6" path="res://scenes/Skills/tanglecleaver.tscn" id="3_dssvc"]
+
+[resource]
+script = ExtResource("2_6j0wn")
+identifier = &"og_tanglecleaver"
+icon = ExtResource("1_dssvc")
+skill_scene = ExtResource("3_dssvc")
+metadata/_custom_type_script = "uid://derk5pfmfhjf6"

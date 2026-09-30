@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bjtcnk6u7qim6"]
+
+[ext_resource type="PackedScene" uid="uid://cvo0gw86m5uag" path="res://scenes/Skills/skill_template.tscn" id="1_c8ru0"]
+[ext_resource type="Script" uid="uid://bmlg1teqasr5u" path="res://scripts/SkillScripts/SS_Tanglecleaver.gd" id="2_c8ru0"]
+
+[node name="Tanglecleaver" unique_id=1468544059 instance=ExtResource("1_c8ru0")]
+script = ExtResource("2_c8ru0")

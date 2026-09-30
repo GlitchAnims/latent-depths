@@ -1,5 +1,6 @@
 class_name Vis extends Node3D
 
+@export var unit_ref: Unit = null
 @export var Vis_Anim_Node: AnimationPlayer = null
 
 const visual_factor_limit: float = TAU*100

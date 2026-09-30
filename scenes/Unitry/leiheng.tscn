@@ -4,25 +4,33 @@
 [ext_resource type="Script" uid="uid://cj3jdy8ckitus" path="res://scripts/Unitry/LeiHeng.gd" id="2_wuvug"]
 [ext_resource type="Script" uid="uid://cutmtpjob0ymu" path="res://scripts/Vis/Vis_LeiHeng.gd" id="3_1413d"]
 [ext_resource type="Texture2D" uid="uid://c42da16s72jcu" path="res://sprites/UnitSprites/Firefist/idle.png" id="3_pb7cs"]
+[ext_resource type="AudioStream" uid="uid://dxg88q03jto0t" path="res://sounds/Ripoff/Tanglecleaver_charge.wav" id="5_r0ryo"]
 [ext_resource type="Texture2D" uid="uid://crsu53ha0n5i6" path="res://sprites/Ripoff/leiheng_idle.png" id="6_8lnyn"]
+[ext_resource type="AudioStream" uid="uid://dnmo7yjekx5it" path="res://sounds/Ripoff/Tanglecleaver_jump.wav" id="6_omo86"]
+[ext_resource type="AudioStream" uid="uid://1kmkpk4fukgq" path="res://sounds/Ripoff/Tanglecleaver_boom1.wav" id="7_awxvn"]
 [ext_resource type="Texture2D" uid="uid://dw2f7uibqyttr" path="res://sprites/Ripoff/skill5_1.png" id="7_r0ryo"]
+[ext_resource type="Texture2D" uid="uid://boceasqtbua80" path="res://sprites/Ripoff/skill5_17.png" id="8_02lu6"]
 [ext_resource type="Texture2D" uid="uid://buk5xvas6kob2" path="res://sprites/Ripoff/skill5_2.png" id="8_omo86"]
+[ext_resource type="AudioStream" uid="uid://d4hcucfidsdx0" path="res://sounds/Ripoff/Tanglecleaver_boom2.wav" id="8_q5vyo"]
+[ext_resource type="Texture2D" uid="uid://csfeos3o0pk4j" path="res://sprites/Ripoff/skill5_18.png" id="9_667gl"]
 [ext_resource type="Texture2D" uid="uid://dgme458fn8mwo" path="res://sprites/Ripoff/skill5_3.png" id="9_hopk5"]
 [ext_resource type="Texture2D" uid="uid://dvo8awdbbsqo3" path="res://sprites/Ripoff/skill5_4.png" id="10_5lqtq"]
+[ext_resource type="Texture2D" uid="uid://c1jrng3imsy7c" path="res://sprites/Ripoff/skill5_19.png" id="10_awxvn"]
 [ext_resource type="Texture2D" uid="uid://bbgqkv8ilwr7u" path="res://sprites/Ripoff/skill5_10.png" id="11_pwl67"]
+[ext_resource type="Texture2D" uid="uid://dwwklragob8dj" path="res://sprites/Ripoff/skill5_20.png" id="11_q5vyo"]
 [ext_resource type="Texture2D" uid="uid://cxvd4hxmk8h3w" path="res://sprites/Ripoff/skill5_11.png" id="12_02lu6"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_8ctfk"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_r0ryo"]
 viewport_path = NodePath("StatusViewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1413d"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_omo86"]
 resource_local_to_scene = true
 transparency = 1
 shading_mode = 0
-albedo_texture = SubResource("ViewportTexture_8ctfk")
+albedo_texture = SubResource("ViewportTexture_r0ryo")
 billboard_mode = 2
 
-[sub_resource type="QuadMesh" id="QuadMesh_8lnyn"]
+[sub_resource type="QuadMesh" id="QuadMesh_hopk5"]
 resource_local_to_scene = true
 size = Vector2(1, 2)
 center_offset = Vector3(1, 0, 0)
@@ -71,10 +79,65 @@ tracks/2/keys = {
 "update": 1,
 "values": [250.0]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("FiringParticles:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ShowcaseLeiHeng:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "position_3d"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = PackedFloat32Array(0, 1, 0, 0, 0)
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("BlastParticles:emitting")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("BoomParticles:emitting")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
-[sub_resource type="Animation" id="Animation_81noq"]
-resource_name = "tanglecleaver_prep"
-length = 0.43333334
+[sub_resource type="Animation" id="Animation_5lqtq"]
+resource_name = "tanglecleaver_boom"
+length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -94,10 +157,10 @@ tracks/1/path = NodePath("ShowcaseLeiHeng:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.40000004, 0.4666667, 0.53333336, 0.6, 0.66666675, 0.73333335, 0.8000001, 0.86666673, 0.9333334, 1.0000001, 1.0666667, 1.1333334, 1.2, 1.2666667, 1.3333334, 1.4000001, 1.4666667, 1.5333334, 1.6000001, 1.6666667, 1.7333335, 1.8000002, 1.8666668),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5]
+"values": [0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -111,6 +174,303 @@ tracks/2/keys = {
 "update": 1,
 "values": [280.0]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("FiringParticles:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "audio"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../LeiHengSound")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("5_r0ryo")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/4/use_blend = true
+
+[sub_resource type="Animation" id="Animation_hopk5"]
+resource_name = "tanglecleaver_firing"
+length = 7.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShowcaseLeiHeng:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"tanglecleaver_prep", &"tanglecleaver_boom"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShowcaseLeiHeng:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.40000004, 0.4666667, 0.53333336, 0.6, 0.66666675, 0.73333335, 0.8000001, 0.86666673, 0.9333334, 1.0000001, 1.0666667, 1.1333334, 1.2, 1.2666667, 1.3333334, 1.4000001, 1.4666667, 1.5333334, 1.6000001, 1.6666667, 1.7333335, 1.8000002, 1.8666668, 1.9333334, 2, 2.0666666, 2.1333332, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.9, 3.2, 3.9333334, 4.066667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 0, 1, 2, 3]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ShowcaseLeiHeng:offset:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [280.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("FiringParticles:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 2.5666666),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/4/type = "audio"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../LeiHengSound")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("5_r0ryo")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("5_r0ryo")
+}, {
+"end_offset": 1.0142,
+"start_offset": 0.0,
+"stream": ExtResource("6_omo86")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("7_awxvn")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("8_q5vyo")
+}],
+"times": PackedFloat32Array(0, 1.3, 2.6, 3.8333333, 3.8666666)
+}
+tracks/4/use_blend = true
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("BlastParticles")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.03333333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [false],
+"method": &"restart"
+}]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 1.3000001, 1.3333334, 2.5666668, 3.1333334, 3.8000002, 3.8333335),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [Vector3(0, 1.5, 3)],
+"method": &"StealCamVec"
+}, {
+"args": [0.6],
+"method": &"ShakeCam"
+}, {
+"args": [Vector3(0, 1.2, 2)],
+"method": &"StealCamVec"
+}, {
+"args": [0.6],
+"method": &"ShakeCam"
+}, {
+"args": [Vector3(0, 2, 4)],
+"method": &"StealCamVec"
+}, {
+"args": [Vector3(0, 1.5, 4)],
+"method": &"StealCamVec"
+}, {
+"args": [Vector3(0, 2, 5)],
+"method": &"StealCamVec"
+}, {
+"args": [1.0],
+"method": &"ShakeCam"
+}]
+}
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("..")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"SnapPositionToHexPos"
+}]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("ShowcaseLeiHeng:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 2.6, 3.1333334),
+"transitions": PackedFloat32Array(1, 1.035265, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/9/type = "position_3d"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath(".")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = PackedFloat32Array(0, 1, 0, 0, 0, 3.1, 1, 0, 0, 0, 3.1333334, 1, 3.3, 2, 0, 3.3333333, 1, 2.9, 2, 0, 3.7333333, 1, 2.9, 2, 0, 3.8333333, 1, 0, 0, 0)
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("BlastParticles:emitting")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.13333334, 1.3000001, 1.4, 2.5666666, 2.6666665),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false, true, false]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("BoomParticles:emitting")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 3.8333333, 3.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, false, true, false]
+}
+tracks/12/type = "method"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath(".")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(3.8333335),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"CurIncStep"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_81noq"]
+resource_name = "tanglecleaver_prep"
+length = 1.9333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShowcaseLeiHeng:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"tanglecleaver_prep"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShowcaseLeiHeng:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.40000004, 0.4666667, 0.53333336, 0.6, 0.66666675, 0.73333335, 0.8000001, 0.86666673, 0.9333334, 1.0000001, 1.0666667, 1.1333334, 1.2, 1.2666667, 1.3333334, 1.4000001, 1.4666667, 1.5333334, 1.6000001, 1.6666667, 1.7333335, 1.8000002, 1.8666668),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ShowcaseLeiHeng:offset:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [280.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("FiringParticles:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "audio"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../LeiHengSound")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("5_r0ryo")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/4/use_blend = true
 
 [sub_resource type="Animation" id="Animation_omo86"]
 resource_name = "tanglecleaver_prep_continuous"
@@ -156,6 +516,8 @@ tracks/2/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r0ryo"]
 _data = {
 &"RESET": SubResource("Animation_r0ryo"),
+&"tanglecleaver_boom": SubResource("Animation_5lqtq"),
+&"tanglecleaver_firing": SubResource("Animation_hopk5"),
 &"tanglecleaver_prep": SubResource("Animation_81noq"),
 &"tanglecleaver_prep_continuous": SubResource("Animation_omo86")
 }
@@ -168,6 +530,23 @@ animations = [{
 }],
 "loop": 1,
 "name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_02lu6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_667gl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_awxvn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_q5vyo")
+}],
+"loop": 1,
+"name": &"tanglecleaver_boom",
 "speed": 5.0
 }, {
 "frames": [{
@@ -194,16 +573,183 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="Curve" id="Curve_hopk5"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_omo86"]
+curve = SubResource("Curve_hopk5")
+
+[sub_resource type="Gradient" id="Gradient_r0ryo"]
+offsets = PackedFloat32Array(0, 0.9957145)
+colors = PackedColorArray(1, 0, 0, 1, 1, 0.51666665, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_r0ryo"]
+gradient = SubResource("Gradient_r0ryo")
+
+[sub_resource type="Gradient" id="Gradient_81noq"]
+offsets = PackedFloat32Array(0, 0.5600002)
+colors = PackedColorArray(1, 0.7666667, 0, 1, 0.48, 0.12, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_81noq"]
+gradient = SubResource("Gradient_81noq")
+
+[sub_resource type="Curve" id="Curve_81noq"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_81noq"]
+curve = SubResource("Curve_81noq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vesgh"]
+particle_flag_damping_as_friction = true
+emission_shape = 3
+emission_box_extents = Vector3(0.1, 0.5, 0.1)
+use_rotation_3d = true
+rotation_3d_min = Vector3(0, 0, 0)
+rotation_3d_max = Vector3(90, 90, 90)
+spread = 1.0
+initial_velocity_min = 22.47
+initial_velocity_max = 22.47
+gravity = Vector3(0, 0, 0)
+damping_min = 8.427
+damping_max = 8.427
+scale_min = 0.19999999
+scale_max = 0.29999998
+scale_curve = SubResource("CurveTexture_81noq")
+color_ramp = SubResource("GradientTexture1D_81noq")
+color_initial_ramp = SubResource("GradientTexture1D_r0ryo")
+alpha_curve = SubResource("CurveTexture_omo86")
+hue_variation_min = -0.010000022
+hue_variation_max = 0.009999977
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wbcaw"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_kkjc3"]
+material = SubResource("StandardMaterial3D_wbcaw")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="Curve" id="Curve_r0ryo"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_hopk5"]
+curve = SubResource("Curve_r0ryo")
+
+[sub_resource type="Gradient" id="Gradient_5lqtq"]
+offsets = PackedFloat32Array(0, 0.9957145)
+colors = PackedColorArray(1, 0, 0, 1, 1, 0.31666666, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_pwl67"]
+gradient = SubResource("Gradient_5lqtq")
+
+[sub_resource type="Gradient" id="Gradient_02lu6"]
+offsets = PackedFloat32Array(0, 0.7742859)
+colors = PackedColorArray(1, 0.20000005, 0, 1, 0.48, 0.12, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_667gl"]
+gradient = SubResource("Gradient_02lu6")
+
+[sub_resource type="Curve" id="Curve_awxvn"]
+_data = [Vector2(0, 0.71936697), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_q5vyo"]
+curve = SubResource("Curve_awxvn")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_22gvy"]
+particle_flag_damping_as_friction = true
+emission_shape_scale = Vector3(1, 0.3, 1)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+use_rotation_3d = true
+rotation_3d_min = Vector3(0, 0, 0)
+rotation_3d_max = Vector3(90, 90, 90)
+spread = 180.0
+flatness = 0.9
+initial_velocity_min = 20.0
+initial_velocity_max = 30.0
+gravity = Vector3(0, 0, 0)
+damping_min = 8.427
+damping_max = 8.427
+scale_min = 0.59999996
+scale_curve = SubResource("CurveTexture_q5vyo")
+color_ramp = SubResource("GradientTexture1D_667gl")
+color_initial_ramp = SubResource("GradientTexture1D_pwl67")
+alpha_curve = SubResource("CurveTexture_hopk5")
+hue_variation_min = -0.010000022
+hue_variation_max = 0.009999977
+
+[sub_resource type="Curve" id="Curve_omo86"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_5lqtq"]
+curve = SubResource("Curve_omo86")
+
+[sub_resource type="Gradient" id="Gradient_pwl67"]
+offsets = PackedFloat32Array(0, 0.9957145)
+colors = PackedColorArray(1, 0, 0, 1, 1, 0.31666666, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_02lu6"]
+gradient = SubResource("Gradient_pwl67")
+
+[sub_resource type="Gradient" id="Gradient_667gl"]
+offsets = PackedFloat32Array(0, 0.7742859)
+colors = PackedColorArray(1, 0.20000005, 0, 1, 0.48, 0.12, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_awxvn"]
+gradient = SubResource("Gradient_667gl")
+
+[sub_resource type="Curve" id="Curve_q5vyo"]
+_data = [Vector2(0, 0.71936697), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_22gvy"]
+curve = SubResource("Curve_q5vyo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_iae4x"]
+particle_flag_damping_as_friction = true
+emission_shape_scale = Vector3(1, 0.3, 1)
+use_rotation_3d = true
+rotation_3d_min = Vector3(0, 0, 0)
+rotation_3d_max = Vector3(90, 90, 90)
+spread = 180.0
+flatness = 0.9
+initial_velocity_min = 20.0
+initial_velocity_max = 30.0
+gravity = Vector3(0, 0, 0)
+damping_min = 8.427
+damping_max = 8.427
+scale_min = 0.39999998
+scale_max = 0.59999996
+scale_curve = SubResource("CurveTexture_22gvy")
+color_ramp = SubResource("GradientTexture1D_awxvn")
+color_initial_ramp = SubResource("GradientTexture1D_02lu6")
+alpha_curve = SubResource("CurveTexture_5lqtq")
+hue_variation_min = -0.010000022
+hue_variation_max = 0.009999977
+
 [node name="Unit" unique_id=756562779 instance=ExtResource("1_hng2m")]
 script = ExtResource("2_wuvug")
 
 [node name="OverheadDisplay" parent="." index="7" unique_id=1872660049]
-material_override = SubResource("StandardMaterial3D_1413d")
-mesh = SubResource("QuadMesh_8lnyn")
+material_override = SubResource("StandardMaterial3D_omo86")
+mesh = SubResource("QuadMesh_hopk5")
 
-[node name="Vis" parent="." index="8" unique_id=1721071178 node_paths=PackedStringArray("Showcase_Node", "Vis_Anim_Node")]
+[node name="Vis" parent="." index="8" unique_id=1721071178 node_paths=PackedStringArray("Showcase_Node", "FiringParticles_Node", "BoomParticles_Node", "unit_ref", "Vis_Anim_Node")]
 script = ExtResource("3_1413d")
 Showcase_Node = NodePath("ShowcaseLeiHeng")
+FiringParticles_Node = NodePath("FiringParticles")
+BoomParticles_Node = NodePath("BoomParticles")
+unit_ref = NodePath("..")
 Vis_Anim_Node = NodePath("Anim")
 
 [node name="Showcase" parent="Vis" index="0" unique_id=1837716725]
@@ -223,6 +769,36 @@ offset = Vector2(0, 250)
 pixel_size = 0.0035
 sprite_frames = SubResource("SpriteFrames_vesgh")
 animation = &"idle"
+
+[node name="FiringParticles" type="GPUParticles3D" parent="Vis" index="4" unique_id=718897609]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.27096105, 1.4858716, 0)
+emitting = false
+amount = 300
+lifetime = 0.6
+process_material = SubResource("ParticleProcessMaterial_vesgh")
+draw_pass_1 = SubResource("BoxMesh_kkjc3")
+
+[node name="BoomParticles" type="GPUParticles3D" parent="Vis" index="5" unique_id=737400840]
+emitting = false
+amount = 300
+lifetime = 5.0
+one_shot = true
+explosiveness = 0.99
+process_material = SubResource("ParticleProcessMaterial_22gvy")
+draw_pass_1 = SubResource("BoxMesh_kkjc3")
+
+[node name="BlastParticles" type="GPUParticles3D" parent="Vis" index="6" unique_id=514837332]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49517286, 0)
+emitting = false
+amount = 300
+lifetime = 0.7
+one_shot = true
+explosiveness = 0.99
+process_material = SubResource("ParticleProcessMaterial_iae4x")
+draw_pass_1 = SubResource("BoxMesh_kkjc3")
+
+[node name="LeiHengSound" type="AudioStreamPlayer3D" parent="." index="10" unique_id=907618681]
+attenuation_filter_cutoff_hz = 20500.0
 
 [connection signal="animation_finished" from="Vis/Anim" to="Vis" method="_on_anim_animation_finished"]
 

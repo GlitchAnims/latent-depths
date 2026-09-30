@@ -114,6 +114,7 @@ var infomercial_unit: Unit = null
 
 var incantation_list: Array[Incantation] = []
 
+var stealcamera_shake: float = 0
 var stealcamera_timer: float = 0
 var stealcamera_pos: Vector3 = Vector3.ZERO
 var stealcamera_aim: Vector3 = Vector3.ZERO

@@ -259,7 +259,7 @@ func _physics_process(delta: float) -> void:
 				
 				if ClientData.press_space and canchoose:
 					if GameData.isServer:
-						if ClientData.thisPlayer.team == actor.team:
+						if ClientData.thisPlayer.team == actor.team or true:
 							Server_SetActorForAll(null)
 							actor.Server_UseSkill(skill, skill.FabricateSkillstructions(hex_from,hex_to))
 							ClientData.temp_skillstruction_list = []
@@ -279,16 +279,22 @@ var thecamera_aim_target: Vector3 = Vector3.ZERO
 var thecamera_pos: Vector3 = Vector3.ZERO
 var thecamera_aim: Vector3 = Vector3.ZERO
 
+const visual_factor_limit: float = TAU*100
+var visual_factor: float = 0
+
 func _ready() -> void:
 	thecamera_free_pos = THECamera_Node.position
 
 func _process(delta: float) -> void:
 	var cam_movespeed: float = delta * 4.0
 	
+	visual_factor += delta
+	if visual_factor >= visual_factor_limit: visual_factor -= visual_factor_limit
+	
 	if ClientData.stealcamera_timer > 0:
 		ClientData.stealcamera_timer -= delta
 		thecamera_pos_target = ClientData.stealcamera_pos
-		thecamera_pos_target = ClientData.stealcamera_aim
+		thecamera_aim_target = ClientData.stealcamera_aim
 	else:
 		thecamera_pos_target = thecamera_free_pos
 		thecamera_aim_target = thecamera_free_aim
@@ -303,8 +309,14 @@ func _process(delta: float) -> void:
 	
 	thecamera_pos = thecamera_pos.lerp(thecamera_pos_target, delta * 5)
 	thecamera_aim = thecamera_aim.lerp(thecamera_aim_target, delta * 5)
-	THECamera_Node.position = thecamera_pos
-	THECamera_Node.look_at(thecamera_aim)
+	if ClientData.stealcamera_shake > 0:
+		var deviation: Vector3 = Vector3(sin(visual_factor*65), 0, cos(visual_factor*80)) * ClientData.stealcamera_shake * 0.2
+		THECamera_Node.position = thecamera_pos + deviation
+		THECamera_Node.look_at(thecamera_aim + deviation)
+		ClientData.stealcamera_shake = maxf(ClientData.stealcamera_shake-delta*1,0)
+	else:
+		THECamera_Node.position = thecamera_pos
+		THECamera_Node.look_at(thecamera_aim)
 	
 	var has_incantation: bool = not ClientData.incantation_list.is_empty()
 	

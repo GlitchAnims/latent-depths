@@ -16,6 +16,7 @@ func _ready() -> void:
 		unit_new.Server_SetupForSpawn(GameData.GetUniqueUnitID())
 		unit_new.team = 1
 		unit_new.pos_hex = Vector2i(-4,i)
+		unit_new.overhead_downtime = 30000
 		unit_new.SnapPositionToHexPos()
 		spawn_list.push_back(unit_new)
 	
@@ -31,7 +32,7 @@ func _ready() -> void:
 		var unit_new: Unit = load("res://scenes/Unitry/leiheng.tscn").instantiate()
 		unit_new.Server_SetupForSpawn(GameData.GetUniqueUnitID())
 		unit_new.team = 2
-		unit_new.pos_hex = Vector2i(4,i-2)
+		unit_new.pos_hex = Vector2i(3,i-1)
 		unit_new.SnapPositionToHexPos()
 		spawn_list.push_back(unit_new)
 	
@@ -41,7 +42,7 @@ func _ready() -> void:
 	var time_per_step: int = BattleTimeline.time_per_second * 3 / spawn_count
 	for i in spawn_count:
 		var unit: Unit = spawn_list[i]
-		unit.overhead_downtime = time_per_step * (i+1)
+		unit.overhead_downtime += time_per_step * (i+1)
 		GameData.Gamespace_Node.Unitry_Node.add_child(unit, true)
 	
 	#unit.overhead_downtime = randi_range(10,30000)

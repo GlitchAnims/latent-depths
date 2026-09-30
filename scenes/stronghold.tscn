@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://b0v6wf0jodgkf" path="res://scripts/HUD/SkillRack.gd" id="6_cf4id"]
 [ext_resource type="PackedScene" uid="uid://bhpd1ue316s2l" path="res://scenes/HUD/skill_button.tscn" id="6_i5rp2"]
 [ext_resource type="AudioStream" uid="uid://br6603clecgx" path="res://sounds/Timeline/timeline_click.mp3" id="6_kj1sv"]
+[ext_resource type="Resource" uid="uid://c42mku3fht24n" path="res://configs/SkillConfigs/BaseSkills/BaseTanglecleaver.tres" id="7_4l2jt"]
 [ext_resource type="Script" uid="uid://bdwta6tnidtgd" path="res://scripts/Audio/AudioManager.gd" id="7_uw0md"]
 [ext_resource type="Script" uid="uid://cxv6jr8qhky3l" path="res://scripts/HUD/BattleTimeline.gd" id="7_v57l1"]
 [ext_resource type="AudioStream" uid="uid://ksfsjyaa82e5" path="res://sounds/Timeline/NewActor.wav" id="8_ptabd"]
@@ -27,7 +28,7 @@ content_margin_bottom = 5.0
 
 [node name="Stronghold" type="Node" unique_id=495344873]
 script = ExtResource("1_mw8q0")
-og_skillconfigs = Array[ExtResource("2_umgfj")]([ExtResource("3_kj1sv"), ExtResource("4_ptabd"), ExtResource("5_i5rp2"), ExtResource("6_6u3qi")])
+og_skillconfigs = Array[ExtResource("2_umgfj")]([ExtResource("3_kj1sv"), ExtResource("4_ptabd"), ExtResource("5_i5rp2"), ExtResource("6_6u3qi"), ExtResource("7_4l2jt")])
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="." unique_id=874524148]
 _spawnable_scenes = PackedStringArray("uid://7u5rpxdcfusb")
