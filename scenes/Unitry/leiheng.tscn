@@ -1,0 +1,229 @@
+[gd_scene format=3 uid="uid://wtx8wn8mhxd2"]
+
+[ext_resource type="PackedScene" uid="uid://bx6iy0abyupfe" path="res://scenes/unit.tscn" id="1_hng2m"]
+[ext_resource type="Script" uid="uid://cj3jdy8ckitus" path="res://scripts/Unitry/LeiHeng.gd" id="2_wuvug"]
+[ext_resource type="Script" uid="uid://cutmtpjob0ymu" path="res://scripts/Vis/Vis_LeiHeng.gd" id="3_1413d"]
+[ext_resource type="Texture2D" uid="uid://c42da16s72jcu" path="res://sprites/UnitSprites/Firefist/idle.png" id="3_pb7cs"]
+[ext_resource type="Texture2D" uid="uid://crsu53ha0n5i6" path="res://sprites/Ripoff/leiheng_idle.png" id="6_8lnyn"]
+[ext_resource type="Texture2D" uid="uid://dw2f7uibqyttr" path="res://sprites/Ripoff/skill5_1.png" id="7_r0ryo"]
+[ext_resource type="Texture2D" uid="uid://buk5xvas6kob2" path="res://sprites/Ripoff/skill5_2.png" id="8_omo86"]
+[ext_resource type="Texture2D" uid="uid://dgme458fn8mwo" path="res://sprites/Ripoff/skill5_3.png" id="9_hopk5"]
+[ext_resource type="Texture2D" uid="uid://dvo8awdbbsqo3" path="res://sprites/Ripoff/skill5_4.png" id="10_5lqtq"]
+[ext_resource type="Texture2D" uid="uid://bbgqkv8ilwr7u" path="res://sprites/Ripoff/skill5_10.png" id="11_pwl67"]
+[ext_resource type="Texture2D" uid="uid://cxvd4hxmk8h3w" path="res://sprites/Ripoff/skill5_11.png" id="12_02lu6"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_8ctfk"]
+viewport_path = NodePath("StatusViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1413d"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_8ctfk")
+billboard_mode = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_8lnyn"]
+resource_local_to_scene = true
+size = Vector2(1, 2)
+center_offset = Vector3(1, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ctfk"]
+transparency = 1
+albedo_texture = ExtResource("3_pb7cs")
+
+[sub_resource type="QuadMesh" id="QuadMesh_vesgh"]
+
+[sub_resource type="Animation" id="Animation_r0ryo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShowcaseLeiHeng:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShowcaseLeiHeng:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ShowcaseLeiHeng:offset:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [250.0]
+}
+
+[sub_resource type="Animation" id="Animation_81noq"]
+resource_name = "tanglecleaver_prep"
+length = 0.43333334
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShowcaseLeiHeng:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"tanglecleaver_prep"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShowcaseLeiHeng:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ShowcaseLeiHeng:offset:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [280.0]
+}
+
+[sub_resource type="Animation" id="Animation_omo86"]
+resource_name = "tanglecleaver_prep_continuous"
+length = 0.36666667
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShowcaseLeiHeng:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"tanglecleaver_prep"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShowcaseLeiHeng:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ShowcaseLeiHeng:offset:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [280.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_r0ryo"]
+_data = {
+&"RESET": SubResource("Animation_r0ryo"),
+&"tanglecleaver_prep": SubResource("Animation_81noq"),
+&"tanglecleaver_prep_continuous": SubResource("Animation_omo86")
+}
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vesgh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_8lnyn")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_r0ryo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_omo86")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_hopk5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_5lqtq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_pwl67")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_02lu6")
+}],
+"loop": 1,
+"name": &"tanglecleaver_prep",
+"speed": 10.0
+}]
+
+[node name="Unit" unique_id=756562779 instance=ExtResource("1_hng2m")]
+script = ExtResource("2_wuvug")
+
+[node name="OverheadDisplay" parent="." index="7" unique_id=1872660049]
+material_override = SubResource("StandardMaterial3D_1413d")
+mesh = SubResource("QuadMesh_8lnyn")
+
+[node name="Vis" parent="." index="8" unique_id=1721071178 node_paths=PackedStringArray("Showcase_Node", "Vis_Anim_Node")]
+script = ExtResource("3_1413d")
+Showcase_Node = NodePath("ShowcaseLeiHeng")
+Vis_Anim_Node = NodePath("Anim")
+
+[node name="Showcase" parent="Vis" index="0" unique_id=1837716725]
+visible = false
+material_override = SubResource("StandardMaterial3D_8ctfk")
+mesh = SubResource("QuadMesh_vesgh")
+
+[node name="VisSkeleton" parent="Vis/ShowcaseViewport" parent_id_path=PackedInt32Array(1721082773) index="0" unique_id=57951637]
+visible = false
+
+[node name="Anim" type="AnimationPlayer" parent="Vis" index="2" unique_id=335828702]
+libraries/ = SubResource("AnimationLibrary_r0ryo")
+
+[node name="ShowcaseLeiHeng" type="AnimatedSprite3D" parent="Vis" index="3" unique_id=395132621]
+sorting_offset = 1.0
+offset = Vector2(0, 250)
+pixel_size = 0.0035
+sprite_frames = SubResource("SpriteFrames_vesgh")
+animation = &"idle"
+
+[connection signal="animation_finished" from="Vis/Anim" to="Vis" method="_on_anim_animation_finished"]
+
+[editable path="Vis/ShowcaseViewport/VisSkeleton"]

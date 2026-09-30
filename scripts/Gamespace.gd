@@ -270,13 +270,41 @@ func _physics_process(delta: float) -> void:
 					#actor.pos_hex = hex_to.coord
 					#actor.SnapPositionToHexPos()
 
+var thecamera_free_pos: Vector3 = Vector3.ZERO
+var thecamera_free_aim: Vector3 = Vector3.ZERO
+var thecamera_stolen_pos: Vector3 = Vector3.ZERO
+var thecamera_stolen_aim: Vector3 = Vector3.ZERO
+var thecamera_pos_target: Vector3 = Vector3.ZERO
+var thecamera_aim_target: Vector3 = Vector3.ZERO
+var thecamera_pos: Vector3 = Vector3.ZERO
+var thecamera_aim: Vector3 = Vector3.ZERO
+
+func _ready() -> void:
+	thecamera_free_pos = THECamera_Node.position
+
 func _process(delta: float) -> void:
 	var cam_movespeed: float = delta * 4.0
 	
-	if ClientData.hold_north: THECamera_Node.position.z -= cam_movespeed
-	elif ClientData.hold_south: THECamera_Node.position.z += cam_movespeed
-	if ClientData.hold_west: THECamera_Node.position.x -= cam_movespeed
-	elif ClientData.hold_east: THECamera_Node.position.x += cam_movespeed
+	if ClientData.stealcamera_timer > 0:
+		ClientData.stealcamera_timer -= delta
+		thecamera_pos_target = ClientData.stealcamera_pos
+		thecamera_pos_target = ClientData.stealcamera_aim
+	else:
+		thecamera_pos_target = thecamera_free_pos
+		thecamera_aim_target = thecamera_free_aim
+		if ClientData.hold_north:
+			thecamera_free_pos.z -= cam_movespeed
+		elif ClientData.hold_south:
+			thecamera_free_pos.z += cam_movespeed
+		if ClientData.hold_west:
+			thecamera_free_pos.x -= cam_movespeed
+		elif ClientData.hold_east:
+			thecamera_free_pos.x += cam_movespeed
+	
+	thecamera_pos = thecamera_pos.lerp(thecamera_pos_target, delta * 5)
+	thecamera_aim = thecamera_aim.lerp(thecamera_aim_target, delta * 5)
+	THECamera_Node.position = thecamera_pos
+	THECamera_Node.look_at(thecamera_aim)
 	
 	var has_incantation: bool = not ClientData.incantation_list.is_empty()
 	

@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://ds4ygwk08iv3x" path="res://scripts/WorldInteract/WorldPickable.gd" id="3_1jvru"]
 [ext_resource type="PackedScene" uid="uid://bgpqr4gcpcdna" path="res://scenes/HUD/unit_over_status.tscn" id="4_gic7v"]
 [ext_resource type="Script" uid="uid://c30lcdnv7wde6" path="res://scripts/Vis/Vis.gd" id="5_tb304"]
+[ext_resource type="PackedScene" uid="uid://ds7pq1jpjqpeo" path="res://scenes/Vis/vis_skeleton_default.tscn" id="6_e8hdl"]
 [ext_resource type="AudioStream" uid="uid://dy7rrj185wvy7" path="res://sounds/Attacks/Hit.wav" id="6_ruro2"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_o7ajc"]
@@ -89,9 +90,16 @@ resource_local_to_scene = true
 size = Vector2(1, 2)
 center_offset = Vector3(1, 0, 0)
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_vesgh"]
-radius = 0.3
-height = 1.5
+[sub_resource type="ViewportTexture" id="ViewportTexture_oee7j"]
+viewport_path = NodePath("Vis/ShowcaseViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e8hdl"]
+resource_local_to_scene = true
+transparency = 1
+albedo_texture = SubResource("ViewportTexture_oee7j")
+
+[sub_resource type="QuadMesh" id="QuadMesh_ruro2"]
+size = Vector2(2, 2)
 
 [node name="Unit" type="Node3D" unique_id=756562779]
 script = ExtResource("1_o7ajc")
@@ -103,6 +111,7 @@ visibility_update_mode = 2
 
 [node name="ID" type="Label3D" parent="." unique_id=153694226]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7796253, 0)
+visible = false
 pixel_size = 0.01
 text = "12"
 
@@ -147,10 +156,18 @@ mesh = SubResource("QuadMesh_gic7v")
 [node name="Vis" type="Node3D" parent="." unique_id=1721071178]
 script = ExtResource("5_tb304")
 
-[node name="Capsule" type="MeshInstance3D" parent="Vis" unique_id=1837716725]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72187877, 0)
-mesh = SubResource("CapsuleMesh_vesgh")
+[node name="Showcase" type="MeshInstance3D" parent="Vis" unique_id=1837716725]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.021874, 0)
+material_override = SubResource("StandardMaterial3D_e8hdl")
+mesh = SubResource("QuadMesh_ruro2")
 skeleton = NodePath("../..")
+
+[node name="ShowcaseViewport" type="SubViewport" parent="Vis" unique_id=1721082773]
+disable_3d = true
+transparent_bg = true
+
+[node name="VisSkeleton" parent="Vis/ShowcaseViewport" unique_id=57951637 instance=ExtResource("6_e8hdl")]
+position = Vector2(256, 512)
 
 [node name="HitSound" type="AudioStreamPlayer3D" parent="." unique_id=838731362]
 stream = ExtResource("6_ruro2")

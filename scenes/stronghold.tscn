@@ -43,7 +43,7 @@ script = ExtResource("3_eav5i")
 metadata/_custom_type_script = "uid://d2t127lkc868q"
 
 [node name="UnitSpawner" type="MultiplayerSpawner" parent="Gamespace" unique_id=1175697082]
-_spawnable_scenes = PackedStringArray("uid://bx6iy0abyupfe")
+_spawnable_scenes = PackedStringArray("uid://bx6iy0abyupfe", "uid://wtx8wn8mhxd2")
 spawn_path = NodePath("../Unitry")
 
 [node name="Unitry" type="Node3D" parent="Gamespace" unique_id=1830807825]

@@ -19,8 +19,16 @@ func _ready() -> void:
 		unit_new.SnapPositionToHexPos()
 		spawn_list.push_back(unit_new)
 	
-	for i in 3:
+	for i in 0:
 		var unit_new: Unit = GameData.unit_scene.instantiate()
+		unit_new.Server_SetupForSpawn(GameData.GetUniqueUnitID())
+		unit_new.team = 2
+		unit_new.pos_hex = Vector2i(4,i-2)
+		unit_new.SnapPositionToHexPos()
+		spawn_list.push_back(unit_new)
+	
+	for i in 1:
+		var unit_new: Unit = load("res://scenes/Unitry/leiheng.tscn").instantiate()
 		unit_new.Server_SetupForSpawn(GameData.GetUniqueUnitID())
 		unit_new.team = 2
 		unit_new.pos_hex = Vector2i(4,i-2)

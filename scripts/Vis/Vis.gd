@@ -1,5 +1,7 @@
 class_name Vis extends Node3D
 
+@export var Vis_Anim_Node: AnimationPlayer = null
+
 const visual_factor_limit: float = TAU*100
 var visual_factor: float = 0
 
@@ -16,3 +18,5 @@ func _process(delta: float) -> void:
 var shake_timer: float = 0
 func GainShake() -> void:
 	shake_timer = 1.0
+
+func Incantate(_incantation: Incantation, _delta: float) -> void: pass

@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://ds7pq1jpjqpeo"]
+
+[ext_resource type="Texture2D" uid="uid://bsjt2gl6p5fxv" path="res://icon.svg" id="1_yayad"]
+
+[node name="VisSkeleton" type="Node2D" unique_id=57951637]
+
+[node name="Bone_Base" type="Node2D" parent="." unique_id=228346879]
+
+[node name="Bone_TorsoLower" type="Node2D" parent="Bone_Base" unique_id=812701332]
+position = Vector2(0, -101)
+
+[node name="Sprite_TorsoLower" type="Sprite2D" parent="Bone_Base/Bone_TorsoLower" unique_id=1443914367]
+texture = ExtResource("1_yayad")
+
+[node name="Bone_TorsoUpper" type="Node2D" parent="Bone_Base/Bone_TorsoLower" unique_id=867878546]
+position = Vector2(0, -146)
+
+[node name="Sprite_TorsoUpper" type="Sprite2D" parent="Bone_Base/Bone_TorsoLower/Bone_TorsoUpper" unique_id=894275812]
+texture = ExtResource("1_yayad")
+
+[node name="Bone_Neck" type="Node2D" parent="Bone_Base/Bone_TorsoLower/Bone_TorsoUpper" unique_id=688940411]
+position = Vector2(0, -129)
+
+[node name="Sprite_Head" type="Sprite2D" parent="Bone_Base/Bone_TorsoLower/Bone_TorsoUpper/Bone_Neck" unique_id=814285326]
+position = Vector2(0, -31)
+texture = ExtResource("1_yayad")
+
+[node name="Bone_LArmUpper" type="Node2D" parent="Bone_Base/Bone_TorsoLower/Bone_TorsoUpper" unique_id=1811286893]
+position = Vector2(-133, 4)
+
+[node name="Sprite_LArmUpper" type="Sprite2D" parent="Bone_Base/Bone_TorsoLower/Bone_TorsoUpper/Bone_LArmUpper" unique_id=1189418540]
+texture = ExtResource("1_yayad")
+
+[node name="Bone_LArmLower" type="Node2D" parent="Bone_Base/Bone_TorsoLower/Bone_TorsoUpper/Bone_LArmUpper" unique_id=527411272]
+position = Vector2(-58, 89)
+
+[node name="Sprite_LArmLower" type="Sprite2D" parent="Bone_Base/Bone_TorsoLower/Bone_TorsoUpper/Bone_LArmUpper/Bone_LArmLower" unique_id=136489338]
+texture = ExtResource("1_yayad")
+
+[node name="Attach_LWeapon" type="Node2D" parent="Bone_Base/Bone_TorsoLower/Bone_TorsoUpper/Bone_LArmUpper" unique_id=739822557]
+
+[node name="Bone_RArmUpper" type="Node2D" parent="Bone_Base/Bone_TorsoLower/Bone_TorsoUpper" unique_id=1608760442]
+position = Vector2(133, 4)
+
+[node name="Sprite_RArmUpper" type="Sprite2D" parent="Bone_Base/Bone_TorsoLower/Bone_TorsoUpper/Bone_RArmUpper" unique_id=1442658223]
+texture = ExtResource("1_yayad")
+
+[node name="Bone_RArmLower" type="Node2D" parent="Bone_Base/Bone_TorsoLower/Bone_TorsoUpper/Bone_RArmUpper" unique_id=1999602435]
+position = Vector2(55, 89)
+
+[node name="Sprite_RArmLower" type="Sprite2D" parent="Bone_Base/Bone_TorsoLower/Bone_TorsoUpper/Bone_RArmUpper/Bone_RArmLower" unique_id=2941496]
+texture = ExtResource("1_yayad")
+
+[node name="Attach_RWeapon" type="Node2D" parent="Bone_Base/Bone_TorsoLower/Bone_TorsoUpper/Bone_RArmUpper/Bone_RArmLower" unique_id=267879448]
+
+[node name="Bone_LLegUpper" type="Node2D" parent="Bone_Base/Bone_TorsoLower" unique_id=237037583]
+position = Vector2(-68, 89)
+
+[node name="Sprite_LLegUpper" type="Sprite2D" parent="Bone_Base/Bone_TorsoLower/Bone_LLegUpper" unique_id=901287340]
+texture = ExtResource("1_yayad")
+
+[node name="Bone_LLegLower" type="Node2D" parent="Bone_Base/Bone_TorsoLower/Bone_LLegUpper" unique_id=1359300397]
+position = Vector2(-48, 122)
+
+[node name="Sprite_LLegLower" type="Sprite2D" parent="Bone_Base/Bone_TorsoLower/Bone_LLegUpper/Bone_LLegLower" unique_id=811944048]
+texture = ExtResource("1_yayad")
+
+[node name="Bone_RLegUpper" type="Node2D" parent="Bone_Base/Bone_TorsoLower" unique_id=123939487]
+position = Vector2(67, 88)
+
+[node name="Sprite_RLegUpper" type="Sprite2D" parent="Bone_Base/Bone_TorsoLower/Bone_RLegUpper" unique_id=219754304]
+texture = ExtResource("1_yayad")
+
+[node name="Bone_RLegLower" type="Node2D" parent="Bone_Base/Bone_TorsoLower/Bone_RLegUpper" unique_id=712285154]
+position = Vector2(30, 126)
+
+[node name="Sprite_RLegLower" type="Sprite2D" parent="Bone_Base/Bone_TorsoLower/Bone_RLegUpper/Bone_RLegLower" unique_id=1478591729]
+texture = ExtResource("1_yayad")

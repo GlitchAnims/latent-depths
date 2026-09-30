@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://c2ts3ytvmxc6h"]
+
+[ext_resource type="PackedScene" uid="uid://bx6iy0abyupfe" path="res://scenes/unit.tscn" id="1_npure"]
+[ext_resource type="AnimationLibrary" uid="uid://crj2rxpra8h1n" path="res://anims/default_unit_anims.res" id="2_xmnkh"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_gqah1"]
+viewport_path = NodePath("StatusViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_en4a8"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_gqah1")
+billboard_mode = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_vboh3"]
+resource_local_to_scene = true
+size = Vector2(1, 2)
+center_offset = Vector3(1, 0, 0)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_lrddt"]
+viewport_path = NodePath("Vis/ShowcaseViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_suwr5"]
+resource_local_to_scene = true
+transparency = 1
+albedo_texture = SubResource("ViewportTexture_lrddt")
+
+[node name="Unit" unique_id=756562779 instance=ExtResource("1_npure")]
+
+[node name="OverheadDisplay" parent="." index="7" unique_id=1872660049]
+material_override = SubResource("StandardMaterial3D_en4a8")
+mesh = SubResource("QuadMesh_vboh3")
+
+[node name="Vis" parent="." index="8" unique_id=1721071178 node_paths=PackedStringArray("Vis_Anim_Node")]
+Vis_Anim_Node = NodePath("Anim")
+
+[node name="Showcase" parent="Vis" index="0" unique_id=1837716725]
+material_override = SubResource("StandardMaterial3D_suwr5")
+
+[node name="Anim" type="AnimationPlayer" parent="Vis" index="2" unique_id=631943932]
+libraries/ = ExtResource("2_xmnkh")
+
+[editable path="Vis/ShowcaseViewport/VisSkeleton"]
