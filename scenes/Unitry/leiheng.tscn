@@ -20,17 +20,17 @@
 [ext_resource type="Texture2D" uid="uid://dwwklragob8dj" path="res://sprites/Ripoff/skill5_20.png" id="11_q5vyo"]
 [ext_resource type="Texture2D" uid="uid://cxvd4hxmk8h3w" path="res://sprites/Ripoff/skill5_11.png" id="12_02lu6"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_r0ryo"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_awxvn"]
 viewport_path = NodePath("StatusViewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_omo86"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q5vyo"]
 resource_local_to_scene = true
 transparency = 1
 shading_mode = 0
-albedo_texture = SubResource("ViewportTexture_r0ryo")
+albedo_texture = SubResource("ViewportTexture_awxvn")
 billboard_mode = 2
 
-[sub_resource type="QuadMesh" id="QuadMesh_hopk5"]
+[sub_resource type="QuadMesh" id="QuadMesh_22gvy"]
 resource_local_to_scene = true
 size = Vector2(1, 2)
 center_offset = Vector3(1, 0, 0)
@@ -625,6 +625,7 @@ hue_variation_max = 0.009999977
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wbcaw"]
 transparency = 1
+cull_mode = 2
 shading_mode = 0
 vertex_color_use_as_albedo = true
 
@@ -661,6 +662,7 @@ point_count = 2
 curve = SubResource("Curve_awxvn")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_22gvy"]
+lifetime_randomness = 0.2
 particle_flag_damping_as_friction = true
 emission_shape_scale = Vector3(1, 0.3, 1)
 emission_shape = 6
@@ -741,8 +743,8 @@ hue_variation_max = 0.009999977
 script = ExtResource("2_wuvug")
 
 [node name="OverheadDisplay" parent="." index="7" unique_id=1872660049]
-material_override = SubResource("StandardMaterial3D_omo86")
-mesh = SubResource("QuadMesh_hopk5")
+material_override = SubResource("StandardMaterial3D_q5vyo")
+mesh = SubResource("QuadMesh_22gvy")
 
 [node name="Vis" parent="." index="8" unique_id=1721071178 node_paths=PackedStringArray("Showcase_Node", "FiringParticles_Node", "BoomParticles_Node", "unit_ref", "Vis_Anim_Node")]
 script = ExtResource("3_1413d")
@@ -767,6 +769,7 @@ libraries/ = SubResource("AnimationLibrary_r0ryo")
 sorting_offset = 1.0
 offset = Vector2(0, 250)
 pixel_size = 0.0035
+alpha_cut = 1
 sprite_frames = SubResource("SpriteFrames_vesgh")
 animation = &"idle"
 
@@ -779,11 +782,13 @@ process_material = SubResource("ParticleProcessMaterial_vesgh")
 draw_pass_1 = SubResource("BoxMesh_kkjc3")
 
 [node name="BoomParticles" type="GPUParticles3D" parent="Vis" index="5" unique_id=737400840]
+cast_shadow = 0
 emitting = false
 amount = 300
 lifetime = 5.0
 one_shot = true
 explosiveness = 0.99
+draw_order = 3
 process_material = SubResource("ParticleProcessMaterial_22gvy")
 draw_pass_1 = SubResource("BoxMesh_kkjc3")
 
@@ -794,6 +799,7 @@ amount = 300
 lifetime = 0.7
 one_shot = true
 explosiveness = 0.99
+draw_order = 3
 process_material = SubResource("ParticleProcessMaterial_iae4x")
 draw_pass_1 = SubResource("BoxMesh_kkjc3")
 

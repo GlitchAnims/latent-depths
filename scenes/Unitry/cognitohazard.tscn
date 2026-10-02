@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://bwq5lk7xxaj3h"]
+
+[ext_resource type="PackedScene" uid="uid://bx6iy0abyupfe" path="res://scenes/unit.tscn" id="1_wwo0x"]
+[ext_resource type="AudioStream" uid="uid://d0toaqjcg0bu1" path="res://sounds/General/HorrorDroning.mp3" id="2_jecno"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_jecno"]
+viewport_path = NodePath("StatusViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xfn0q"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_jecno")
+billboard_mode = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_emb34"]
+resource_local_to_scene = true
+size = Vector2(1, 2)
+center_offset = Vector3(1, 0, 0)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_l3j8y"]
+viewport_path = NodePath("Vis/ShowcaseViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qcrou"]
+resource_local_to_scene = true
+transparency = 1
+albedo_texture = SubResource("ViewportTexture_l3j8y")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jecno"]
+lifetime_randomness = 0.8
+emission_shape_scale = Vector3(2, 2, 2)
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wwo0x"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(0, 0, 0, 1)
+billboard_mode = 1
+use_z_clip_scale = true
+z_clip_scale = 0.4
+
+[sub_resource type="QuadMesh" id="QuadMesh_wwo0x"]
+material = SubResource("StandardMaterial3D_wwo0x")
+
+[node name="Unit" unique_id=756562779 instance=ExtResource("1_wwo0x")]
+
+[node name="OverheadDisplay" parent="." index="7" unique_id=1872660049]
+material_override = SubResource("StandardMaterial3D_xfn0q")
+mesh = SubResource("QuadMesh_emb34")
+
+[node name="Showcase" parent="Vis" parent_id_path=PackedInt32Array(1721071178) index="0" unique_id=1837716725]
+visible = false
+material_override = SubResource("StandardMaterial3D_qcrou")
+
+[node name="VisSkeleton" parent="Vis/ShowcaseViewport" parent_id_path=PackedInt32Array(1721082773) index="0" unique_id=57951637]
+visible = false
+
+[node name="Blocker" type="GPUParticles3D" parent="Vis" parent_id_path=PackedInt32Array(1721071178) index="2" unique_id=40040701]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6003119, 0)
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_jecno")
+draw_pass_1 = SubResource("QuadMesh_wwo0x")
+
+[node name="hrrrr" type="AudioStreamPlayer3D" parent="." index="10" unique_id=1729010012]
+stream = ExtResource("2_jecno")
+unit_size = 5.0
+autoplay = true
+attenuation_filter_cutoff_hz = 20500.0
+parameters/looping = true
